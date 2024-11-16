@@ -264,21 +264,6 @@
 <script src="../assets/lib/jquery-3.7.1.min.js.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 <script>
-/*    $('#lblSignUp').on('click', () => {
-        // Fade out the login section
-        $('#login').css({ justifyContent: "left", opacity: 0 });
-
-        // After fade-out animation, hide #login and show #signUp
-        setTimeout(function () {
-            $("#login").css("display", "none"); // Hide login
-            $("#signUp").css({ display: "flex", opacity: 0, justifyContent: "center" }); // Prepare #signUp for fade-in
-
-            // Trigger fade-in for #signUp
-            setTimeout(function () {
-                $("#signUp").css("opacity", 1); // Fade in smoothly
-            }, 10); // Small delay to ensure display property is applied
-        }, 400); // Match this delay with the transition duration
-    });*/
 $('#lblSignUp').on('click', () => {
         $('#login').css('display', 'none');
         $('#signUp').css('display', 'flex');
@@ -289,8 +274,6 @@ $('#lblLogin').on('click', () => {
         $('#signUp').css('display', 'none');
         $('#login').css('display', 'flex');
 });
-
-
 /*
     $('#lblSignUp').on('click',() => {
         $('#login').css({justifyContent: "left"});
