@@ -195,29 +195,30 @@
                 <div class="right"></div>
             </div>
             <li class="nav-item ">
-                <a class="nav-link" href="index.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+                <a class="nav-link" href="../index.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
             </li>
             <li class="nav-item ">
-                <a class="nav-link" href="pages/crop.html"><i class="fa fa-crop" aria-hidden="true"></i> Crop Manage</a>
+                <a class="nav-link" href="crop.html"><i class="fa fa-crop" aria-hidden="true"></i> Crop Manage</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="pages/field.html"><i class="far fa-clone"></i>Field Manage</a>
+                <a class="nav-link" href="field.html"><i class="far fa-clone"></i>Field Manage</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="pages/staff.html"><i class="fa fa-users" aria-hidden="true"></i>Staff Manage</a>
+                <a class="nav-link" href="staff.html"><i class="fa fa-users" aria-hidden="true"></i>Staff Manage</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="pages/vehicle.html"><i class="fa fa-car" aria-hidden="true"></i>Vehicle Manage</a>
+                <a class="nav-link" href="vehicle.html"><i class="fa fa-car" aria-hidden="true"></i>Vehicle Manage</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="pages/log.html"><i class="far fa-calendar-alt"></i>Log Manage</a>
+                <a class="nav-link" href="log.html"><i class="far fa-calendar-alt"></i>Log Manage</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="pages/equipment.html"><i class="far fa-copy"></i>Equipment Manage</a>
+                <a class="nav-link" href="equipment.html"><i class="far fa-copy"></i>Equipment Manage</a>
             </li>
         </ul>
     </div>
 </nav>
+<h1>staff page</h1>
 <footer>
     <p>© 2023 GreenShadow. All rights reserved.</p>
 </footer>
@@ -225,72 +226,58 @@
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-    // ----------navbar-active-animation-----------
-    function test() {
+    // ---------navbar-active-animation-----------
+    function updateHoriSelector() {
         var tabsNewAnim = $("#navbarSupportedContent");
-        var selectorNewAnim = $("#navbarSupportedContent").find("li").length;
-        var activeItemNewAnim = tabsNewAnim.find(".active");
-        var activeWidthNewAnimHeight = activeItemNewAnim.innerHeight();
-        var activeWidthNewAnimWidth = activeItemNewAnim.innerWidth();
-        var itemPosNewAnimTop = activeItemNewAnim.position();
-        var itemPosNewAnimLeft = activeItemNewAnim.position();
-        $(".hori-selector").css({
-            top: itemPosNewAnimTop.top + "px",
-            left: itemPosNewAnimLeft.left + "px",
-            height: activeWidthNewAnimHeight + "px",
-            width: activeWidthNewAnimWidth + "px"
-        });
-        $("#navbarSupportedContent").on("click", "li", function (e) {
+        var activeItem = tabsNewAnim.find(".active");
+        if (activeItem.length) {
+            var activeWidth = activeItem.innerWidth();
+            var activeHeight = activeItem.innerHeight();
+            var itemPos = activeItem.position();
+            $(".hori-selector").css({
+                top: itemPos.top + "px",
+                left: itemPos.left + "px",
+                height: activeHeight + "px",
+                width: activeWidth + "px",
+            });
+        }
+    }
+
+    function test() {
+        updateHoriSelector();
+        $("#navbarSupportedContent").on("click", "li", function () {
             $("#navbarSupportedContent ul li").removeClass("active");
             $(this).addClass("active");
-            var activeWidthNewAnimHeight = $(this).innerHeight();
-            var activeWidthNewAnimWidth = $(this).innerWidth();
-            var itemPosNewAnimTop = $(this).position();
-            var itemPosNewAnimLeft = $(this).position();
-            $(".hori-selector").css({
-                top: itemPosNewAnimTop.top + "px",
-                left: itemPosNewAnimLeft.left + "px",
-                height: activeWidthNewAnimHeight + "px",
-                width: activeWidthNewAnimWidth + "px"
-            });
+            updateHoriSelector();
         });
     }
+
     $(document).ready(function () {
-        setTimeout(function () {
-            test();
-        });
+        test();
     });
+
     $(window).on("resize", function () {
-        setTimeout(function () {
-            test();
-        }, 500);
+        updateHoriSelector();
     });
+
     $(".navbar-toggler").click(function () {
         $(".navbar-collapse").slideToggle(300);
-        setTimeout(function () {
-            test();
-        });
+        updateHoriSelector();
     });
 
-    $(document).ready(function ($) {
-        // Get the current path of the URL
-        var path = window.location.pathname.split("/").pop();
-
-        // If the path is empty (home page), default to 'index.html'
-        if (path === "") {
-            path = "index.html";
-        }
-
-        // Find the target link using the href attribute
-        var target = $('#navbarSupportedContent ul li a').filter(function () {
-            return $(this).attr('href') === path;
+    $(window).on("load", function () {
+        var current = location.pathname.split("/").pop().toLowerCase();
+        if (current === "") current = "index.html";
+        $("#navbarSupportedContent ul li a").each(function () {
+            var $this = $(this);
+            if ($this.attr("href").toLowerCase() === current) {
+                $this.parent().addClass("active");
+            } else {
+                $this.parent().removeClass("active");
+            }
         });
-
-        // Remove "active" class from all links and add to the target link
-        $('#navbarSupportedContent ul li').removeClass("active");
-        target.parent().addClass("active");
+        updateHoriSelector();
     });
-
 
 </script>
 </body>
