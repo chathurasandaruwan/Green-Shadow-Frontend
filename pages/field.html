@@ -195,29 +195,30 @@
                 <div class="right"></div>
             </div>
             <li class="nav-item ">
-                <a class="nav-link" href="index.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+                <a class="nav-link" href="../index.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
             </li>
             <li class="nav-item ">
-                <a class="nav-link" href="pages/crop.html"><i class="fa fa-crop" aria-hidden="true"></i> Crop Manage</a>
+                <a class="nav-link" href="crop.html"><i class="fa fa-crop" aria-hidden="true"></i> Crop Manage</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="pages/field.html"><i class="far fa-clone"></i>Field Manage</a>
+                <a class="nav-link" href="field.html"><i class="far fa-clone"></i>Field Manage</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="javascript:void(1);"><i class="fa fa-users" aria-hidden="true"></i>Staff Manage</a>
+                <a class="nav-link" href="staff.html"><i class="fa fa-users" aria-hidden="true"></i>Staff Manage</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="javascript:void(0);"><i class="fa fa-car" aria-hidden="true"></i>Vehicle Manage</a>
+                <a class="nav-link" href="vehicle.html"><i class="fa fa-car" aria-hidden="true"></i>Vehicle Manage</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="javascript:void(0);"><i class="far fa-calendar-alt"></i>Log Manage</a>
+                <a class="nav-link" href="log.html"><i class="far fa-calendar-alt"></i>Log Manage</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="javascript:void(0);"><i class="far fa-copy"></i>Equipment Manage</a>
+                <a class="nav-link" href="equipment.html"><i class="far fa-copy"></i>Equipment Manage</a>
             </li>
         </ul>
     </div>
 </nav>
+<h1>field page</h1>
 <footer>
     <p>© 2023 GreenShadow. All rights reserved.</p>
 </footer>
@@ -225,8 +226,8 @@
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-    // ---------Responsive-navbar-active-animation-----------
-    function test() {
+    // ----------navbar-active-animation-----------
+    /*function test() {
         var tabsNewAnim = $("#navbarSupportedContent");
         var selectorNewAnim = $("#navbarSupportedContent").find("li").length;
         var activeItemNewAnim = tabsNewAnim.find(".active");
@@ -272,43 +273,82 @@
         });
     });
 
-    $(document).ready(function ($) {
-        // Get the current path of the URL
-        var path = window.location.pathname.split("/").pop();
+    $(window).on('load', function () {
+        // Extract the filename from the current path
+        var current = location.pathname.split("/").pop();
+        console.log("Current path (filename):", current);
 
-        // If the path is empty (home page), default to 'index.html'
-        if (path === "") {
-            path = "index.html";
+        if (current === "") {
+            current = "index.html"; // Default to 'index.html' for the homepage
         }
 
-        // Find the target link using the href attribute
-        var target = $('#navbarSupportedContent ul li a').filter(function () {
-            return $(this).attr('href') === path;
-        });
-
-        // Remove "active" class from all links and add to the target link
-        $('#navbarSupportedContent ul li').removeClass("active");
-        target.parent().addClass("active");
-    });
-
-
-    /*Add active class on another page linked
-    ==========================================*/
-    /*$(window).on('load',function () {
-        var current = location.pathname;
-        console.log(current);
-        $('#navbarSupportedContent ul li a').each(function(){
+        // Iterate over each link in the navbar
+        $('#navbarSupportedContent ul li a').each(function () {
             var $this = $(this);
-            // if the current path is like this link, make it active
-            if($this.attr('href').indexOf(current) !== -1){
+
+            // Compare only the filenames
+            if ($this.attr('href') === current) {
+                // Add the 'active' class to the parent <li>
                 $this.parent().addClass('active');
-                $this.parents('.menu-submenu').addClass('show-dropdown');
-                $this.parents('.menu-submenu').parent().addClass('active');
-            }else{
+            } else {
+                // Remove 'active' class from non-matching links
                 $this.parent().removeClass('active');
             }
-        })
-    });*/
+        });
+    });
+*/
+    function updateHoriSelector() {
+        var tabsNewAnim = $("#navbarSupportedContent");
+        var activeItem = tabsNewAnim.find(".active");
+        if (activeItem.length) {
+            var activeWidth = activeItem.innerWidth();
+            var activeHeight = activeItem.innerHeight();
+            var itemPos = activeItem.position();
+            $(".hori-selector").css({
+                top: itemPos.top + "px",
+                left: itemPos.left + "px",
+                height: activeHeight + "px",
+                width: activeWidth + "px",
+            });
+        }
+    }
+
+    function test() {
+        updateHoriSelector();
+        $("#navbarSupportedContent").on("click", "li", function () {
+            $("#navbarSupportedContent ul li").removeClass("active");
+            $(this).addClass("active");
+            updateHoriSelector();
+        });
+    }
+
+    $(document).ready(function () {
+        test();
+    });
+
+    $(window).on("resize", function () {
+        updateHoriSelector();
+    });
+
+    $(".navbar-toggler").click(function () {
+        $(".navbar-collapse").slideToggle(300);
+        updateHoriSelector();
+    });
+
+    $(window).on("load", function () {
+        var current = location.pathname.split("/").pop().toLowerCase();
+        if (current === "") current = "index.html";
+        $("#navbarSupportedContent ul li a").each(function () {
+            var $this = $(this);
+            if ($this.attr("href").toLowerCase() === current) {
+                $this.parent().addClass("active");
+            } else {
+                $this.parent().removeClass("active");
+            }
+        });
+        updateHoriSelector();
+    });
+
 
 
 </script>
