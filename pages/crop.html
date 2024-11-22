@@ -8,6 +8,141 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="../css/style.css">
     <style>
+        #saveCrop{
+            /*width: 80%;*/
+            height: 1000px;
+            /*background-color: #b1dfbb;*/
+           /* margin-left: 0;*/
+            margin-top: 40px;
+
+
+        }
+        .container{
+            max-width: 1230px;
+            width: 100%;
+        }
+
+        h1{
+            font-weight: 700;
+            font-size: 45px;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .header{
+            margin-bottom: 80px;
+        }
+        #description{
+            font-size: 24px;
+        }
+
+        .form-wrap{
+            background: rgba(255,255,255,1);
+            width: 100%;
+            /*max-width: 850px;*/
+            padding: 50px;
+            margin: 0 auto;
+            position: relative;
+            -webkit-border-radius: 10px;
+            -moz-border-radius: 10px;
+            border-radius: 10px;
+            -webkit-box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.15);
+            -moz-box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.15);
+            box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.15);
+        }
+        .form-wrap:before{
+            content: "";
+            width: 90%;
+            height: calc(100% + 60px);
+            left: 0;
+            right: 0;
+            margin: 0 auto;
+            position: absolute;
+            top: -30px;
+            background: #00bcd9;
+            z-index: -1;
+            opacity: 0.8;
+            -webkit-border-radius: 10px;
+            -moz-border-radius: 10px;
+            border-radius: 10px;
+            -webkit-box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.15);
+            -moz-box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.15);
+            box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.15);
+        }
+        .form-group{
+            margin-bottom: 25px;
+        }
+        .form-group > label{
+            display: block;
+            font-size: 18px;
+            color: #000;
+        }
+        .custom-control-label{
+            color: #000;
+            font-size: 16px;
+        }
+        .custom-control-inline{
+            display: inline-flex;
+            margin-right: 8rem;
+            margin-top: 10px;
+        }
+        .form-control{
+            height: 50px;
+            background: #ecf0f4;
+            border-color: transparent;
+            padding: 0 15px;
+            font-size: 16px;
+            -webkit-transition: all 0.3s ease-in-out;
+            -moz-transition: all 0.3s ease-in-out;
+            -o-transition: all 0.3s ease-in-out;
+            transition: all 0.3s ease-in-out;
+            appearance: auto !important;
+            -webkit-appearance: checkbox !important;
+        }
+        .form-control:focus{
+            border-color: #00bcd9;
+            -webkit-box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
+            -moz-box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
+        }
+        #cropImgSelector{
+            margin-top: 10px;
+
+        }
+
+
+        .btn{
+            padding: .500rem .75rem;
+            font-size: 18px;
+            letter-spacing: 0.050em;
+            -webkit-transition: all 0.3s ease-in-out;
+            -moz-transition: all 0.3s ease-in-out;
+            -o-transition: all 0.3s ease-in-out;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .btn-primary {
+            color: #fff;
+            background-color: #00bcd9;
+            border-color: #00bcd9;
+        }
+
+        .btn-primary:hover {
+            color: #00bcd9;
+            background-color: #ffffff;
+            border-color: #00bcd9;
+            -webkit-box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
+            -moz-box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
+        }
+
+        .btn-primary:focus {
+            color: #00bcd9;
+            background-color: #ffffff;
+            border-color: #00bcd9;
+            -webkit-box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
+            -moz-box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
+        }
 
     </style>
 </head>
@@ -47,7 +182,100 @@
         </ul>
     </div>
 </nav>
-<h1>crop page</h1>
+<section id="saveCrop">
+    <div class="container">
+        <header class="header">
+            <h1 id="title" class="text-center">Crop Form</h1>
+            <p id="description" class="text-center">
+                Please use this form to fill out your crop.
+            </p>
+        </header>
+        <div class="form-wrap">
+            <form id="survey-form">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label id="Co-name-label" for="CommonNameTxt">Common Name</label>
+                            <input type="text" name="name" id="CommonNameTxt" placeholder="Enter common name" class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label id="Sc-name-label" for="scientificNameTxt">Scientific Name</label>
+                            <input type="text" name="name" id="scientificNameTxt" placeholder="Enter scientific name" class="form-control" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="dropdownCategory">Category</label>
+                            <select id="dropdownCategory" name="category" class="form-control" required>
+                                <option value=""  disabled selected hidden>Select Category</option>
+                                <option value="rice">Rice</option>
+                                <option value="cow-pea">Cow-pea</option>
+                                <option value="gram">Green gram</option>
+                                <option value="chickpea">Chickpea</option>
+                                <option value="sweet-potato">Sweet potato</option>
+                                <option value="reddish">Reddish</option>
+                                <option value="cassava">Cassava</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="dropdownFieldName">Field Name</label>
+                            <select id="dropdownFieldName" name="fieldName" class="form-control" required>
+                                <option value=""  disabled selected hidden>Select Field Name</option>
+                                <option value="field1">Field1</option>
+                                <option value="field1">Field1</option>
+                                <option value="field1">Field1</option>
+                                <option value="field1">Field1</option>
+                                <option value="field1">Field1</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>What is the crop season ?</label>
+                            <div class="custom-control custom-radio custom-control-inline">
+                                <input type="radio" id="customRadioInline1" value="Definitely" name="customRadioInline1" class="custom-control-input" checked="">
+                                <label class="custom-control-label" for="customRadioInline1">Yala</label>
+                            </div>
+                            <div class="custom-control custom-radio custom-control-inline">
+                                <input type="radio" id="customRadioInline2" value="Maybe" name="customRadioInline1" class="custom-control-input">
+                                <label class="custom-control-label" for="customRadioInline2">Maha</label>
+                            </div>
+                            <div class="custom-control custom-radio custom-control-inline">
+                                <input type="radio" id="customRadioInline3" value="Not sure" name="customRadioInline1" class="custom-control-input">
+                                <label class="custom-control-label" for="customRadioInline3">Other</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="cropImgSelector">Crop Image</label>
+                            <input type="file" name="cropImg" id="cropImgSelector" class="form-control-file form-control" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <button type="submit" id="btnSave" class="btn btn-primary btn-block">Save</button>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+</section>
 <footer>
     <p>© 2023 GreenShadow. All rights reserved.</p>
 </footer>
