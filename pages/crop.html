@@ -10,10 +10,11 @@
     <style>
         #saveCrop{
             /*width: 80%;*/
-            height: 1000px;
+            height: auto;
             /*background-color: #b1dfbb;*/
            /* margin-left: 0;*/
             margin-top: 40px;
+            margin-bottom: 100px;
 
 
         }
@@ -145,7 +146,7 @@
         }
         /*table css*/
         .container {
-            padding: 2rem 0rem;
+            padding: 1rem 0rem;
         }
 
         h4 {
@@ -156,7 +157,24 @@
             td, th {
             vertical-align: middle;
             }
+        .deleteBtn{
+            width: max-content;
+            color: red;
+            cursor: pointer;
+            display: none;
+        }
+        tr:hover .deleteBtn{
+            display: inline-block;
+        }
+        @media (max-width: 425px) {
+            /*.container {
+                overflow-x: unset !important;
+            }*/
+            #cropTable{
+                overflow-X: scroll;
+            }
 
+        }
 
     </style>
 </head>
@@ -201,7 +219,7 @@
         <header class="header">
             <h1 id="title" class="text-center">Crop Form</h1>
             <p id="description" class="text-center">
-                Please use this form to fill out your crop.
+                Please use this form to fill out your crop details.
             </p>
         </header>
         <div class="form-wrap">
@@ -315,6 +333,7 @@
                         <td>Cow-pea</td>
                         <td>field1</td>
                         <td>Other</td>
+                        <td><a href="#" class=" btn deleteBtn ">Delete <i class="far fa-trash-alt"></i></a></td>
                     </tr>
                     <tr>
                         <td class="w-25">
@@ -325,6 +344,7 @@
                         <td>Cow-pea</td>
                         <td>field2</td>
                         <td>Other</td>
+                        <td><a href="#" class=" btn deleteBtn ">Delete <i class="far fa-trash-alt"></i></a></td>
                     </tr>
                     </tbody>
                 </table>
