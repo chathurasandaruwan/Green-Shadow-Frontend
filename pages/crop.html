@@ -143,6 +143,20 @@
             -moz-box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
             box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
         }
+        /*table css*/
+        .container {
+            padding: 2rem 0rem;
+        }
+
+        h4 {
+            margin: 2rem 0rem 1rem;
+        }
+
+        .table-image ,
+            td, th {
+            vertical-align: middle;
+            }
+
 
     </style>
 </head>
@@ -275,6 +289,48 @@
         </div>
     </div>
 
+</section>
+<section id="cropTable">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <table class="table table-image">
+                    <thead>
+                    <tr>
+                        <th scope="col">Image</th>
+                        <th scope="col">Common Name</th>
+                        <th scope="col">Scientific Name</th>
+                        <th scope="col">Category</th>
+                        <th scope="col">Field Name</th>
+                        <th scope="col">Season</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td class="w-25">
+                            <img src="https://s3.eu-central-1.amazonaws.com/bootstrapbaymisc/blog/24_days_bootstrap/sheep-3.jpg" class="img-fluid img-thumbnail" alt="Sheep">
+                        </td>
+                        <td>coconut</td>
+                        <td>Cocos nucifera</td>
+                        <td>Cow-pea</td>
+                        <td>field1</td>
+                        <td>Other</td>
+                    </tr>
+                    <tr>
+                        <td class="w-25">
+                            <img src="https://s3.eu-central-1.amazonaws.com/bootstrapbaymisc/blog/24_days_bootstrap/sheep-5.jpg" class="img-fluid img-thumbnail" alt="Sheep">
+                        </td>
+                        <td>coconut</td>
+                        <td>Cocos nucifera</td>
+                        <td>Cow-pea</td>
+                        <td>field2</td>
+                        <td>Other</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 </section>
 <footer>
     <p>© 2023 GreenShadow. All rights reserved.</p>
