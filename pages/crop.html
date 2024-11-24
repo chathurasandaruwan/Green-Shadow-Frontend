@@ -135,6 +135,14 @@
             -moz-box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
             box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
         }
+        .btn-secondary:hover {
+            color: #6c757d;
+            background-color: #ffffff;
+            border-color: #6c757d;
+            -webkit-box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
+            -moz-box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
+        }
 
         .btn-primary:focus {
             color: #00bcd9;
@@ -227,8 +235,8 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label id="Co-name-label" for="CommonNameTxt">Common Name</label>
-                            <input type="text" name="name" id="CommonNameTxt" placeholder="Enter common name" class="form-control" required>
+                            <label id="Co-name-label" for="commonNameTxt">Common Name</label>
+                            <input type="text" name="name" id="commonNameTxt" placeholder="Enter common name" class="form-control" required>
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -274,15 +282,15 @@
                         <div class="form-group">
                             <label>What is the crop season ?</label>
                             <div class="custom-control custom-radio custom-control-inline">
-                                <input type="radio" id="customRadioInline1" value="Definitely" name="customRadioInline1" class="custom-control-input" checked="">
+                                <input type="radio" id="customRadioInline1"  name="customRadioInline1" class="custom-control-input" >
                                 <label class="custom-control-label" for="customRadioInline1">Yala</label>
                             </div>
                             <div class="custom-control custom-radio custom-control-inline">
-                                <input type="radio" id="customRadioInline2" value="Maybe" name="customRadioInline1" class="custom-control-input">
+                                <input type="radio" id="customRadioInline2" name="customRadioInline1" class="custom-control-input">
                                 <label class="custom-control-label" for="customRadioInline2">Maha</label>
                             </div>
                             <div class="custom-control custom-radio custom-control-inline">
-                                <input type="radio" id="customRadioInline3" value="Not sure" name="customRadioInline1" class="custom-control-input">
+                                <input type="radio" id="customRadioInline3" name="customRadioInline1" class="custom-control-input">
                                 <label class="custom-control-label" for="customRadioInline3">Other</label>
                             </div>
                         </div>
@@ -300,6 +308,7 @@
                 <div class="row">
                     <div class="col-md-4">
                         <button type="submit" id="btnSave" class="btn btn-primary btn-block">Save</button>
+                        <button type="button" id="btnClear" class="btn btn-secondary btn-block">Clear</button>
                     </div>
                 </div>
 
@@ -361,6 +370,16 @@
 <script src="js/pageMain.js"></script>
 <script>
 
+    $(document).ready(function () {
+        $('#btnClear').on('click', () => {
+            $('#commonNameTxt').val("");
+            $('#scientificNameTxt').val("");
+            $('#dropdownCategory').val("");
+            $('#dropdownFieldName').val("");
+            $('input[name="customRadioInline1"]').prop('checked', false);
+            $('#cropImgSelector').val('');
+        });
+    });
 
 </script>
 </body>
