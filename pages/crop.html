@@ -105,9 +105,27 @@
             -moz-box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
             box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
         }
+        .form-control-file{
+            width: 60%;
+            height: 200px;
+            background: #ecf0f4;
+            border-color: transparent;
+            padding: 0 15px;
+            font-size: 16px;
+            -webkit-transition: all 0.3s ease-in-out;
+            -moz-transition: all 0.3s ease-in-out;
+            -o-transition: all 0.3s ease-in-out;
+            transition: all 0.3s ease-in-out;
+        }
         #cropImgSelector{
             margin-top: 10px;
-
+            margin-bottom: 20px;
+        }
+        #previewImage{
+            max-width: 150px;
+            max-height: 80px;
+            margin-top: 10px;
+            display: block;
         }
 
 
@@ -174,6 +192,7 @@
         tr:hover .deleteBtn{
             display: inline-block;
         }
+
         @media (max-width: 425px) {
             /*.container {
                 overflow-x: unset !important;
@@ -298,9 +317,10 @@
                 </div>
                 <div class="row">
                     <div class="col-md-6">
-                        <div class="form-group">
+                        <div class="form-group form-control-file">
                             <label for="cropImgSelector">Crop Image</label>
-                            <input type="file" name="cropImg" id="cropImgSelector" class="form-control-file form-control" required>
+                            <img id="previewImage" alt="Original Preview" />
+                            <input type="file" name="cropImg" id="cropImgSelector" class="form-control" required>
                         </div>
                     </div>
                 </div>
@@ -321,7 +341,7 @@
     <div class="container">
         <div class="row">
             <div class="col-12">
-                <table class="table table-image">
+                <table id="cropTbl" class="table table-image">
                     <thead>
                     <tr>
                         <th scope="col">Image</th>
@@ -334,14 +354,15 @@
                     </thead>
                     <tbody>
                     <tr>
-                        <td class="w-25">
-                            <img src="https://s3.eu-central-1.amazonaws.com/bootstrapbaymisc/blog/24_days_bootstrap/sheep-3.jpg" class="img-fluid img-thumbnail" alt="Sheep">
+                        <td id="cropImgValue" class="w-25">
+                            <!--<img src="https://s3.eu-central-1.amazonaws.com/bootstrapbaymisc/blog/24_days_bootstrap/sheep-3.jpg" class="img-fluid img-thumbnail" alt="Sheep">-->
+                            <img src="../assets/images/test.png" class="img-fluid img-thumbnail" alt="Sheep">
                         </td>
-                        <td>coconut</td>
-                        <td>Cocos nucifera</td>
-                        <td>Cow-pea</td>
-                        <td>field1</td>
-                        <td>Other</td>
+                        <td id="commonNameValue">coconut</td>
+                        <td id="scientificNameValue">Cocos nucifera</td>
+                        <td id="categoryValue">Cow-pea</td>
+                        <td id="fieldNameValue">field1</td>
+                        <td id="seasonValue">Other</td>
                         <td><a href="#" class=" btn deleteBtn ">Delete <i class="far fa-trash-alt"></i></a></td>
                     </tr>
                     <tr>
@@ -371,6 +392,18 @@
 <script>
 
     $(document).ready(function () {
+        $("#cropImgSelector").on("change", function (event) {
+            event.preventDefault();
+            const file = $("#cropImgSelector")[0].files[0];
+
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    $("#previewImage").attr("src", e.target.result);
+                };
+                reader.readAsDataURL(file);
+            }
+        })
         $('#btnClear').on('click', () => {
             $('#commonNameTxt').val("");
             $('#scientificNameTxt').val("");
@@ -406,6 +439,16 @@
                 console.log("No file selected");
             }*/
             console.log(commonName, scientificName, category, fieldName, season, file);
+        });
+        $("#cropTbl").on('click','tr',function (){
+            let commonName = $(this).find("#commonNameValue").text();
+            let scientificName = $(this).find("#scientificNameValue").text();
+            let category = $(this).find("#categoryValue").text();
+            let fieldName = $(this).find("#fieldNameValue").text();
+            let season = $(this).find("#seasonValue").text();
+            let img = $(this).find("#cropImgValue").text();
+            console.log(commonName, scientificName, category, fieldName, season);
+            console.log("image: ", img);
         })
     });
 
