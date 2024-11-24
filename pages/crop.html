@@ -271,14 +271,14 @@
                             <label for="dropdownCategory">Category</label>
                             <select id="dropdownCategory" name="category" class="form-control" required>
                                 <option value=""  disabled selected hidden>Select Category</option>
-                                <option value="rice">Rice</option>
-                                <option value="cow-pea">Cow-pea</option>
-                                <option value="gram">Green gram</option>
-                                <option value="chickpea">Chickpea</option>
-                                <option value="sweet-potato">Sweet potato</option>
-                                <option value="reddish">Reddish</option>
-                                <option value="cassava">Cassava</option>
-                                <option value="other">Other</option>
+                                <option value="Rice">Rice</option>
+                                <option value="Cow-pea">Cow-pea</option>
+                                <option value="Green-gram">Green-gram</option>
+                                <option value="Chickpea">Chickpea</option>
+                                <option value="Sweet-potato">Sweet-potato</option>
+                                <option value="Reddish">Reddish</option>
+                                <option value="Cassava">Cassava</option>
+                                <option value="Other">Other</option>
                             </select>
                         </div>
                     </div>
@@ -288,10 +288,10 @@
                             <select id="dropdownFieldName" name="fieldName" class="form-control" required>
                                 <option value=""  disabled selected hidden>Select Field Name</option>
                                 <option value="field1">Field1</option>
-                                <option value="field1">Field1</option>
-                                <option value="field1">Field1</option>
-                                <option value="field1">Field1</option>
-                                <option value="field1">Field1</option>
+                                <option value="field2">Field2</option>
+                                <option value="field3">Field3</option>
+                                <option value="field4">Field4</option>
+                                <option value="field5">Field5</option>
                             </select>
                         </div>
                     </div>
@@ -319,7 +319,7 @@
                     <div class="col-md-6">
                         <div class="form-group form-control-file">
                             <label for="cropImgSelector">Crop Image</label>
-                            <img id="previewImage" alt="Original Preview" />
+                            <img id="previewImage" src="" alt="Preview" />
                             <input type="file" name="cropImg" id="cropImgSelector" class="form-control" required>
                         </div>
                     </div>
@@ -395,7 +395,6 @@
         $("#cropImgSelector").on("change", function (event) {
             event.preventDefault();
             const file = $("#cropImgSelector")[0].files[0];
-
             if (file) {
                 const reader = new FileReader();
                 reader.onload = function (e) {
@@ -405,20 +404,47 @@
             }
         })
         $('#btnClear').on('click', () => {
+            /*let btnText = $("#btnClear").text()
             $('#commonNameTxt').val("");
             $('#scientificNameTxt').val("");
             $('#dropdownCategory').val("");
             $('#dropdownFieldName').val("");
             $('input[name="customRadioInline1"]').prop('checked', false);
             $('#cropImgSelector').val('');
+            $('#previewImage').attr("src", "");
+            if (btnText === "Cancel") {
+                $("#btnClear").text("Clear");
+                $("#btnSave").text("Save");
+                $("#btnSave").removeClass("btn-warning");
+                $("#btnSave").addClass("btn-primary");
+
+            }*/
+            clearInputs();
+
         });
+        function clearInputs() {
+            let btnText = $("#btnClear").text()
+            $('#commonNameTxt').val("");
+            $('#scientificNameTxt').val("");
+            $('#dropdownCategory').val("");
+            $('#dropdownFieldName').val("");
+            $('input[name="customRadioInline1"]').prop('checked', false);
+            $('#cropImgSelector').val('');
+            $('#previewImage').attr("src", "");
+            if (btnText === "Cancel") {
+                $("#btnClear").text("Clear");
+                $("#btnSave").text("Save");
+                $("#btnSave").removeClass("btn-warning");
+                $("#btnSave").addClass("btn-primary");
+            }
+        }
         $('#btnSave').on('click', () => {
+            let btnText = $("#btnSave").text()
             var commonName = $('#commonNameTxt').val();
             var scientificName = $('#scientificNameTxt').val();
             var category = $('#dropdownCategory').val();
             var fieldName = $('#dropdownFieldName').val();
             var season = $('input[name="customRadioInline1"]:checked').val();
-            // var img = $('#cropImgSelector').val();
 
             const fileInput = $('#cropImgSelector')[0]; // Access the DOM element
             const file = fileInput.files[0];
@@ -438,7 +464,21 @@
             } else {
                 console.log("No file selected");
             }*/
-            console.log(commonName, scientificName, category, fieldName, season, file);
+            //save data
+            if (btnText === "Save") {
+                console.log("Save btn on action")
+                console.log(commonName, scientificName, category, fieldName, season, file);
+                clearInputs();
+
+            }else {
+            //update data
+                if (!file){
+                    console.log("No file selected");
+                }
+                console.log("Update btn on action")
+                console.log(commonName, scientificName, category, fieldName, season, file);
+                clearInputs();
+            }
         });
         $("#cropTbl").on('click','tr',function (){
             let commonName = $(this).find("#commonNameValue").text();
@@ -446,9 +486,25 @@
             let category = $(this).find("#categoryValue").text();
             let fieldName = $(this).find("#fieldNameValue").text();
             let season = $(this).find("#seasonValue").text();
-            let img = $(this).find("#cropImgValue").text();
+            let img = $(this).find("#cropImgValue img").attr("src");
             console.log(commonName, scientificName, category, fieldName, season);
             console.log("image: ", img);
+
+            $('#commonNameTxt').val(commonName);
+            $('#scientificNameTxt').val(scientificName);
+            $('#dropdownCategory').val(category);
+            $('#dropdownFieldName').val(fieldName);
+            // Set the appropriate radio button based on season
+            $('input[name="customRadioInline1"]').each(function () {
+                $(this).prop('checked', $(this).val() === season);
+            });
+            // Set the image source
+            $('#previewImage').attr("src", img);
+
+            $("#btnSave").text("Update");
+            $("#btnSave").removeClass("btn-primary");
+            $("#btnSave").addClass("btn-warning");
+            $("#btnClear").text("Cancel");
         })
     });
 
