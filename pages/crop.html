@@ -282,15 +282,15 @@
                         <div class="form-group">
                             <label>What is the crop season ?</label>
                             <div class="custom-control custom-radio custom-control-inline">
-                                <input type="radio" id="customRadioInline1"  name="customRadioInline1" class="custom-control-input" >
-                                <label class="custom-control-label" for="customRadioInline1">Yala</label>
+                                <input type="radio" id="customRadioInline1"  name="customRadioInline1" value="Yala"class="custom-control-input" >
+                                <label class="custom-control-label"for="customRadioInline1">Yala</label>
                             </div>
                             <div class="custom-control custom-radio custom-control-inline">
-                                <input type="radio" id="customRadioInline2" name="customRadioInline1" class="custom-control-input">
+                                <input type="radio" id="customRadioInline2" name="customRadioInline1" value="Maha" class="custom-control-input">
                                 <label class="custom-control-label" for="customRadioInline2">Maha</label>
                             </div>
                             <div class="custom-control custom-radio custom-control-inline">
-                                <input type="radio" id="customRadioInline3" name="customRadioInline1" class="custom-control-input">
+                                <input type="radio" id="customRadioInline3" name="customRadioInline1" value="Other" class="custom-control-input">
                                 <label class="custom-control-label" for="customRadioInline3">Other</label>
                             </div>
                         </div>
@@ -307,7 +307,7 @@
 
                 <div class="row">
                     <div class="col-md-4">
-                        <button type="submit" id="btnSave" class="btn btn-primary btn-block">Save</button>
+                        <button type="button" id="btnSave" class="btn btn-primary btn-block">Save</button>
                         <button type="button" id="btnClear" class="btn btn-secondary btn-block">Clear</button>
                     </div>
                 </div>
@@ -379,7 +379,36 @@
             $('input[name="customRadioInline1"]').prop('checked', false);
             $('#cropImgSelector').val('');
         });
+        $('#btnSave').on('click', () => {
+            var commonName = $('#commonNameTxt').val();
+            var scientificName = $('#scientificNameTxt').val();
+            var category = $('#dropdownCategory').val();
+            var fieldName = $('#dropdownFieldName').val();
+            var season = $('input[name="customRadioInline1"]:checked').val();
+            // var img = $('#cropImgSelector').val();
+
+            const fileInput = $('#cropImgSelector')[0]; // Access the DOM element
+            const file = fileInput.files[0];
+
+            // image encode to base64
+            /*if (file) {
+                const reader = new FileReader();
+
+                // Callback for when the file is loaded
+                reader.onload = function (e) {
+                    const base64String = e.target.result; // Get Base64 string
+                    console.log("Base64 String: ", base64String);
+                };
+
+                // Read the file as a data URL (Base64 encoded string)
+                reader.readAsDataURL(file);
+            } else {
+                console.log("No file selected");
+            }*/
+            console.log(commonName, scientificName, category, fieldName, season, file);
+        })
     });
+
 
 </script>
 </body>
