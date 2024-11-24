@@ -506,6 +506,10 @@
             $("#btnSave").addClass("btn-warning");
             $("#btnClear").text("Cancel");
         })
+        $(".deleteBtn").on('click', function (e){
+            console.log("delete btn on action")
+            console.log("commonName: ", $(this).parent().parent().find("#commonNameValue").text());
+        })
     });
 
 
