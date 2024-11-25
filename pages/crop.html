@@ -505,8 +505,11 @@
             $("#btnSave").removeClass("btn-primary");
             $("#btnSave").addClass("btn-warning");
             $("#btnClear").text("Cancel");
-        })
-        $(".deleteBtn").on('click', function (e){
+        });
+        //delete crop
+        $("#cropTbl").on('click', '.deleteBtn', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
             console.log("delete btn on action")
             console.log("commonName: ", $(this).parent().parent().find("#commonNameValue").text());
         })
