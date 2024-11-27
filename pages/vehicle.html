@@ -165,6 +165,33 @@
             -moz-box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
             box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
         }
+        .btn-danger:hover {
+            color: #dc3545;
+            background-color: #ffffff;
+            border-color: #dc3545;
+            -webkit-box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
+            -moz-box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
+        }
+        /*table css*/
+        .container {
+            padding: 1rem 0rem;
+        }
+        .tblBtn{
+            /*width: max-content;*/
+            /*color: red;*/
+            /*cursor: pointer;*/
+            display: none;
+
+        }
+        tr{
+            cursor: pointer;
+            height: 55px;
+        }
+        tr:hover .tblBtn{
+            display: inline-block;
+            height: 40px;
+        }
 
     </style>
 </head>
@@ -291,19 +318,19 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label  for="lastName">Last Name</label>
-                            <input type="text" name="remarks" id="lastName" placeholder="Last Name" class="form-control" disabled>
+                            <input type="text" name="lastName" id="lastName" placeholder="Last Name" class="form-control" disabled>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="contactNo">Contact No</label>
-                            <input type="text" name="remarks" id="contactNo" placeholder="Contact No" class="form-control" disabled>
+                            <input type="text" name="contactNo" id="contactNo" placeholder="Contact No" class="form-control" disabled>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="designation">Designation</label>
-                            <input type="text" name="remarks" id="designation" placeholder="Designation" class="form-control" disabled>
+                            <input type="text" name="designation" id="designation" placeholder="Designation" class="form-control" disabled>
                         </div>
                     </div>
                 </div>
@@ -318,7 +345,50 @@
             </form>
         </div>
     </div>
-
+</section>
+<section id="vehicleTblCard">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <table id="cropTbl" class="table table-image">
+                    <thead>
+                    <tr>
+                        <th scope="col">License Plate Number</th>
+                        <th scope="col">Remarks</th>
+                        <th scope="col">Category</th>
+                        <th scope="col">Fuel type</th>
+                        <th scope="col">status</th>
+                        <th scope="col">Staff name</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td id="">LD-1462</td>
+                        <td id=" ">No need</td>
+                        <td id="  ">Lorry</td>
+                        <td id="   ">Diesel</td>
+                        <td id="    ">Available</td>
+                        <td id="     ">kamal</td>
+                        <td><button class=" btn tblBtn btn-danger">Delete <i class="far fa-trash-alt"></i></button>
+                            <button class=" btn  tblBtn btn-warning">Edit <i class="fas fa-pencil-alt"></i></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td id="1">LD-1462</td>
+                        <td id="2 ">No need</td>
+                        <td id=" 3 ">Lorry</td>
+                        <td id=" 4  ">Diesel</td>
+                        <td id="   5 ">Available</td>
+                        <td id="  6   ">kamal</td>
+                        <td><button class=" btn tblBtn btn-danger">Delete <i class="far fa-trash-alt"></i></button>
+                            <button class=" btn  tblBtn btn-warning">Edit <i class="fas fa-pencil-alt"></i></button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 </section>
 <footer>
     <p>© 2023 GreenShadow. All rights reserved.</p>
