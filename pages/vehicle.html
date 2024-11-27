@@ -8,6 +8,163 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="../css/style.css">
     <style>
+        #saveVehicle{
+            height: auto;
+            margin-top: 40px;
+            margin-bottom: 100px;
+        }
+        .container{
+            max-width: 1230px;
+            width: 100%;
+        }
+        h1{
+            font-weight: 700;
+            font-size: 45px;
+            font-family: 'Roboto', sans-serif;
+        }
+        .header{
+            margin-bottom: 80px;
+        }
+        #description{
+            font-size: 24px;
+        }
+
+        .form-wrap{
+            background: rgba(255,255,255,1);
+            width: 100%;
+            padding: 50px;
+            margin: 0 auto;
+            position: relative;
+            -webkit-border-radius: 10px;
+            -moz-border-radius: 10px;
+            border-radius: 10px;
+            -webkit-box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.15);
+            -moz-box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.15);
+            box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.15);
+        }
+        .form-wrap:before{
+            content: "";
+            width: 90%;
+            height: calc(100% + 60px);
+            left: 0;
+            right: 0;
+            margin: 0 auto;
+            position: absolute;
+            top: -30px;
+            background: #00bcd9;
+            z-index: -1;
+            opacity: 0.8;
+            -webkit-border-radius: 10px;
+            -moz-border-radius: 10px;
+            border-radius: 10px;
+            -webkit-box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.15);
+            -moz-box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.15);
+            box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.15);
+        }
+        .form-group{
+            margin-bottom: 25px;
+        }
+        .form-group > label{
+            display: block;
+            font-size: 18px;
+            color: #000;
+        }
+        .custom-control-label{
+            color: #000;
+            font-size: 16px;
+        }
+        .custom-control-inline{
+            display: inline-flex;
+            margin-right: 8rem;
+            margin-top: 10px;
+        }
+        .form-control{
+            height: 50px;
+            background: #ecf0f4;
+            border-color: transparent;
+            padding: 0 15px;
+            font-size: 16px;
+            -webkit-transition: all 0.3s ease-in-out;
+            -moz-transition: all 0.3s ease-in-out;
+            -o-transition: all 0.3s ease-in-out;
+            transition: all 0.3s ease-in-out;
+            appearance: auto !important;
+            -webkit-appearance: checkbox !important;
+        }
+        .form-control:focus{
+            border-color: #00bcd9;
+            -webkit-box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
+            -moz-box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
+        }
+        .form-control-file{
+            width: 60%;
+            height: 200px;
+            background: #ecf0f4;
+            border-color: transparent;
+            padding: 0 15px;
+            font-size: 16px;
+            -webkit-transition: all 0.3s ease-in-out;
+            -moz-transition: all 0.3s ease-in-out;
+            -o-transition: all 0.3s ease-in-out;
+            transition: all 0.3s ease-in-out;
+        }
+        #staffSelectCard{
+            /*border: 1px solid #00bcd9;*/
+            /*border-radius: 10px;*/
+            border-top: 1px dashed #00bcd9;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        #staffSelectCard > h4{
+            margin-bottom: 30px;
+        }
+        #staffSelectCard:hover{
+            border: 1px solid #00bcd9;
+            border-radius: 10px;
+        }
+
+
+        .btn{
+            padding: .500rem .75rem;
+            font-size: 18px;
+            letter-spacing: 0.050em;
+            -webkit-transition: all 0.3s ease-in-out;
+            -moz-transition: all 0.3s ease-in-out;
+            -o-transition: all 0.3s ease-in-out;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .btn-primary {
+            color: #fff;
+            background-color: #00bcd9;
+            border-color: #00bcd9;
+        }
+
+        .btn-primary:hover {
+            color: #00bcd9;
+            background-color: #ffffff;
+            border-color: #00bcd9;
+            -webkit-box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
+            -moz-box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
+        }
+        .btn-secondary:hover {
+            color: #6c757d;
+            background-color: #ffffff;
+            border-color: #6c757d;
+            -webkit-box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
+            -moz-box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
+        }
+        .btn-warning:hover {
+            color: #ffc107;
+            background-color: #ffffff;
+            border-color: #ffc107;
+            -webkit-box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
+            -moz-box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
+        }
 
     </style>
 </head>
@@ -47,7 +204,122 @@
         </ul>
     </div>
 </nav>
-<h1>vehicle page</h1>
+<section id="saveVehicle">
+    <div class="container">
+        <header class="header">
+            <h1 id="title" class="text-center">Vehicle Manage</h1>
+            <p id="description" class="text-center">
+                Please use this form to fill out your vehicle details.
+            </p>
+        </header>
+        <div class="form-wrap">
+            <form id="survey-form">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="licensePlateNumTxt">License Plate Number</label>
+                            <input type="text" name="lpNumber" id="licensePlateNumTxt" placeholder="Enter license plate number" class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label id="Sc-name-label" for="remarksTxt">Remarks</label>
+                            <input type="text" name="remarks" id="remarksTxt" placeholder="Enter Remarks" class="form-control" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="dropdownCategory">Category</label>
+                            <select id="dropdownCategory" name="category" class="form-control" required>
+                                <option value=""  disabled selected hidden>Select Category</option>
+                                <option value="Car">Car</option>
+                                <option value="Van">Van</option>
+                                <option value="Motorbikes">Motorbikes</option>
+                                <option value="Tractors–Land-masters">Tractors–Land-masters</option>
+                                <option value="Tractors-4WD">Tractors-4WD</option>
+                                <option value="Tankers-truck">Tankers-truck</option>
+                                <option value="Land-vehicles">Land-vehicles</option>
+                                <option value="Lorry">Lorry</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="fuelTypedName">Fuel type</label>
+                            <select id="fuelTypedName" name="fieldName" class="form-control" required>
+                                <option value=""  disabled selected hidden>Select Fuel type</option>
+                                <option value="Petrol">Petrol</option>
+                                <option value="Diesel">Diesel</option>
+                                <option value="Electric">Electric</option>
+                                <option value="Hybrid">Hybrid</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>What is the vehicle status ?</label>
+                            <div class="custom-control custom-radio custom-control-inline">
+                                <input type="radio" id="customRadioInline1"  name="customRadioInline1" value="Available" class="custom-control-input" >
+                                <label class="custom-control-label" for="customRadioInline1">Available</label>
+                            </div>
+                            <div class="custom-control custom-radio custom-control-inline">
+                                <input type="radio" id="customRadioInline2" name="customRadioInline1" value="NotAvailable" class="custom-control-input">
+                                <label class="custom-control-label" for="customRadioInline2">NotAvailable</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="staffSelectCard" class="row">
+                    <h4 class="text-center text-black-50"><b>Select Staff here..</b></h4>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="dropdownStaffName">Staff Name</label>
+                            <select id="dropdownStaffName" name="staffName" class="form-control" required>
+                                <option value=""  disabled selected hidden>Select Staff Name</option>
+                                <option value="kamal">kamal</option>
+                                <option value="ranil">ranil</option>
+                                <option value="nimal">nimal</option>
+                                <option value="sahan">sahan</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label  for="lastName">Last Name</label>
+                            <input type="text" name="remarks" id="lastName" placeholder="Last Name" class="form-control" disabled>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="contactNo">Contact No</label>
+                            <input type="text" name="remarks" id="contactNo" placeholder="Contact No" class="form-control" disabled>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="designation">Designation</label>
+                            <input type="text" name="remarks" id="designation" placeholder="Designation" class="form-control" disabled>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <button type="button" id="btnSave" class="btn btn-primary btn-block">Save</button>
+                        <button type="button" id="btnClear" class="btn btn-secondary btn-block">Clear</button>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+</section>
 <footer>
     <p>© 2023 GreenShadow. All rights reserved.</p>
 </footer>
