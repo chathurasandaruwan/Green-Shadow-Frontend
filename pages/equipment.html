@@ -8,7 +8,80 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="../css/style.css">
     <style>
+        #equipmentTblCard{
+            margin-top: 40px;
+            margin-bottom: 100px;
+            height: auto;
+        }
+        .container{
+            max-width: 1230px;
+            width: 100%;
+        }
+        h1{
+            font-weight: 700;
+            font-size: 45px;
+            font-family: 'Roboto', sans-serif;
+        }
+        .header{
+            margin-bottom: 50px;
+        }
+        #description{
+            font-size: 24px;
+        }
 
+        /*table css*/
+        .container {
+            padding: 1rem 0rem;
+        }
+        .table>tbody {
+            vertical-align: middle;
+        }
+        .tblBtn{
+            /*width: max-content;*/
+            /*color: red;*/
+            /*cursor: pointer;*/
+            display: none;
+        }
+        .btn-warning:hover {
+            color: #ffc107;
+            background-color: #ffffff;
+            border-color: #ffc107;
+            -webkit-box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
+            -moz-box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
+        }
+        .btn-danger:hover {
+            color: #dc3545;
+            background-color: #ffffff;
+            border-color: #dc3545;
+            -webkit-box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
+            -moz-box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
+        }
+        tr{
+            cursor: pointer;
+            height: 55px;
+        }
+        tr:hover .tblBtn{
+            display: inline-block;
+            max-height: 40px;
+        }
+        @media (max-width: 768px) {
+            #equipmentTblCard{
+                overflow-X: scroll;
+            }
+            .table {
+                width: max-content;
+            }
+            .tblBtn {
+                /*display: inline-block;*/
+                height: 30px;
+                font-size: 10px;
+                letter-spacing: 0px;
+                width: max-content;
+            }
+
+        }
     </style>
 </head>
 <body>
@@ -47,7 +120,55 @@
         </ul>
     </div>
 </nav>
-<h1>equipment page</h1>
+<section id="equipmentTblCard">
+    <header class="header">
+        <h1 id="title" class="text-center">Equipment Manage</h1>
+        <p id="description" class="text-center">
+            Please use this form to fill out your Equipment details.
+        </p>
+    </header>
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <table id="cropTbl" class="table table-image">
+                    <thead>
+                    <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Type</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Field name</th>
+                        <th scope="col">Staff name</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td id="">Wheelbarrow</td>
+                        <td id=" ">Mechanical</td>
+                        <td id="  ">Available</td>
+                        <td id="   ">Field1</td>
+                        <td id="     ">kamal</td>
+                        <td><button class=" btn tblBtn btn-danger">Delete <i class="far fa-trash-alt"></i></button>
+                            <button class=" btn  tblBtn btn-warning">Edit <i class="fas fa-pencil-alt"></i></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td id="1">Chain saw</td>
+                        <td id="2 ">Electrical</td>
+                        <td id=" 3 ">Available</td>
+                        <td id=" 4  ">Field2</td>
+                        <td id="  6   ">kamal</td>
+                        <td><button class=" btn tblBtn btn-danger">Delete <i class="far fa-trash-alt"></i></button>
+                            <button class=" btn  tblBtn btn-warning">Edit <i class="fas fa-pencil-alt"></i></button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+
+</section>
 <footer>
     <p>© 2023 GreenShadow. All rights reserved.</p>
 </footer>
