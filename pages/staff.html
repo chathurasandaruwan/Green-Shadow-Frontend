@@ -8,7 +8,59 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="../css/style.css">
     <style>
+        .btn-warning:hover {
+            color: #ffc107;
+            background-color: #ffffff;
+            border-color: #ffc107;
+            -webkit-box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
+            -moz-box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
+        }
+        .btn-danger:hover {
+            color: #dc3545;
+            background-color: #ffffff;
+            border-color: #dc3545;
+            -webkit-box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
+            -moz-box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
+        }
+        /*table css*/
+        .container {
+            padding: 1rem 0rem;
+        }
+        .table>tbody {
+            vertical-align: middle;
+        }
+        .tblBtn{
+            /*width: max-content;*/
+            /*color: red;*/
+            /*cursor: pointer;*/
+            display: none;
+        }
+        tr{
+            cursor: pointer;
+            height: 55px;
+        }
+        tr:hover .tblBtn{
+            display: inline-block;
+            max-height: 40px;
+        }
+        @media (max-width: 768px) {
+            #staffTblCard{
+                overflow-X: scroll;
+            }
+            .table {
+                width: max-content;
+            }
+            .tblBtn {
+                /*display: inline-block;*/
+                height: 30px;
+                font-size: 10px;
+                letter-spacing: 0px;
+                width: max-content;
+            }
 
+        }
     </style>
 </head>
 <body>
@@ -47,7 +99,62 @@
         </ul>
     </div>
 </nav>
-<h1>staff page</h1>
+<section id="staffTblCard">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <table id="staffTbl" class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">First Name</th>
+                        <th scope="col">Last Name</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Designation</th>
+                        <th scope="col">Gender</th>
+                        <th scope="col">Joined date</th>
+                        <th scope="col">DOB</th>
+                        <th scope="col">Address</th>
+                        <th scope="col">Contact No</th>
+                        <th scope="col">Role</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td id="">kamal</td>
+                        <td id=" ">santha</td>
+                        <td id="  ">kamal@123</td>
+                        <td id="   ">Manager</td>
+                        <td id="    ">Male</td>
+                        <td id="     ">01-01-2002</td>
+                        <td id="      ">01-01-1962</td>
+                        <td id="       ">no1, street, city</td>
+                        <td id="        ">1234567890</td>
+                        <td id="         ">Manager</td>
+                        <td><button class=" btn tblBtn btn-danger">Delete <i class="far fa-trash-alt"></i></button>
+                            <button class=" btn  tblBtn btn-warning">Edit <i class="fas fa-pencil-alt"></i></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td id="1">kamal</td>
+                        <td id="2 ">santha</td>
+                        <td id=" 3 ">kamal@123</td>
+                        <td id=" 4  ">Manager</td>
+                        <td id="   5 ">Male</td>
+                        <td id="  6   ">01-01-2019</td>
+                        <td id="  7   ">01-01-1972</td>
+                        <td id="  8   ">no1, street, city</td>
+                        <td id="  9   ">1234567890</td>
+                        <td id="  10   ">Manager</td>
+                        <td><button class=" btn tblBtn btn-danger">Delete <i class="far fa-trash-alt"></i></button>
+                            <button class=" btn  tblBtn btn-warning">Edit <i class="fas fa-pencil-alt"></i></button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
 <footer>
     <p>© 2023 GreenShadow. All rights reserved.</p>
 </footer>
