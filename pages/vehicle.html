@@ -177,12 +177,14 @@
         .container {
             padding: 1rem 0rem;
         }
+        .table>tbody {
+            vertical-align: middle;
+        }
         .tblBtn{
             /*width: max-content;*/
             /*color: red;*/
             /*cursor: pointer;*/
             display: none;
-
         }
         tr{
             cursor: pointer;
@@ -190,7 +192,26 @@
         }
         tr:hover .tblBtn{
             display: inline-block;
-            height: 40px;
+            max-height: 40px;
+        }
+        @media (max-width: 768px) {
+            #vehicleTblCard{
+                overflow-X: scroll;
+            }
+            .table {
+                width: max-content;
+            }
+            .tblBtn {
+                display: inline-block;
+                height: 30px;
+                font-size: 10px;
+                letter-spacing: 0px;
+                width: max-content;
+            }
+            td{
+                width: max-content !important;
+            }
+
         }
 
     </style>
