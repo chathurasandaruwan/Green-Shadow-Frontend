@@ -8,6 +8,75 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="../css/style.css">
     <style>
+        #crudCard{
+            height: auto;
+            margin-top: 40px;
+            margin-bottom: 50px;
+            text-align: center;
+        }
+        .card {
+            width: 100%;
+            height: 170px;
+            border-radius: 10px;
+            color: white;
+            display: grid;
+            margin-top: 40px;
+            cursor: pointer;
+            grid-template-rows: 50px 1fr;
+        }
+        .addCard-desc {
+            background: linear-gradient(to bottom, #4389c8, #356e9d);
+        }
+        .updateCard-desc {
+            background: linear-gradient(to bottom, #f1b44d, #d69438);
+        }
+        .deleteCard-desc {
+            background: linear-gradient(to bottom, #f56f6f, #d53d3d);
+        }
+        .searchCard-desc {
+            background: linear-gradient(to bottom, #5cb385, #4b946e);
+        }
+        .card:hover .img-section {
+            transform: translateY(1em);
+        }
+        .card-desc {
+            border-radius: 10px;
+            padding: 15px;
+            position: relative;
+            top: -10px;
+            display: grid;
+            gap: 10px;
+        }
+        .card-time {
+            font-size: 1.7em;
+            font-weight: 500;
+        }
+        .img-section {
+            transition: 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+            background: hsl(195, 74%, 62%);
+        }
+        .card-header {
+            display: flex;
+            align-items: center;
+            width: 100%;
+        }
+        .card-title {
+            flex: 1;
+            font-weight: bold;
+        }
+
+        .card svg {
+            float: right;
+            max-width: 100%;
+            max-height: 100%;
+        }
+        .card .recent {
+            line-height: 0;
+            font-size: 0.8em;
+        }
+
         /*search bar css*/
         .custSearchCardHeader{
             background-color: #198754;
@@ -47,6 +116,23 @@
         #suggestions .list-group-item:hover {
             background-color: #f8f9fa;
         }
+        /*Start Section Stats*/
+
+        .statistics .data
+        {
+            background-color: rgba(3, 3, 3, 0.7);
+            /*background-color: #5161ce;*/
+            color: #B6B5B5;
+            min-height: 300px;
+            padding: 40px;
+
+        }
+
+        .statistics .stats:hover {color: #FFF}
+        .statistics p {font-size: 60px; font-weight: 600; margin-bottom: 0}
+        .statistics span {font-size: 16px}
+
+
 
         /*table css*/
         .container {
@@ -55,32 +141,14 @@
         .table>tbody {
             vertical-align: middle;
         }
-        .tblBtn{
-            /*width: max-content;*/
-            /*color: red;*/
-            /*cursor: pointer;*/
-            display: none;
-        }
         tr{
-            cursor: pointer;
             height: 55px;
-        }
-        tr:hover .tblBtn{
-            display: inline-block;
-            max-height: 40px;
         }
         @media (max-width: 768px) {
             #staffTblCard{
                 overflow-X: scroll;
             }
             .table {
-                width: max-content;
-            }
-            .tblBtn {
-                /*display: inline-block;*/
-                height: 30px;
-                font-size: 10px;
-                letter-spacing: 0px;
                 width: max-content;
             }
 
@@ -124,7 +192,7 @@
     </div>
 </nav>
 <!--search bar-->
-<div class="card container">
+<!--<div class="card container">
     <div class="card-header custSearchCardHeader">
         <b>Search Staff By name</b>
     </div>
@@ -135,7 +203,127 @@
         </div>
         <ul id="suggestions" class="list-group"></ul>
     </div>
-</div>
+</div>-->
+
+<section id="crudCard">
+    <div class="container shadow-lg p-5 rounded-3">
+        <header class="header">
+            <h1 id="title" class="text-center">Staff Manage</h1>
+            <p id="description" class="text-center">
+                Please use this form to fill out your staff details.
+            </p>
+        </header>
+        <div class="row">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <div class="card work">
+                        <div class="img-section">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="77" width="76"><path fill-rule="nonzero" fill="#3F9CBB" d="m60.91 71.846 12.314-19.892c3.317-5.36 3.78-13.818-2.31-19.908l-26.36-26.36c-4.457-4.457-12.586-6.843-19.908-2.31L4.753 15.69c-5.4 3.343-6.275 10.854-1.779 15.35a7.773 7.773 0 0 0 7.346 2.035l7.783-1.945a3.947 3.947 0 0 1 3.731 1.033l22.602 22.602c.97.97 1.367 2.4 1.033 3.732l-1.945 7.782a7.775 7.775 0 0 0 2.037 7.349c4.49 4.49 12.003 3.624 15.349-1.782Zm-24.227-46.12-1.891-1.892-1.892 1.892a2.342 2.342 0 0 1-3.312-3.312l1.892-1.892-1.892-1.891a2.342 2.342 0 0 1 3.312-3.312l1.892 1.891 1.891-1.891a2.342 2.342 0 0 1 3.312 3.312l-1.891 1.891 1.891 1.892a2.342 2.342 0 0 1-3.312 3.312Zm14.19 14.19a2.343 2.343 0 1 1 3.315-3.312 2.343 2.343 0 0 1-3.314 3.312Zm0 7.096a2.343 2.343 0 0 1 3.313-3.312 2.343 2.343 0 0 1-3.312 3.312Zm7.096-7.095a2.343 2.343 0 1 1 3.312 0 2.343 2.343 0 0 1-3.312 0Zm0 7.095a2.343 2.343 0 0 1 3.312-3.312 2.343 2.343 0 0 1-3.312 3.312Z"></path></svg>
+                        </div>
+                        <div class="card-desc addCard-desc">
+                            <div class="card-header">
+                                <div class="card-title">Add New Staff</div>
+<!--                                <div class="card-menu"></div>-->
+                            </div>
+                            <div class="card-time"><i class="fa fa-plus-circle" aria-hidden="true"></i> </div>
+<!--                            <p class="recent">Add </p>-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <div class="card work">
+                        <div class="img-section">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="77" width="76"><path fill-rule="nonzero" fill="#3F9CBB" d="m60.91 71.846 12.314-19.892c3.317-5.36 3.78-13.818-2.31-19.908l-26.36-26.36c-4.457-4.457-12.586-6.843-19.908-2.31L4.753 15.69c-5.4 3.343-6.275 10.854-1.779 15.35a7.773 7.773 0 0 0 7.346 2.035l7.783-1.945a3.947 3.947 0 0 1 3.731 1.033l22.602 22.602c.97.97 1.367 2.4 1.033 3.732l-1.945 7.782a7.775 7.775 0 0 0 2.037 7.349c4.49 4.49 12.003 3.624 15.349-1.782Zm-24.227-46.12-1.891-1.892-1.892 1.892a2.342 2.342 0 0 1-3.312-3.312l1.892-1.892-1.892-1.891a2.342 2.342 0 0 1 3.312-3.312l1.892 1.891 1.891-1.891a2.342 2.342 0 0 1 3.312 3.312l-1.891 1.891 1.891 1.892a2.342 2.342 0 0 1-3.312 3.312Zm14.19 14.19a2.343 2.343 0 1 1 3.315-3.312 2.343 2.343 0 0 1-3.314 3.312Zm0 7.096a2.343 2.343 0 0 1 3.313-3.312 2.343 2.343 0 0 1-3.312 3.312Zm7.096-7.095a2.343 2.343 0 1 1 3.312 0 2.343 2.343 0 0 1-3.312 0Zm0 7.095a2.343 2.343 0 0 1 3.312-3.312 2.343 2.343 0 0 1-3.312 3.312Z"></path></svg>
+                        </div>
+                        <div class="card-desc updateCard-desc">
+                            <div class="card-header">
+                                <div class="card-title">Update Staff</div>
+<!--                                <div class="card-menu"></div>-->
+                            </div>
+                            <div class="card-time"><i class="fas fa-pencil-alt"></i></div>
+<!--                            <p class="recent">Add </p>-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <div class="card work">
+                        <div class="img-section">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="77" width="76"><path fill-rule="nonzero" fill="#3F9CBB" d="m60.91 71.846 12.314-19.892c3.317-5.36 3.78-13.818-2.31-19.908l-26.36-26.36c-4.457-4.457-12.586-6.843-19.908-2.31L4.753 15.69c-5.4 3.343-6.275 10.854-1.779 15.35a7.773 7.773 0 0 0 7.346 2.035l7.783-1.945a3.947 3.947 0 0 1 3.731 1.033l22.602 22.602c.97.97 1.367 2.4 1.033 3.732l-1.945 7.782a7.775 7.775 0 0 0 2.037 7.349c4.49 4.49 12.003 3.624 15.349-1.782Zm-24.227-46.12-1.891-1.892-1.892 1.892a2.342 2.342 0 0 1-3.312-3.312l1.892-1.892-1.892-1.891a2.342 2.342 0 0 1 3.312-3.312l1.892 1.891 1.891-1.891a2.342 2.342 0 0 1 3.312 3.312l-1.891 1.891 1.891 1.892a2.342 2.342 0 0 1-3.312 3.312Zm14.19 14.19a2.343 2.343 0 1 1 3.315-3.312 2.343 2.343 0 0 1-3.314 3.312Zm0 7.096a2.343 2.343 0 0 1 3.313-3.312 2.343 2.343 0 0 1-3.312 3.312Zm7.096-7.095a2.343 2.343 0 1 1 3.312 0 2.343 2.343 0 0 1-3.312 0Zm0 7.095a2.343 2.343 0 0 1 3.312-3.312 2.343 2.343 0 0 1-3.312 3.312Z"></path></svg>
+                        </div>
+                        <div class="card-desc deleteCard-desc">
+                            <div class="card-header">
+                                <div class="card-title">Delete Staff</div>
+                            </div>
+                            <div class="card-time"><i class="far fa-trash-alt"></i></div>
+<!--                            <p class="recent">Add </p>-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <div class="card work from-blue-400 to-blue-600">
+                        <div class="img-section">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="77" width="76"><path fill-rule="nonzero" fill="#3F9CBB" d="m60.91 71.846 12.314-19.892c3.317-5.36 3.78-13.818-2.31-19.908l-26.36-26.36c-4.457-4.457-12.586-6.843-19.908-2.31L4.753 15.69c-5.4 3.343-6.275 10.854-1.779 15.35a7.773 7.773 0 0 0 7.346 2.035l7.783-1.945a3.947 3.947 0 0 1 3.731 1.033l22.602 22.602c.97.97 1.367 2.4 1.033 3.732l-1.945 7.782a7.775 7.775 0 0 0 2.037 7.349c4.49 4.49 12.003 3.624 15.349-1.782Zm-24.227-46.12-1.891-1.892-1.892 1.892a2.342 2.342 0 0 1-3.312-3.312l1.892-1.892-1.892-1.891a2.342 2.342 0 0 1 3.312-3.312l1.892 1.891 1.891-1.891a2.342 2.342 0 0 1 3.312 3.312l-1.891 1.891 1.891 1.892a2.342 2.342 0 0 1-3.312 3.312Zm14.19 14.19a2.343 2.343 0 1 1 3.315-3.312 2.343 2.343 0 0 1-3.314 3.312Zm0 7.096a2.343 2.343 0 0 1 3.313-3.312 2.343 2.343 0 0 1-3.312 3.312Zm7.096-7.095a2.343 2.343 0 1 1 3.312 0 2.343 2.343 0 0 1-3.312 0Zm0 7.095a2.343 2.343 0 0 1 3.312-3.312 2.343 2.343 0 0 1-3.312 3.312Z"></path></svg>
+                        </div>
+                        <div class="card-desc searchCard-desc">
+                            <div class="card-header">
+                                <div class="card-title">Search Staff</div>
+                                <div class="card-menu"></div>
+                            </div>
+                            <div class="card-time"><i class="fa fa-search" aria-hidden="true"></i> </div>
+<!--                            <p class="recent">Add </p>-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!--status card-->
+<section class="statistics text-center mb-4">
+        <div class="data">
+            <div class="container">
+                <h2 class="h1">Our Main Statistics</h2>
+                <div class="row">
+                    <div class="col-md-3 col-sm-6">
+                        <div class="stats">
+                            <i class="fa fa-users fa-5x"></i>
+                            <p>3,290</p>
+                            <span>Satisfied Users</span>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6">
+                        <div class="stats">
+                            <i class="fa fa-comments fa-5x"></i>
+                            <p>12,000</p>
+                            <span>Posted Comments</span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 col-sm-6">
+                        <div class="stats">
+                            <i class="fa fa-comments fa-5x"></i>
+                            <p>22,600</p>
+                            <span>Ticket Archived</span>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6">
+                        <div class="stats">
+                            <i class="fa fa-users fa-5x"></i>
+                            <p>3,290</p>
+                            <span>Satisfied Users</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
 <section id="staffTblCard">
     <div class="container">
@@ -168,9 +356,6 @@
                         <td id="       ">no1, street, city</td>
                         <td id="        ">1234567890</td>
                         <td id="         ">Manager</td>
-                        <td><button class=" btn tblBtn btn-danger">Delete <i class="far fa-trash-alt"></i></button>
-                            <button class=" btn  tblBtn btn-warning">Edit <i class="fas fa-pencil-alt"></i></button>
-                        </td>
                     </tr>
                     <tr>
                         <td id="1">kamal</td>
@@ -183,9 +368,6 @@
                         <td id="  8   ">no1, street, city</td>
                         <td id="  9   ">1234567890</td>
                         <td id="  10   ">Manager</td>
-                        <td><button class=" btn tblBtn btn-danger">Delete <i class="far fa-trash-alt"></i></button>
-                            <button class=" btn  tblBtn btn-warning">Edit <i class="fas fa-pencil-alt"></i></button>
-                        </td>
                     </tr>
                     </tbody>
                 </table>
