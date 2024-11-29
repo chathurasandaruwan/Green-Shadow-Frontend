@@ -83,6 +83,129 @@
             color: white;
             text-align: center;
         }
+        #custSearchCardBody{
+            margin-top: 0 !important;
+            margin-bottom: 40px !important;
+            display: flex;
+        }
+         /*Add new staff model css*/
+        .form-wrap{
+            background: rgba(255,255,255,1);
+            width: 100%;
+            padding: 50px;
+            margin: 0 auto;
+            position: relative;
+            -webkit-border-radius: 10px;
+            -moz-border-radius: 10px;
+            border-radius: 10px;
+            -webkit-box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.15);
+            -moz-box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.15);
+            box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.15);
+        }
+        .form-wrap:before{
+            content: "";
+            width: 90%;
+            height: calc(100% + 60px);
+            left: 0;
+            right: 0;
+            margin: 0 auto;
+            position: absolute;
+            top: -30px;
+            background: #00bcd9;
+            z-index: -1;
+            opacity: 0.8;
+            -webkit-border-radius: 10px;
+            -moz-border-radius: 10px;
+            border-radius: 10px;
+            -webkit-box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.15);
+            -moz-box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.15);
+            box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.15);
+        }
+        .form-group{
+            margin-bottom: 25px;
+        }
+        .form-group > label{
+            display: block;
+            font-size: 18px;
+            color: #000;
+        }
+        .custom-control-label{
+            color: #000;
+            font-size: 16px;
+        }
+        .custom-control-inline{
+            display: inline-flex;
+            margin-right: 8rem;
+            margin-top: 10px;
+        }
+        .form-control{
+            height: 50px;
+            background: #ecf0f4;
+            border-color: transparent;
+            padding: 0 15px;
+            font-size: 16px;
+            -webkit-transition: all 0.3s ease-in-out;
+            -moz-transition: all 0.3s ease-in-out;
+            -o-transition: all 0.3s ease-in-out;
+            transition: all 0.3s ease-in-out;
+            appearance: auto !important;
+            -webkit-appearance: checkbox !important;
+        }
+        .form-control:focus{
+            border-color: #00bcd9;
+            -webkit-box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
+            -moz-box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
+        }
+
+        #staffSelectCard{
+            /*border: 1px solid #00bcd9;*/
+            /*border-radius: 10px;*/
+            border-top: 1px dashed #00bcd9;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        #staffSelectCard > h4{
+            margin-bottom: 30px;
+        }
+        #staffSelectCard:hover{
+            border: 1px solid #00bcd9;
+            border-radius: 10px;
+        }
+
+
+        .btn{
+            padding: .500rem .75rem;
+            font-size: 18px;
+            letter-spacing: 0.050em;
+            -webkit-transition: all 0.3s ease-in-out;
+            -moz-transition: all 0.3s ease-in-out;
+            -o-transition: all 0.3s ease-in-out;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .btn-primary {
+            color: #fff;
+            background-color: #00bcd9;
+            border-color: #00bcd9;
+        }
+
+        .btn-primary:hover {
+            color: #00bcd9;
+            background-color: #ffffff;
+            border-color: #00bcd9;
+            -webkit-box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
+            -moz-box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
+        }
+        .btn-secondary:hover {
+            color: #6c757d;
+            background-color: #ffffff;
+            border-color: #6c757d;
+            -webkit-box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
+            -moz-box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
+        }
 
         .btn-warning:hover {
             color: #ffc107;
@@ -205,6 +328,7 @@
     </div>
 </div>-->
 
+<!--crud card-->
 <section id="crudCard">
     <div class="container shadow-lg p-5 rounded-3">
         <header class="header">
@@ -216,14 +340,13 @@
         <div class="row">
             <div class="col-md-3">
                 <div class="form-group">
-                    <div class="card work">
+                    <div id="AddNewStaffBtn" class="card work">
                         <div class="img-section">
                             <svg xmlns="http://www.w3.org/2000/svg" height="77" width="76"><path fill-rule="nonzero" fill="#3F9CBB" d="m60.91 71.846 12.314-19.892c3.317-5.36 3.78-13.818-2.31-19.908l-26.36-26.36c-4.457-4.457-12.586-6.843-19.908-2.31L4.753 15.69c-5.4 3.343-6.275 10.854-1.779 15.35a7.773 7.773 0 0 0 7.346 2.035l7.783-1.945a3.947 3.947 0 0 1 3.731 1.033l22.602 22.602c.97.97 1.367 2.4 1.033 3.732l-1.945 7.782a7.775 7.775 0 0 0 2.037 7.349c4.49 4.49 12.003 3.624 15.349-1.782Zm-24.227-46.12-1.891-1.892-1.892 1.892a2.342 2.342 0 0 1-3.312-3.312l1.892-1.892-1.892-1.891a2.342 2.342 0 0 1 3.312-3.312l1.892 1.891 1.891-1.891a2.342 2.342 0 0 1 3.312 3.312l-1.891 1.891 1.891 1.892a2.342 2.342 0 0 1-3.312 3.312Zm14.19 14.19a2.343 2.343 0 1 1 3.315-3.312 2.343 2.343 0 0 1-3.314 3.312Zm0 7.096a2.343 2.343 0 0 1 3.313-3.312 2.343 2.343 0 0 1-3.312 3.312Zm7.096-7.095a2.343 2.343 0 1 1 3.312 0 2.343 2.343 0 0 1-3.312 0Zm0 7.095a2.343 2.343 0 0 1 3.312-3.312 2.343 2.343 0 0 1-3.312 3.312Z"></path></svg>
                         </div>
                         <div class="card-desc addCard-desc">
                             <div class="card-header">
                                 <div class="card-title">Add New Staff</div>
-<!--                                <div class="card-menu"></div>-->
                             </div>
                             <div class="card-time"><i class="fa fa-plus-circle" aria-hidden="true"></i> </div>
 <!--                            <p class="recent">Add </p>-->
@@ -284,6 +407,139 @@
         </div>
     </div>
 </section>
+
+<!--staff model-->
+<div class="modal fade" id="staffModel" tabindex="-1" role="dialog" aria-labelledby="staffModelLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+        <!-- Modal content -->
+        <div class="modal-content " style="z-index: -2">
+            <div class="modal-header bg-secondary">
+                <h5 class="modal-title" id="staffModelLabel">Add New Staff</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <div class="form-wrap">
+                    <!--search bar-->
+                    <div id="custSearchCardBody" class="card">
+                        <div class="card-header custSearchCardHeader">
+                            <b>Search Staff By name</b>
+                        </div>
+                        <div class="card-body">
+                            <div class="input-group mb-3">
+                                <input id="searchBox" type="search" role="combobox" class="form-control" placeholder="Search by name here ....." aria-describedby="button-addon2">
+                                <button class="btn btn-outline-success" type="button" >Search</button>
+                            </div>
+                            <ul id="suggestions" class="list-group"></ul>
+                        </div>
+                    </div>
+<!--                    <div class="form-wrap">-->
+                    <form id="survey-form">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="licensePlateNumTxt">License Plate Number</label>
+                                    <input type="text" name="lpNumber" id="licensePlateNumTxt" placeholder="Enter license plate number" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label id="Sc-name-label" for="remarksTxt">Remarks</label>
+                                    <input type="text" name="remarks" id="remarksTxt" placeholder="Enter Remarks" class="form-control" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="dropdownCategory">Category</label>
+                                    <select id="dropdownCategory" name="category" class="form-control" required>
+                                        <option value=""  disabled selected hidden>Select Category</option>
+                                        <option value="Car">Car</option>
+                                        <option value="Van">Van</option>
+                                        <option value="Motorbikes">Motorbikes</option>
+                                        <option value="Tractors–Land-masters">Tractors–Land-masters</option>
+                                        <option value="Tractors-4WD">Tractors-4WD</option>
+                                        <option value="Tankers-truck">Tankers-truck</option>
+                                        <option value="Land-vehicles">Land-vehicles</option>
+                                        <option value="Lorry">Lorry</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="fuelTypedName">Fuel type</label>
+                                    <select id="fuelTypedName" name="fieldName" class="form-control" required>
+                                        <option value=""  disabled selected hidden>Select Fuel type</option>
+                                        <option value="Petrol">Petrol</option>
+                                        <option value="Diesel">Diesel</option>
+                                        <option value="Electric">Electric</option>
+                                        <option value="Hybrid">Hybrid</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>What is the vehicle status ?</label>
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" id="customRadioInline1"  name="customRadioInline1" value="Available" class="custom-control-input" >
+                                        <label class="custom-control-label" for="customRadioInline1">Available</label>
+                                    </div>
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" id="customRadioInline2" name="customRadioInline1" value="NotAvailable" class="custom-control-input">
+                                        <label class="custom-control-label" for="customRadioInline2">NotAvailable</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="staffSelectCard" class="row">
+                            <h4 class="text-center text-black-50"><b>Select Staff here..</b></h4>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="dropdownStaffName">Staff Name</label>
+                                    <select id="dropdownStaffName" name="staffName" class="form-control" required>
+                                        <option value=""  disabled selected hidden>Select Staff Name</option>
+                                        <option value="kamal">kamal</option>
+                                        <option value="ranil">ranil</option>
+                                        <option value="nimal">nimal</option>
+                                        <option value="sahan">sahan</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label  for="lastName">Last Name</label>
+                                    <input type="text" name="lastName" id="lastName" placeholder="Last Name" class="form-control" disabled>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="contactNo">Contact No</label>
+                                    <input type="text" name="contactNo" id="contactNo" placeholder="Contact No" class="form-control" disabled>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="designation">Designation</label>
+                                    <input type="text" name="designation" id="designation" placeholder="Designation" class="form-control" disabled>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="btnSave" class="btn btn-primary btn-block">Save</button>
+                <button type="button" id="btnClear" class="btn btn-secondary btn-block">Clear</button>
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <!--status card-->
 <section class="statistics text-center mb-4">
@@ -383,11 +639,20 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="js/pageMain.js"></script>
 <script>
-    // search bar
+    // AddNewStaffBtn
+
     $(document).ready(function () {
+        $(document).on("click","#AddNewStaffBtn",function(){
+            $("#staffModel").modal("toggle");
+        })
+
+
+
+
+
         // Example staff names (replace this with your dynamic data source)
         const staffNames = ["Alice Johnson", "Bob Smith", "Charlie Brown", "Diana Prince", "Eve Adams"];
-
+        // search bar suggestions
         $("#searchBox").on("input", function () {
             const query = $(this).val().toLowerCase();
             const $suggestions = $("#suggestions");
