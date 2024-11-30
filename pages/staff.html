@@ -130,15 +130,6 @@
             font-size: 18px;
             color: #000;
         }
-        .custom-control-label{
-            color: #000;
-            font-size: 16px;
-        }
-        .custom-control-inline{
-            display: inline-flex;
-            margin-right: 8rem;
-            margin-top: 10px;
-        }
         .form-control{
             height: 50px;
             background: #ecf0f4;
@@ -158,22 +149,29 @@
             -moz-box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
             box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
         }
-
-        #staffSelectCard{
-            /*border: 1px solid #00bcd9;*/
-            /*border-radius: 10px;*/
-            border-top: 1px dashed #00bcd9;
-            padding: 20px;
-            margin-bottom: 30px;
+        #inputAD1{
+            width: 20%;
+            margin: 10px;
+            float: left;
         }
-        #staffSelectCard > h4{
-            margin-bottom: 30px;
+        #inputAD5{
+            width: 75%;
+            margin: 10px;
         }
-        #staffSelectCard:hover{
-            border: 1px solid #00bcd9;
-            border-radius: 10px;
+        #inputAD2{
+            width: 97%;
+            margin: 10px;
         }
-
+        #inputAD3{
+            width: 75%;
+            margin: 10px;
+        }
+        #inputAD4{
+            width: 20%;
+            margin: 10px;
+            margin-top: 0;
+            float: left;
+        }
 
         .btn{
             padding: .500rem .75rem;
@@ -439,64 +437,114 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="licensePlateNumTxt">License Plate Number</label>
-                                    <input type="text" name="lpNumber" id="licensePlateNumTxt" placeholder="Enter license plate number" class="form-control" required>
+                                    <label for="firstNameTxt">First Name</label>
+                                    <input type="text" name="firstName" id="firstNameTxt" placeholder="Enter First Name" class="form-control" required>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label id="Sc-name-label" for="remarksTxt">Remarks</label>
-                                    <input type="text" name="remarks" id="remarksTxt" placeholder="Enter Remarks" class="form-control" required>
+                                    <label id="Sc-name-label" for="lastNameTxt">Last Name</label>
+                                    <input type="text" name="lastName" id="lastNameTxt" placeholder="Enter Last Name" class="form-control" required>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="dropdownCategory">Category</label>
-                                    <select id="dropdownCategory" name="category" class="form-control" required>
-                                        <option value=""  disabled selected hidden>Select Category</option>
-                                        <option value="Car">Car</option>
-                                        <option value="Van">Van</option>
-                                        <option value="Motorbikes">Motorbikes</option>
-                                        <option value="Tractors–Land-masters">Tractors–Land-masters</option>
-                                        <option value="Tractors-4WD">Tractors-4WD</option>
-                                        <option value="Tankers-truck">Tankers-truck</option>
-                                        <option value="Land-vehicles">Land-vehicles</option>
-                                        <option value="Lorry">Lorry</option>
-                                    </select>
+                                    <label for="emailTxt">Email</label>
+                                    <input type="email" name="email" id="emailTxt" placeholder="Enter Email" class="form-control" required>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="fuelTypedName">Fuel type</label>
-                                    <select id="fuelTypedName" name="fieldName" class="form-control" required>
-                                        <option value=""  disabled selected hidden>Select Fuel type</option>
-                                        <option value="Petrol">Petrol</option>
-                                        <option value="Diesel">Diesel</option>
-                                        <option value="Electric">Electric</option>
-                                        <option value="Hybrid">Hybrid</option>
+                                    <label id="contactNo-label" for="contactNoTxt">Contact No</label>
+                                    <input type="tel" name="contactNo" id="contactNoTxt" placeholder="Enter Contact No" class="form-control" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="dateOfBirthTxt">Date of Birth</label>
+                                    <input type="date" id="dateOfBirthTxt" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="dateOfJoiningTxt">Date of Joining</label>
+                                    <input type="date" id="dateOfJoiningTxt" class="form-control" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group ">
+                                    <label for="inputAD1">Address</label>
+                                    <input type="text" class="form-control" id="inputAD1" placeholder="No-">
+                                    <input type="text" class="form-control" id="inputAD5" placeholder="Postal code">
+                                    <input type="text" class="form-control" id="inputAD2" placeholder="lane">
+                                    <input type="text" class="form-control" id="inputAD4" placeholder="State">
+                                    <input type="text" class="form-control" id="inputAD3" placeholder="City">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="genderDropdown">Gender</label>
+                                    <select id="genderDropdown" name="gender" class="form-control" required>
+                                        <option value=""  disabled selected hidden>Select Gender</option>
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
                                     </select>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
-
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>What is the vehicle status ?</label>
-                                    <div class="custom-control custom-radio custom-control-inline">
-                                        <input type="radio" id="customRadioInline1"  name="customRadioInline1" value="Available" class="custom-control-input" >
-                                        <label class="custom-control-label" for="customRadioInline1">Available</label>
-                                    </div>
-                                    <div class="custom-control custom-radio custom-control-inline">
-                                        <input type="radio" id="customRadioInline2" name="customRadioInline1" value="NotAvailable" class="custom-control-input">
-                                        <label class="custom-control-label" for="customRadioInline2">NotAvailable</label>
-                                    </div>
+                                    <label for="dropdownDesignation">Designation</label>
+                                    <select id="dropdownDesignation" name="category" class="form-control" required>
+                                        <option value=""  disabled selected hidden>Select Designation</option>
+                                        <option value="MANAGER">MANAGER</option>
+                                        <option value="SENIOR_ASSISTANT_MANAGER">SENIOR_ASSISTANT_MANAGER</option>
+                                        <option value="ASSISTANT_MANAGER">ASSISTANT_MANAGER</option>
+                                        <option value="ADMIN_AND_HR_STAFF">ADMIN_AND_HR_STAFF</option>
+                                        <option value="OFFICE_ASSISTANT">OFFICE_ASSISTANT</option>
+                                        <option value="SENIOR_AGRONOMIST">SENIOR_AGRONOMIST</option>
+                                        <option value="AGRONOMIST">AGRONOMIST</option>
+                                        <option value="SOIL_SCIENTIST">SOIL_SCIENTIST</option>
+                                        <option value="SENIOR_TECHNICIAN">SENIOR_TECHNICIAN</option>
+                                        <option value="TECHNICIAN">TECHNICIAN</option>
+                                        <option value="SUPERVISORS">SUPERVISORS</option>
+                                        <option value="LABORS">LABORS</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="roleDropdown">Role</label>
+                                    <select id="roleDropdown" name="role" class="form-control" required>
+                                        <option value=""  disabled selected hidden>Select Role</option>
+                                        <option value="MANAGER">MANAGER</option>
+                                        <option value="ADMINISTRATIVE">ADMINISTRATIVE</option>
+                                        <option value="SCIENTIST">SCIENTIST</option>
+                                        <option value="OTHER">OTHER</option>
+                                    </select>
                                 </div>
                             </div>
                         </div>
-                        <div id="staffSelectCard" class="row">
+                        <div class="row">
+                            <!--<div class="col-md-6">
+                                <div class="form-group ">
+                                    <label for="inputAD1">Address</label>
+                                    <input type="text" class="form-control" id="inputAD1" placeholder="No-">
+                                    <input type="text" class="form-control" id="inputAD5" placeholder="Postal code">
+                                    <input type="text" class="form-control" id="inputAD2" placeholder="lane">
+                                    <input type="text" class="form-control" id="inputAD4" placeholder="State">
+                                    <input type="text" class="form-control" id="inputAD3" placeholder="City">
+                                </div>
+                            </div>-->
+                        </div>
+                     <!--   <div id="staffSelectCard" class="row">
                             <h4 class="text-center text-black-50"><b>Select Staff here..</b></h4>
                             <div class="col-md-6">
                                 <div class="form-group">
@@ -528,7 +576,7 @@
                                     <input type="text" name="designation" id="designation" placeholder="Designation" class="form-control" disabled>
                                 </div>
                             </div>
-                        </div>
+                        </div>-->
                     </form>
                     </div>
                 </div>
