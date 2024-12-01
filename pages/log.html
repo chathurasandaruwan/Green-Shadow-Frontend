@@ -8,7 +8,169 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="../css/style.css">
     <style>
+        #saveLog{
+            height: auto;
+            margin-top: 40px;
+            margin-bottom: 100px;
+        }
+        .container{
+            max-width: 1230px;
+            width: 100%;
+        }
+        h1{
+            font-weight: 700;
+            font-size: 45px;
+            font-family: 'Roboto', sans-serif;
+        }
+        .header{
+            margin-bottom: 80px;
+        }
+        #description{
+            font-size: 24px;
+        }
 
+        .form-wrap{
+            background: rgba(255,255,255,1);
+            width: 100%;
+            padding: 50px;
+            margin: 0 auto;
+            position: relative;
+            -webkit-border-radius: 10px;
+            -moz-border-radius: 10px;
+            border-radius: 10px;
+            -webkit-box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.15);
+            -moz-box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.15);
+            box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.15);
+        }
+        .form-wrap:before{
+            content: "";
+            width: 90%;
+            height: calc(100% + 60px);
+            left: 0;
+            right: 0;
+            margin: 0 auto;
+            position: absolute;
+            top: -30px;
+            background: #00bcd9;
+            z-index: -1;
+            opacity: 0.8;
+            -webkit-border-radius: 10px;
+            -moz-border-radius: 10px;
+            border-radius: 10px;
+            -webkit-box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.15);
+            -moz-box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.15);
+            box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.15);
+        }
+        .form-group{
+            margin-bottom: 25px;
+        }
+        .form-group > label{
+            display: block;
+            font-size: 18px;
+            color: #000;
+        }
+        #logDetailTxt{
+            height: 200px;
+        }
+        .form-control{
+            height: 50px;
+            background: #ecf0f4;
+            border-color: transparent;
+            padding: 0 15px;
+            font-size: 16px;
+            -webkit-transition: all 0.3s ease-in-out;
+            -moz-transition: all 0.3s ease-in-out;
+            -o-transition: all 0.3s ease-in-out;
+            transition: all 0.3s ease-in-out;
+            appearance: auto !important;
+            -webkit-appearance: checkbox !important;
+        }
+        .form-control:focus{
+            border-color: #00bcd9;
+            -webkit-box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
+            -moz-box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
+        }
+        .form-control-file{
+            width: 100%;
+            height: 200px;
+            margin-top: 25px;
+            background: #ecf0f4;
+            border-color: transparent;
+            padding: 0 15px;
+            font-size: 16px;
+            -webkit-transition: all 0.3s ease-in-out;
+            -moz-transition: all 0.3s ease-in-out;
+            -o-transition: all 0.3s ease-in-out;
+            transition: all 0.3s ease-in-out;
+        }
+        /*#cropImgSelector{
+            margin-top: 10px;
+            margin-bottom: 20px;
+        }*/
+        #previewImage{
+            max-width: 150px;
+            max-height: 80px;
+            margin-top: 10px;
+            display: block;
+        }
+
+
+        .btn{
+            padding: .500rem .75rem;
+            font-size: 18px;
+            letter-spacing: 0.050em;
+            -webkit-transition: all 0.3s ease-in-out;
+            -moz-transition: all 0.3s ease-in-out;
+            -o-transition: all 0.3s ease-in-out;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .btn-primary {
+            color: #fff;
+            background-color: #00bcd9;
+            border-color: #00bcd9;
+        }
+
+        .btn-primary:hover {
+            color: #00bcd9;
+            background-color: #ffffff;
+            border-color: #00bcd9;
+            -webkit-box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
+            -moz-box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
+        }
+        .btn-secondary:hover {
+            color: #6c757d;
+            background-color: #ffffff;
+            border-color: #6c757d;
+            -webkit-box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
+            -moz-box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
+        }
+        .btn-warning:hover {
+            color: #ffc107;
+            background-color: #ffffff;
+            border-color: #ffc107;
+            -webkit-box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
+            -moz-box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
+        }
+        .selectBtnSet{
+            width: 100%;
+            height: 70px;
+            background: #80bdff;
+            color: white;
+            margin: 10px;
+        }
+        .selectBtnSet:hover {
+            color: #80bdff;
+            background-color: #ffffff;
+            border-color: #80bdff;
+            -webkit-box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
+            -moz-box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
+        }
     </style>
 </head>
 <body>
@@ -47,7 +209,354 @@
         </ul>
     </div>
 </nav>
-<h1>log page</h1>
+<section id="saveLog">
+    <div class="container">
+        <header class="header">
+            <h1 id="title" class="text-center">Log Manage</h1>
+            <p id="description" class="text-center">
+                Please use this form to fill out your log details.
+            </p>
+        </header>
+        <div class="form-wrap">
+            <form id="survey-form">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label id="logId-label" for="logIdTxt">Log Id</label>
+                            <input type="text" name="id" id="logIdTxt" class="form-control" disabled>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="logDateLbl" id="date-label">Date</label>
+                            <input type="text" name="name" id="logDateLbl" class="form-control" disabled>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label id="Sc-name-label" for="logDetailTxt">Log details</label>
+                            <textarea type="text" name="details" id="logDetailTxt" placeholder="Enter log details" class="form-control" required></textarea>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group form-control-file">
+                            <label for="logImgSelector">Crop Image</label>
+                            <img id="previewImage" src="" alt="Preview" />
+                            <input type="file" name="logImg" id="logImgSelector" class="form-control" required>
+                        </div>
+                    </div>
+
+                </div>
+                <!--<div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="dropdownCategory">Category</label>
+                            <select id="dropdownCategory" name="category" class="form-control" required>
+                                <option value=""  disabled selected hidden>Select Category</option>
+                                <option value="Rice">Rice</option>
+                                <option value="Cow-pea">Cow-pea</option>
+                                <option value="Green-gram">Green-gram</option>
+                                <option value="Chickpea">Chickpea</option>
+                                <option value="Sweet-potato">Sweet-potato</option>
+                                <option value="Reddish">Reddish</option>
+                                <option value="Cassava">Cassava</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="dropdownFieldName">Field Name</label>
+                            <select id="dropdownFieldName" name="fieldName" class="form-control" required>
+                                <option value=""  disabled selected hidden>Select Field Name</option>
+                                <option value="field1">Field1</option>
+                                <option value="field2">Field2</option>
+                                <option value="field3">Field3</option>
+                                <option value="field4">Field4</option>
+                                <option value="field5">Field5</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>-->
+                <div class="row mb-4">
+                    <div class="col-md-4 ">
+                        <button type="button" id="selectStaffBtn" class="selectBtnSet btn" data-bs-toggle="modal" data-bs-target="#staffModal">
+                            <i class="fa fa-users" aria-hidden="true"></i> Select Staffs
+                        </button>
+
+                    </div>
+                    <div class="col-md-4 ">
+                        <button type="button" id="selectFieldBtn" class="selectBtnSet btn" data-bs-toggle="modal" data-bs-target="#fieldModal">
+                            <i class="far fa-clone"></i> Select Fields
+                        </button>
+
+                    </div>
+                    <div class="col-md-4 ">
+                        <button type="button" id="selectCropBtn" class="selectBtnSet btn" data-bs-toggle="modal" data-bs-target="#cropModal">
+                            <i class="fa fa-crop" aria-hidden="true"></i> Select Crops
+                        </button>
+                    </div>
+                </div>
+                <div class="row mb-4">
+                    <div class="col-md-4 ">
+                        <table id="staffListTbl" class="table text-center">
+                            <thead>
+                            <tr>
+                                <th scope="col">Staffs</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td id="">kamal</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-md-4 ">
+                        <table id="fieldListTbl" class="table text-center">
+                            <thead>
+                            <tr>
+                                <th scope="col">Fields</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td id="2">Field1</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-md-4 ">
+                        <table id="cropListTbl" class="table text-center">
+                            <thead>
+                            <tr>
+                                <th scope="col">Crops</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td id="3">Been</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <button type="button" id="btnSave" class="btn btn-primary btn-block">Save</button>
+                        <button type="button" id="btnClear" class="btn btn-secondary btn-block">Clear</button>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</section>
+<!-- staff select model-->
+<div class="modal fade " id="staffModal" tabindex="-1" role="dialog" aria-labelledby="staffModelLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+        <!-- Modal content -->
+        <div class="modal-content ">
+            <div class="modal-header custModalHeader">
+                <h5 class="modal-title" id="staffModelLabel">Select Staff</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <div class="form-wrap">
+                        <form id="staff-select-form">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="dropdownStaffName">Staff Name</label>
+                                        <select id="dropdownStaffName" name="staffName" class="form-control" required>
+                                            <option value=""  disabled selected hidden>Select Staff Name</option>
+                                            <option value="kamal">kamal</option>
+                                            <option value="ranil">ranil</option>
+                                            <option value="nimal">nimal</option>
+                                            <option value="sahan">sahan</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label id="lastN-label" for="lastNameDum">Last Name</label>
+                                        <input type="text" name="lastName" id="lastNameDum" placeholder="Enter Last Name" class="form-control" disabled>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="emailDum">Email</label>
+                                        <input type="text" name="email" id="emailDum" placeholder="Enter Email" class="form-control" disabled>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label id="contactNo-label" for="contactNoDum">Contact No</label>
+                                        <input type="tel" name="contactNo" id="contactNoDum" placeholder="Enter Contact No" class="form-control" disabled>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="dateOfBirthDum">Date of Birth</label>
+                                        <input type="date" id="dateOfBirthDum" class="form-control" disabled>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="dateOfJoiningDum">Date of Joining</label>
+                                        <input type="date" id="dateOfJoiningDum" class="form-control" disabled>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group ">
+                                        <label for="ADDDum">Address</label>
+                                        <input type="text" class="form-control" id="ADDDum" placeholder="No-" disabled>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="genderDum">Gender</label>
+                                        <input id="genderDum" name="gender" class="form-control" disabled>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="designationDum">Designation</label>
+                                        <input id="designationDum" name="des" class="form-control" disabled>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="roleInputDum">Role</label>
+                                        <input id="roleInputDum" name="role" class="form-control" disabled>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="btnStaffAdd" class="btn btn-primary btn-block">Add</button>
+                <button type="button" id="btnStaffClose" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--field select model-->
+<div class="modal fade " id="fieldModal" tabindex="-1" role="dialog" aria-labelledby="fieldModelLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+        <!-- Modal content -->
+        <div class="modal-content ">
+            <div class="modal-header custModalHeader">
+                <h5 class="modal-title" id="fieldModelLabel">Select Field</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <div class="form-wrap">
+                        <form id="field-select-form">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="dropdownFieldName">Field Name</label>
+                                        <select id="dropdownFieldName" name="staffName" class="form-control" required>
+                                            <option value=""  disabled selected hidden>Select Field Name</option>
+                                            <option value="Field1">Field1</option>
+                                            <option value="Field2">Field2</option>
+                                            <option value="Field3">Field3</option>
+                                            <option value="Field4">Field4</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label id="extent-size-label" for="extentSizeDum">Extent Size</label>
+                                        <input type="text" name="lastName" id="extentSizeDum" placeholder="Enter extent size" class="form-control" disabled>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="dropdownFieldName">Field image</label>
+                                        <div id="fieldImg" class="form-control"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="btnFieldAdd" class="btn btn-primary btn-block">Add</button>
+                <button type="button" id="btnFieldClose" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--crop select model-->
+<div class="modal fade " id="cropModal" tabindex="-1" role="dialog" aria-labelledby="cropModelLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+        <!-- Modal content -->
+        <div class="modal-content ">
+            <div class="modal-header custModalHeader">
+                <h5 class="modal-title" id="cropModelLabel">Select Crop</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <div class="form-wrap">
+                        <form id="crop-select-form">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="dropdownCropName">Crop Name</label>
+                                        <select id="dropdownCropName" name="cropName" class="form-control" required>
+                                            <option value=""  disabled selected hidden>Select Crop Name</option>
+                                            <option value="Crop1">Crop1</option>
+                                            <option value="Crop2">Crop2</option>
+                                            <option value="Crop3">Crop3</option>
+                                            <option value="Crop4">Crop4</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label id="scientific-name-label" for="scientificNameDum">Extent Size</label>
+                                        <input type="text" name="lastName" id="scientificNameDum" class="form-control" disabled>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="categoryDum">Category</label>
+                                        <input type="text" id="categoryDum" name="category" class="form-control" disabled>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="btnCropAdd" class="btn btn-primary btn-block">Add</button>
+                <button type="button" id="btnCropClose" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 <footer>
     <p>© 2023 GreenShadow. All rights reserved.</p>
 </footer>
