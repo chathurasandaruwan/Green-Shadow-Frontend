@@ -179,6 +179,15 @@
         tr:hover .hiddenBtn{
             display: inline-block;
         }
+        /*main table css*/
+        td > img{
+            width: 60px;
+        }
+        ul{
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
     </style>
 </head>
 <body>
@@ -255,37 +264,6 @@
                     </div>
 
                 </div>
-                <!--<div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="dropdownCategory">Category</label>
-                            <select id="dropdownCategory" name="category" class="form-control" required>
-                                <option value=""  disabled selected hidden>Select Category</option>
-                                <option value="Rice">Rice</option>
-                                <option value="Cow-pea">Cow-pea</option>
-                                <option value="Green-gram">Green-gram</option>
-                                <option value="Chickpea">Chickpea</option>
-                                <option value="Sweet-potato">Sweet-potato</option>
-                                <option value="Reddish">Reddish</option>
-                                <option value="Cassava">Cassava</option>
-                                <option value="Other">Other</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="dropdownFieldName">Field Name</label>
-                            <select id="dropdownFieldName" name="fieldName" class="form-control" required>
-                                <option value=""  disabled selected hidden>Select Field Name</option>
-                                <option value="field1">Field1</option>
-                                <option value="field2">Field2</option>
-                                <option value="field3">Field3</option>
-                                <option value="field4">Field4</option>
-                                <option value="field5">Field5</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>-->
                 <div class="row mb-4">
                     <div class="col-md-4 ">
                         <button type="button" id="selectStaffBtn" class="selectBtnSet btn" data-bs-toggle="modal" data-bs-target="#staffModal">
@@ -367,6 +345,88 @@
         </div>
     </div>
 </section>
+<!-- log table-->
+
+<section id="logTblCard" class="py-4 bg-light">
+    <div class="container">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-hover table-nowrap align-middle">
+                        <thead class="table-light">
+                        <tr>
+                            <th scope="col">Id</th>
+                            <th scope="col">Date</th>
+                            <th scope="col">image</th>
+                            <th scope="col">Details</th>
+                            <th scope="col">Staff</th>
+                            <th scope="col">Field</th>
+                            <th scope="col">Crop</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>01</td>
+                            <td>2024/10/30</td>
+                            <td>
+                                <img alt="..." src="https://images.unsplash.com/photo-1610878722345-79c5eaf6a48c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=3&w=256&h=256&q=80" class="avatar avatar-sm rounded-circle me-2">
+                            </td>
+                            <td>good condition</td>
+                            <td>
+                                <ul>
+                                    <li>kamal</li>
+                                    <li>namal</li>
+                                </ul>
+                            </td>
+                            <td>
+                                <ul>
+                                    <li>Field1</li>
+                                    <li>Field2</li>
+                                </ul>
+                            </td>
+                            <td>
+                                <ul>
+                                    <li>Been</li>
+                                    <li>Wheat</li>
+                                </ul>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>01</td>
+                            <td>2024/10/30</td>
+                            <td>
+                                <img alt="..." src="https://images.unsplash.com/photo-1610878722345-79c5eaf6a48c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=3&w=256&h=256&q=80" class="avatar avatar-sm rounded-circle me-2">
+                            </td>
+                            <td>good condition</td>
+                            <td>
+                                <ul>
+                                    <li>kamal</li>
+                                    <li>namal</li>
+                                </ul>
+                            </td>
+                            <td>
+                                <ul>
+                                    <li>Field1</li>
+                                    <li>Field2</li>
+                                </ul>
+                            </td>
+                            <td>
+                                <ul>
+                                    <li>Been</li>
+                                    <li>Wheat</li>
+                                </ul>
+                            </td>
+                        </tr>
+                        <!-- Repeat rows as needed -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
 <!-- staff select model-->
 <div class="modal fade " id="staffModal" tabindex="-1" role="dialog" aria-labelledby="staffModelLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl" role="document">
