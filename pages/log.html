@@ -108,7 +108,8 @@
             margin-top: 10px;
             margin-bottom: 20px;
         }*/
-        #previewImage{
+        #previewImage,
+        #previewFieldImageDum{
             max-width: 150px;
             max-height: 80px;
             margin-top: 10px;
@@ -170,6 +171,13 @@
             -webkit-box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
             -moz-box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
             box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
+        }
+        /*models css*/
+        .hiddenBtn{
+            display: none;
+        }
+        tr:hover .hiddenBtn{
+            display: inline-block;
         }
     </style>
 </head>
@@ -308,6 +316,7 @@
                             <tbody>
                             <tr>
                                 <td id="">kamal</td>
+                                <td><button type="button" class="btn-close hiddenBtn" aria-label="Close"></button></td>
                             </tr>
                             </tbody>
                         </table>
@@ -322,6 +331,8 @@
                             <tbody>
                             <tr>
                                 <td id="2">Field1</td>
+                                <td><button type="button" class="btn-close hiddenBtn" aria-label="Close"></button></td>
+
                             </tr>
                             </tbody>
                         </table>
@@ -336,6 +347,9 @@
                             <tbody>
                             <tr>
                                 <td id="3">Been</td>
+                                <td>
+                                    <button type="button" class="btn-close hiddenBtn" aria-label="Close"></button>
+                                </td>
                             </tr>
                             </tbody>
                         </table>
@@ -490,7 +504,9 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="dropdownFieldName">Field image</label>
-                                        <div id="fieldImg" class="form-control"></div>
+                                        <div id="fieldImg" class="form-control-file">
+                                            <img id="previewFieldImageDum" src="" alt="Preview" />
+                                        </div>
                                     </div>
                                 </div>
                             </div>
