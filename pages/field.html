@@ -6,6 +6,7 @@
     <title>Green Shadow</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"/>
     <link rel="stylesheet" href="../css/style.css">
     <style>
         #saveField{
@@ -162,7 +163,7 @@
             background: #00bcd9;
             margin-bottom: 20px;
         }
-        .map_container #googleMap {
+        .map_container #map {
             height: 100%;
             min-height: 100%;
             width: 100%;
@@ -250,7 +251,13 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="map_container ">
-                            <div id="googleMap"></div>
+                            <div id="map"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label id="location-label" for="location">Location</label>
+                            <input type="text" name="name" id="location" placeholder="Enter Location" class="form-control" required>
                         </div>
                     </div>
                 </div>
@@ -272,25 +279,40 @@
 </footer>
 
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-<script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY"></script>
+<!--<script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY"></script>-->
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="js/pageMain.js"></script>
 <script>
-    $(document).ready(function () {
-        function initializeMap() {
-            // Define the map options
-            var mapOptions = {
-                center: { lat: 40.73061, lng: -73.935242 }, // Latitude and Longitude
-                zoom: 12, // Zoom level
-            };
+    // map set
 
-            // Create the map and attach it to the "googleMap" div
-            var map = new google.maps.Map($('#googleMap')[0], mapOptions);
+    // let map = L.map('map').setView([7.8731, 80.7718], 7); // Initial location (Sri Lanka)
+    let map = L.map('map').setView([6.9271, 79.8612], 10); // Centered on Colombo with zoom level 10
+
+    // Add OpenStreetMap tiles
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    // Marker for the selected location
+    let marker;
+    // Event listener for map clicks
+    map.on('click', function(e) {
+        const latlng = e.latlng;
+        latitude = latlng.lat.toFixed(6);
+        longitude = latlng.lng.toFixed(6);
+
+        // Update the input field with the selected coordinates
+        $('#location').val(`${latitude}, ${longitude}`);
+
+        // If a marker already exists, remove it
+        if (marker) {
+            map.removeLayer(marker);
         }
-
-        // Call the initializeMap function
-        initializeMap();
+        // Add a marker at the clicked location
+        marker = L.marker([latitude, longitude]).addTo(map);
     });
+
 
 
 </script>
