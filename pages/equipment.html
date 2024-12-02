@@ -22,8 +22,26 @@
             font-size: 45px;
             font-family: 'Roboto', sans-serif;
         }
+        .animatedBg{
+            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+        }
+        @keyframes gradient {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
         .header{
-            margin-bottom: 50px;
+            margin-bottom: 80px;
+            padding: 100px;
+            padding-top: 50px;
         }
         #description{
             font-size: 24px;
@@ -274,14 +292,14 @@
         </ul>
     </div>
 </nav>
-<section id="equipmentTblCard">
-    <header class="header">
+<section id="equipmentTblCard" class="container">
+    <header class="header animatedBg rounded-4 shadow-lg">
         <h1 id="title" class="text-center">Equipment Manage</h1>
         <p id="description" class="text-center">
             Please use this form to fill out your Equipment details.
         </p>
     </header>
-    <div class="container equipmentTbl">
+    <div class=" equipmentTbl">
         <div class="row">
             <div class="col-12">
                 <table id="cropTbl" class="table">
