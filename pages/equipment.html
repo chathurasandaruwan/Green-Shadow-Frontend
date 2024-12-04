@@ -303,7 +303,7 @@
     <div class=" equipmentTbl">
         <div class="row">
             <div class="col-12">
-                <table id="cropTbl" class="table">
+                <table id="equipmentTbl" class="table">
                     <thead>
                     <tr>
                         <th scope="col">Name</th>
@@ -331,7 +331,7 @@
                         <td id=" 4  ">Field2</td>
                         <td id="  6   ">kamal</td>
                         <td><button class=" btn tblBtn btn-danger deleteBtn">Delete <i class="far fa-trash-alt"></i></button>
-                            <button class=" btn  tblBtn btn-warning">Edit <i class="fas fa-pencil-alt"></i></button>
+                            <button class=" btn  tblBtn btn-warning editBtn">Edit <i class="fas fa-pencil-alt"></i></button>
                         </td>
                     </tr>
                     </tbody>
@@ -568,9 +568,16 @@
 
         }
         $('#btnClear').on('click', () => {
+            let btnText = $("#btnClear").text()
+
+            if (btnText === "Cancel") {
+                $('#btnSave').text("Save");
+                $("#btnClear").text("Clear");
+                clearInputs();
+            }
             clearInputs();
         });
-        $("#cropTbl").on('click', '.deleteBtn', function (e) {
+        $("#equipmentTbl").on('click', '.deleteBtn', function (e) {
             e.preventDefault();
             e.stopPropagation();
             iziToast.show({
@@ -621,6 +628,30 @@
                     }]
                 ]
             });
+
+        });
+        $("#equipmentTbl").on('click', '.editBtn', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            console.log("hari")
+            $("#btnSave").text("Update");
+            $("#btnSave").removeClass("btn-primary");
+            $("#btnSave").addClass("btn-warning");
+            $("#btnClear").text("Cancel");
+            let EquipmentNameTxt = $(this).parent().parent().find("#commonNameValue").text();
+            let type = $(this).parent().parent().find("#commonNameValue").text();
+            let staffName = $(this).parent().parent().find("#commonNameValue").text();
+            let fieldName = $(this).parent().parent().find("#commonNameValue").text();
+            let status = $(this).parent().parent().find("#commonNameValue").text();
+
+            $('#nameTxt').val(EquipmentNameTxt);
+            $('input[name="customRadioInline1"]').each(function () {
+                $(this).prop('checked', $(this).val() === status);
+            });
+            $('#dropdownType').val(type);
+            $('#dropdownStaffName').val(staffName);
+            $('#dropdownFieldName').val(fieldName);
+
 
         });
 

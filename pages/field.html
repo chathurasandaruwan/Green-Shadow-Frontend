@@ -394,6 +394,98 @@
         marker = L.marker([latitude, longitude]).addTo(map);
     });
 
+    //operation set
+    $(document).ready(function () {
+        $('#btnSave').on('click', () => {
+            let btnText = $("#btnSave").text()
+
+            if (btnText === "Save") {
+                $.ajax({
+                    method: "POST",
+                    contentType: "form-data",
+                    url: "http://localhost:8080/api/v1/customer",
+                    async: true,
+                    data: JSON.stringify({
+                        "customerName": customerName,
+                    }),
+                    success: function (data) {
+                        console.log(equipmentName, type, type, fieldName, staffName, status);
+                        clearInputs();
+                        iziToast.success({
+                            title: 'Success!',
+                            message: 'Equipment has been Saved successfully..!',
+                            position: 'bottomRight',
+                            timeout: 5000,
+                            progressBar: true,
+                            class: 'custom-iziToast',
+                        });
+                    },
+                    error: function () {
+                        iziToast.error({
+                            title: 'Error!',
+                            message: 'Equipment not saved ..!',
+                            position: 'bottomRight',
+                            timeout: 5000,
+                            progressBar: true,
+                            class: 'custom-iziToast',
+                        });
+                    }
+                })
+
+            } else {
+                //update data
+                iziToast.show({
+                    title: 'Do you want to Update this Equipment ?',
+                    message: 'Click the button below to confirm.',
+                    position: 'topCenter',
+                    class: 'custom-iziToast-btn',
+                    timeout: false, // Stays on screen until user interacts
+                    buttons: [
+                        ['<button>Confirm</button>', function (instance, toast) {
+                            $.ajax({
+                                method: "POST",
+                                contentType: "form-data",
+                                url: "http://localhost:8080/api/v1/customer",
+                                async: true,
+                                data: JSON.stringify({
+                                    "customerName": customerName,
+
+                                }),
+                                success: function (data) {
+                                    console.log(commonName, scientificName, category, fieldName, season, file);
+                                    clearInputs();
+                                    iziToast.success({
+                                        title: 'Success!',
+                                        message: 'Equipment has been Updated successfully..!',
+                                        position: 'bottomRight',
+                                        timeout: 5000,
+                                        progressBar: true,
+                                        class: 'custom-iziToast',
+                                    });
+                                },
+                                error: function () {
+                                    iziToast.error({
+                                        title: 'Error!',
+                                        message: 'Equipment not Updated ..!',
+                                        position: 'bottomRight',
+                                        timeout: 5000,
+                                        progressBar: true,
+                                        class: 'custom-iziToast',
+                                    });
+                                }
+                            })
+                            instance.hide({transitionOut: 'fadeOut'}, toast);
+                        }],
+                        ['<button>Cancel</button>', function (instance, toast) {
+                            instance.hide({transitionOut: 'fadeOut'}, toast);
+                        }]
+                    ]
+                });
+            }
+        });
+
+    });
+
 
 
 </script>
