@@ -6,6 +6,7 @@
     <title>Green Shadow</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/izitoast/dist/css/iziToast.min.css">
     <link rel="stylesheet" href="../css/style.css">
     <style>
 /*        #equipmentTblCard{
@@ -319,7 +320,7 @@
                         <td id="  ">Available</td>
                         <td id="   ">Field1</td>
                         <td id="     ">kamal</td>
-                        <td><button class=" btn tblBtn btn-danger">Delete <i class="far fa-trash-alt"></i></button>
+                        <td><button class=" btn tblBtn btn-danger deleteBtn">Delete <i class="far fa-trash-alt"></i></button>
                             <button class=" btn  tblBtn btn-warning">Edit <i class="fas fa-pencil-alt"></i></button>
                         </td>
                     </tr>
@@ -329,7 +330,7 @@
                         <td id=" 3 ">Available</td>
                         <td id=" 4  ">Field2</td>
                         <td id="  6   ">kamal</td>
-                        <td><button class=" btn tblBtn btn-danger">Delete <i class="far fa-trash-alt"></i></button>
+                        <td><button class=" btn tblBtn btn-danger deleteBtn">Delete <i class="far fa-trash-alt"></i></button>
                             <button class=" btn  tblBtn btn-warning">Edit <i class="fas fa-pencil-alt"></i></button>
                         </td>
                     </tr>
@@ -416,7 +417,7 @@
                     <h4 class="text-center text-black-50"><b>Select Field here..</b></h4>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="dropdownFieldName">Staff Name</label>
+                            <label for="dropdownFieldName">Field Name</label>
                             <select id="dropdownFieldName" name="fieldName" class="form-control" required>
                                 <option value=""  disabled selected hidden>Select Field Name</option>
                                 <option value="Field1">Field1</option>
@@ -458,12 +459,168 @@
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="../js/pageMain.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/izitoast/dist/js/iziToast.min.js"></script>
 <script>
     $(document).ready(function () {
-        $("#btnSave").click(function () {
+        $('#btnSave').on('click', () => {
+            let btnText = $("#btnSave").text()
+            var equipmentName = $('#nameTxt').val();
+            var type = $('#dropdownType').val();
+            var staffName = $('#dropdownStaffName').val();
+            var fieldName = $('#dropdownFieldName').val();
+            var status = $('input[name="customRadioInline1"]:checked').val();
 
+            if (btnText === "Save") {
+                $.ajax({
+                    method:"POST",
+                    contentType:"form-data",
+                    url:"http://localhost:8080/api/v1/customer",
+                    async:true,
+                    data:JSON.stringify({
+                        "customerName": customerName,
+                    }),
+                    success:function (data){
+                        console.log(equipmentName, type, type, fieldName, staffName, status);
+                        clearInputs();
+                        iziToast.success({
+                            title: 'Success!',
+                            message: 'Equipment has been Saved successfully..!',
+                            position: 'bottomRight',
+                            timeout: 5000,
+                            progressBar: true,
+                            class: 'custom-iziToast',
+                        });
+                    },
+                    error:function (){
+                        iziToast.error({
+                            title: 'Error!',
+                            message: 'Equipment not saved ..!',
+                            position: 'bottomRight',
+                            timeout: 5000,
+                            progressBar: true,
+                            class: 'custom-iziToast',
+                        });
+                    }
+                })
+
+            }else {
+                //update data
+                iziToast.show({
+                    title: 'Do you want to Update this Equipment ?',
+                    message: 'Click the button below to confirm.',
+                    position: 'topCenter',
+                    class: 'custom-iziToast-btn',
+                    timeout: false, // Stays on screen until user interacts
+                    buttons: [
+                        ['<button>Confirm</button>', function (instance, toast) {
+                            $.ajax({
+                                method:"POST",
+                                contentType:"form-data",
+                                url:"http://localhost:8080/api/v1/customer",
+                                async:true,
+                                data:JSON.stringify({
+                                    "customerName": customerName,
+
+                                }),
+                                success:function (data){
+                                    console.log(commonName, scientificName, category, fieldName, season, file);
+                                    clearInputs();
+                                    iziToast.success({
+                                        title: 'Success!',
+                                        message: 'Equipment has been Updated successfully..!',
+                                        position: 'bottomRight',
+                                        timeout: 5000,
+                                        progressBar: true,
+                                        class: 'custom-iziToast',
+                                    });
+                                },
+                                error:function (){
+                                    iziToast.error({
+                                        title: 'Error!',
+                                        message: 'Equipment not Updated ..!',
+                                        position: 'bottomRight',
+                                        timeout: 5000,
+                                        progressBar: true,
+                                        class: 'custom-iziToast',
+                                    });
+                                }
+                            })
+                            instance.hide({ transitionOut: 'fadeOut' }, toast);
+                        }],
+                        ['<button>Cancel</button>', function (instance, toast) {
+                            instance.hide({ transitionOut: 'fadeOut' }, toast);
+                        }]
+                    ]
+                });
+            }
         });
-        $("#btnClear").click(function () {
+        function clearInputs() {
+            $('#nameTxt').val("");
+            $('input[name="customRadioInline1"]').prop('checked', false);
+            $('#dropdownType').val("");
+            $('#dropdownStaffName').val("");
+            $('#dropdownFieldName').val("");
+            $('#lastName').val("");
+            $('#contactNo').val("");
+            $('#designation').val("");
+            $('#extentSize').val("");
+            $('#fieldImg').attr("src", "");
+
+        }
+        $('#btnClear').on('click', () => {
+            clearInputs();
+        });
+        $("#cropTbl").on('click', '.deleteBtn', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            iziToast.show({
+                title: 'Do you want to delete this Equipment?',
+                message: 'Click the button below to confirm.',
+                position: 'topCenter',
+                class: 'custom-iziToast-btn',
+                timeout: false, // Stays on screen until user interacts
+                buttons: [
+                    ['<button>Confirm</button>', function (instance, toast) {
+
+                        $.ajax({
+                            method:"POST",
+                            contentType:"form-data",
+                            url:"http://localhost:8080/api/v1/customer",
+                            async:true,
+                            data:JSON.stringify({
+                                "customerName": customerName,
+                            }),
+                            success:function (data){
+                                console.log("delete btn on action")
+                                console.log("commonName: ", $(this).parent().parent().find("#commonNameValue").text());
+                                iziToast.success({
+                                    title: 'Success!',
+                                    message: 'Equipment has been Deleted successfully..!',
+                                    position: 'bottomRight',
+                                    timeout: 5000,
+                                    progressBar: true,
+                                    class: 'custom-iziToast',
+                                });
+                            },
+                            error:function (){
+                                iziToast.error({
+                                    title: 'Error!',
+                                    message: 'Equipment not Deleted ..!',
+                                    position: 'bottomRight',
+                                    timeout: 5000,
+                                    progressBar: true,
+                                    class: 'custom-iziToast',
+                                });
+                            }
+                        })
+
+                        instance.hide({ transitionOut: 'fadeOut' }, toast);
+                    }],
+                    ['<button>Cancel</button>', function (instance, toast) {
+                        instance.hide({ transitionOut: 'fadeOut' }, toast);
+                    }]
+                ]
+            });
 
         });
 
