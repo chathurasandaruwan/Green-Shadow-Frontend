@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="../css/style.css">
     <style>
-        #saveLog{
+/*        #saveLog{
             height: auto;
             margin-top: 40px;
             margin-bottom: 100px;
@@ -122,10 +122,10 @@
             -o-transition: all 0.3s ease-in-out;
             transition: all 0.3s ease-in-out;
         }
-        /*#cropImgSelector{
+        !*#logImgSelector{
             margin-top: 10px;
             margin-bottom: 20px;
-        }*/
+        }*!
         #previewImage,
         #previewFieldImageDum{
             max-width: 150px;
@@ -190,14 +190,14 @@
             -moz-box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
             box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
         }
-        /*models css*/
+        !*models css*!
         .hiddenBtn{
             display: none;
         }
         tr:hover .hiddenBtn{
             display: inline-block;
         }
-        /*main table css*/
+        !* log main table css*!
         td > img{
             width: 60px;
         }
@@ -206,6 +206,9 @@
             padding: 0;
             margin: 0;
         }
+        .table-custom{
+            width: 100%;
+        }*/
     </style>
 </head>
 <body>
@@ -274,8 +277,8 @@
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <div class="form-group form-control-file">
-                            <label for="logImgSelector">Crop Image</label>
+                        <div class="form-group form-control-file custFile">
+                            <label for="logImgSelector">Log Image</label>
                             <img id="previewImage" src="" alt="Preview" />
                             <input type="file" name="logImg" id="logImgSelector" class="form-control" required>
                         </div>
@@ -303,7 +306,7 @@
                 </div>
                 <div class="row mb-4">
                     <div class="col-md-4 ">
-                        <table id="staffListTbl" class="table text-center">
+                        <table id="staffListTbl" class=" text-center">
                             <thead>
                             <tr>
                                 <th scope="col">Staffs</th>
@@ -318,7 +321,7 @@
                         </table>
                     </div>
                     <div class="col-md-4 ">
-                        <table id="fieldListTbl" class="table text-center">
+                        <table id="fieldListTbl" class=" text-center " >
                             <thead>
                             <tr>
                                 <th scope="col">Fields</th>
@@ -334,7 +337,7 @@
                         </table>
                     </div>
                     <div class="col-md-4 ">
-                        <table id="cropListTbl" class="table text-center">
+                        <table id="cropListTbl" class=" text-center">
                             <thead>
                             <tr>
                                 <th scope="col">Crops</th>
@@ -367,7 +370,7 @@
 
 <section id="logTblCard" class="py-4 bg-light">
     <div class="container">
-        <div class="card shadow-sm">
+        <div class="custCard shadow-sm">
             <div class="card-body">
                 <div class="table-responsive">
                     <table class="table table-hover table-nowrap align-middle">
