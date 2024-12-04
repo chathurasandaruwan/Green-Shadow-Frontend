@@ -164,6 +164,52 @@ i {
         left: -25px;
     }
 }
+/*---------------------------Dashboard css---------------------------------------*/
+/*main css*/
+#main {
+    margin-top: 60px;
+    padding: 30px 10px;
+    transition: all 0.3s;
+    background: #f1f1f1 !important;
+    color: #444444 !important;
+}
+
+@media (max-width: 1199px) {
+    #main {
+        padding: 20px;
+    }
+}
+/*Dashboard css*/
+.dash-overview .card {
+    padding: 15px;
+    border: none;
+    border-bottom: 3px solid #00bcd9;
+}
+
+.dash-overview .card h1 {
+    margin-bottom: 4px;
+    font-size: 34px;
+}
+
+.dash-overview .card p {
+    margin: 0px;
+    font-size: 15px;
+    color: gray;
+}
+/*bar chart css*/
+.bar { opacity: 0.5; }
+
+.label, .amount{
+    text-anchor: middle;
+    text-transform: uppercase;
+    font-family:  Impact, Charcoal, sans-serif;
+    font-size: 4em;
+}
+#chart {
+    background: #f1f1f1;
+}
+
+/*---------------------------footer css---------------------------------------*/
 footer {
     text-align: center;
     font-size: 12px;
