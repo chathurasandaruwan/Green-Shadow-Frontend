@@ -305,7 +305,7 @@
         <div class="custCard shadow-sm">
             <div class="card-body">
                 <div class="table-responsive">
-                    <table class="table table-hover table-nowrap align-middle">
+                    <table id="fieldTable" class="table table-hover table-nowrap align-middle">
                         <thead class="table-light">
                         <tr>
                             <th scope="col">Name</th>
@@ -394,10 +394,28 @@
         marker = L.marker([latitude, longitude]).addTo(map);
     });
 
+    // image upload
+
+
     //operation set
     $(document).ready(function () {
         $('#btnSave').on('click', () => {
             let btnText = $("#btnSave").text()
+            var fieldNameTxt = $('#fieldNameTxt').val();
+            var extentSizeTxt = $('#extentSizeTxt').val();
+            // image 1
+            const fileInput1 = $('#fieldImgSelector1')[0];
+            const image1 = fileInput1.files[0];
+            // image 1
+            const fileInput2 = $('#fieldImgSelector2')[0];
+            const image2 = fileInput2.files[0];
+
+            const locationValue = $('#location').val();
+            console.log(locationValue);
+            const [latitude, longitude] = locationValue.split(',').map(Number);
+            console.log(latitude); // x
+            console.log(longitude); // y
+
 
             if (btnText === "Save") {
                 $.ajax({
@@ -413,7 +431,7 @@
                         clearInputs();
                         iziToast.success({
                             title: 'Success!',
-                            message: 'Equipment has been Saved successfully..!',
+                            message: 'Field has been Saved successfully..!',
                             position: 'bottomRight',
                             timeout: 5000,
                             progressBar: true,
@@ -423,7 +441,7 @@
                     error: function () {
                         iziToast.error({
                             title: 'Error!',
-                            message: 'Equipment not saved ..!',
+                            message: 'Field not saved ..!',
                             position: 'bottomRight',
                             timeout: 5000,
                             progressBar: true,
@@ -435,7 +453,7 @@
             } else {
                 //update data
                 iziToast.show({
-                    title: 'Do you want to Update this Equipment ?',
+                    title: 'Do you want to Update this Field ?',
                     message: 'Click the button below to confirm.',
                     position: 'topCenter',
                     class: 'custom-iziToast-btn',
@@ -482,6 +500,64 @@
                     ]
                 });
             }
+        });
+        $("#fieldTable").on('click','tr',function (){
+            $("#btnSave").text("Update");
+            $("#btnSave").removeClass("btn-primary");
+            $("#btnSave").addClass("btn-outline-warning");
+
+
+            let commonName = $(this).find("#commonNameValue").text();
+            let scientificName = $(this).find("#scientificNameValue").text();
+            let category = $(this).find("#categoryValue").text();
+            let fieldName = $(this).find("#fieldNameValue").text();
+            let season = $(this).find("#seasonValue").text();
+            let img1 = $(this).find("#cropImgValue img").attr("src");
+            let img2 = $(this).find("#cropImgValue img").attr("src");
+
+            //passed data
+        });
+
+        $("#fieldImgSelector1").on("change", function (event) {
+            event.preventDefault();
+            const file = $("#fieldImgSelector1")[0].files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    $("#previewImage1").attr("src", e.target.result);
+                };
+                reader.readAsDataURL(file);
+            }
+        })
+        $("#fieldImgSelector2").on("change", function (event) {
+            event.preventDefault();
+            const file = $("#fieldImgSelector2")[0].files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    $("#previewImage2").attr("src", e.target.result);
+                };
+                reader.readAsDataURL(file);
+            }
+        })
+        function clearInputs() {
+            $("#btnSave").text("Save");
+            $("#btnSave").removeClass("btn-outline-warning");
+            $("#btnSave").addClass("btn-primary");
+            $('#fieldNameTxt').val("");
+            $('#extentSizeTxt').val("");
+            $('#location').val("");
+            $('#fieldImgSelector1').val('');
+            $('#fieldImgSelector2').val('');
+
+            $('#previewImage1').attr("src", "");
+            $('#previewImage2').attr("src", "");
+
+
+        }
+        $('#btnClear').on('click', () => {
+            clearInputs();
+
         });
 
     });
