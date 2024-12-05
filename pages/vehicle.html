@@ -333,11 +333,6 @@
                         <div class="form-group">
                             <label for="dropdownStaffName">Staff Name</label>
                             <select id="dropdownStaffName" name="staffName" class="form-control" required>
-                                <option value=""  disabled selected hidden>Select Staff Name</option>
-                                <option value="kamal">kamal</option>
-                                <option value="ranil">ranil</option>
-                                <option value="nimal">nimal</option>
-                                <option value="sahan">sahan</option>
                             </select>
                         </div>
                     </div>
@@ -387,8 +382,8 @@
                         <th scope="col">Staff name</th>
                     </tr>
                     </thead>
-                    <tbody>
-                    <tr>
+                    <tbody id="vehicleTable-body">
+                   <!-- <tr>
                         <td id="">LD-1462</td>
                         <td id=" ">No need</td>
                         <td id="  ">Lorry</td>
@@ -409,7 +404,7 @@
                         <td><button class=" btn tblBtn btn-danger deleteBtnTbl">Delete <i class="far fa-trash-alt"></i></button>
                             <button class=" btn  tblBtn btn-warning editBtn">Edit <i class="fas fa-pencil-alt"></i></button>
                         </td>
-                    </tr>
+                    </tr>-->
                     </tbody>
                 </table>
             </div>
@@ -427,6 +422,8 @@
 <script src="https://cdn.jsdelivr.net/npm/izitoast/dist/js/iziToast.min.js"></script>
 <script>
     $(document).ready(function () {
+        refreshStaff();
+        loadTable();
         $('#btnSave').on('click', () => {
             let btnText = $("#btnSave").text()
             var licensePlateNumber = $('#licensePlateNumTxt').val();
@@ -434,20 +431,24 @@
             var category = $('#dropdownCategory').val();
             var fuelType = $('#fuelTypedName').val();
             var status = $('input[name="customRadioInline1"]:checked').val();
-            var staffName = $('#dropdownStaffName').val();
+            var staffId = $('#dropdownStaffName').val();
             if (btnText === "Save") {
                 $.ajax({
                     method:"POST",
-                    contentType:"form-data",
-                    url:"http://localhost:8080/api/v1/customer",
+                    contentType:"application/json",
+                    url:"http://localhost:5050/CropMonitoringSystem/api/v1/vehicle",
                     async:true,
                     data:JSON.stringify({
-                        "customerName": customerName,
+                        "licensePlateNum": licensePlateNumber,
+                        "category": category,
+                        "fuel_type": fuelType,
+                        "status": status,
+                        "remarks": remarks,
+                        "staffId": staffId,
                     }),
                     success:function (data){
-                        console.log("Save btn on action")
-                        console.log(licensePlateNumber, remarks, category, fuelType, status, staffName);
                         clearInputs();
+                        loadTable();
                         iziToast.success({
                             title: 'Success!',
                             message: 'Vehicle has been Saved successfully..!',
@@ -614,6 +615,70 @@
                 $(this).prop('checked', $(this).val() === status);
             });
         })
+        function refreshStaff() {
+            $('#dropdownStaffName').empty();
+            let staffArray = [];
+            $.ajax({
+                method:"GET",
+                contentType:"application/json",
+                url:"http://localhost:5050/CropMonitoringSystem/api/v1/staff/getAllStaff",
+                async:true,
+                success:function (data){
+                    staffArray=data;
+                    $('#dropdownStaffName').append($('<option>', {
+                        value: '',
+                        disabled: true,
+                        selected: true,
+                        hidden: true,
+                        text: 'Select Staff Name'
+                    }));
+                    for (let i = 0; i < staffArray.length; i++) {
+                        $('#dropdownStaffName').append($('<option>', {
+                            value: staffArray[i].staffId,
+                            text: staffArray[i].staffName
+                        }));
+                    }
+
+                },
+                error:function (){
+                    alert("Error")
+                }
+            });
+        }
+        function loadTable() {
+            $('#vehicleTable-body').empty();
+
+            $.ajax({
+                method:"GET",
+                contentType:"application/json",
+                url:"http://localhost:5050/CropMonitoringSystem/api/v1/vehicle/getAllVehicle",
+                async:true,
+                success:function (data){
+
+                    // sort to setOrderBy tempId
+                    data.map((item,index) =>{
+                        var record=`<tr>
+
+            <td id="licensePlateNumberValue">${item.licensePlateNum}</td>
+            <td id="remarksValue">${item.remarks}</td>
+            <td id="categoryValue">${item.category}</td>
+            <td id="fuelTypeValue">${item.fuel_type}</td>
+            <td id="statusValue">${item.status}</td>
+            <td id="staffIdValue">${item.staffId}</td>
+            <td>
+            <button class=" btn tblBtn btn-danger deleteBtnTbl">Delete <i class="far fa-trash-alt"></i></button>
+                            <button class=" btn  tblBtn btn-warning editBtn">Edit <i class="fas fa-pencil-alt"></i></button>
+            </td>
+        </tr>`
+                        $('#vehicleTable-body').append(record);
+                    });
+                },
+                error:function (){
+                    alert("Error from load table customer")
+                }
+            });
+        }
+
     })
 </script>
 </body>
