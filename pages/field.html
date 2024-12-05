@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/izitoast/dist/css/iziToast.min.css">
     <link rel="stylesheet" href="../css/style.css">
     <style>
 /*        #saveField{
@@ -292,6 +293,7 @@
                 <div class="row">
                     <div class="col-md-4">
                         <button type="button" id="btnSave" class="btn btn-primary btn-block">Save</button>
+                        <button type="button" id="fieldDeleteBtn" class="btn btn-danger btn-block">Delete</button>
                         <button type="button" id="btnClear" class="btn btn-secondary btn-block">Clear</button>
                     </div>
                 </div>
@@ -315,8 +317,8 @@
                             <th scope="col">Location</th>
                         </tr>
                         </thead>
-                        <tbody>
-                        <tr>
+                        <tbody id="fieldTableBody">
+                        <!--<tr>
                             <td>Field1</td>
                             <td>4000</td>
                             <td>
@@ -347,7 +349,7 @@
                                     <li>12.2112</li>
                                 </ul>
                             </td>
-                        </tr>
+                        </tr>-->
                         </tbody>
                     </table>
                 </div>
@@ -365,6 +367,7 @@
 <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="../js/pageMain.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/izitoast/dist/js/iziToast.min.js"></script>
 <script>
     // map set
 
@@ -399,6 +402,7 @@
 
     //operation set
     $(document).ready(function () {
+        loadTable();
         $('#btnSave').on('click', () => {
             let btnText = $("#btnSave").text()
             var fieldNameTxt = $('#fieldNameTxt').val();
@@ -411,23 +415,26 @@
             const image2 = fileInput2.files[0];
 
             const locationValue = $('#location').val();
-            console.log(locationValue);
             const [latitude, longitude] = locationValue.split(',').map(Number);
             console.log(latitude); // x
             console.log(longitude); // y
 
-
+            let formData = new FormData();
             if (btnText === "Save") {
+                formData.append("field_name", fieldNameTxt);
+                formData.append("extent_size", extentSizeTxt);
+                formData.append("image1", image1);
+                formData.append("image2", image2);
+                formData.append("location.x", latitude);
+                formData.append("location.y", longitude);
                 $.ajax({
-                    method: "POST",
-                    contentType: "form-data",
-                    url: "http://localhost:8080/api/v1/customer",
-                    async: true,
-                    data: JSON.stringify({
-                        "customerName": customerName,
-                    }),
+                    method:"POST",
+                    contentType: false,
+                    processData: false,
+                    url: "http://localhost:5050/CropMonitoringSystem/api/v1/field",
+                    async:true,
+                    data:formData,
                     success: function (data) {
-                        console.log(equipmentName, type, type, fieldName, staffName, status);
                         clearInputs();
                         iziToast.success({
                             title: 'Success!',
@@ -451,6 +458,12 @@
                 })
 
             } else {
+                formData.append("field_name", fieldNameTxt);
+                formData.append("extent_size", extentSizeTxt);
+                formData.append("image1", image1);
+                formData.append("image2", image2);
+                formData.append("location.x", latitude);
+                formData.append("location.y", longitude);
                 //update data
                 iziToast.show({
                     title: 'Do you want to Update this Field ?',
@@ -460,18 +473,18 @@
                     timeout: false, // Stays on screen until user interacts
                     buttons: [
                         ['<button>Confirm</button>', function (instance, toast) {
+                            getFieldIdByName(fieldNameTxt, function (fieldCode) {
+                                if (fieldCode) {
                             $.ajax({
-                                method: "POST",
-                                contentType: "form-data",
-                                url: "http://localhost:8080/api/v1/customer",
-                                async: true,
-                                data: JSON.stringify({
-                                    "customerName": customerName,
-
-                                }),
+                                method:"PUT",
+                                contentType: false,
+                                processData: false,
+                                url: "http://localhost:5050/CropMonitoringSystem/api/v1/field/"+fieldCode,
+                                async:true,
+                                data:formData,
                                 success: function (data) {
-                                    console.log(commonName, scientificName, category, fieldName, season, file);
                                     clearInputs();
+                                    loadTable();
                                     iziToast.success({
                                         title: 'Success!',
                                         message: 'Equipment has been Updated successfully..!',
@@ -492,6 +505,9 @@
                                     });
                                 }
                             })
+                                } else {
+                                    alert("Error: Field not found");
+                                }});
                             instance.hide({transitionOut: 'fadeOut'}, toast);
                         }],
                         ['<button>Cancel</button>', function (instance, toast) {
@@ -505,15 +521,23 @@
             $("#btnSave").text("Update");
             $("#btnSave").removeClass("btn-primary");
             $("#btnSave").addClass("btn-outline-warning");
+            $("#fieldDeleteBtn").css("display", "inline");
 
 
-            let commonName = $(this).find("#commonNameValue").text();
-            let scientificName = $(this).find("#scientificNameValue").text();
-            let category = $(this).find("#categoryValue").text();
-            let fieldName = $(this).find("#fieldNameValue").text();
-            let season = $(this).find("#seasonValue").text();
-            let img1 = $(this).find("#cropImgValue img").attr("src");
-            let img2 = $(this).find("#cropImgValue img").attr("src");
+            let fieldNameValue = $(this).find("#fieldNameValue").text();
+            let extentSizeValue = $(this).find("#extentSizeValue").text();
+            let locationValue = $(this).find("#locationValue ul ").text();
+            let img1 = $(this).find("#ImgValue1 img").attr("src");
+            let img2 = $(this).find("#ImgValue2 img").attr("src");
+
+            // let map = L.map('map1').setView([locationValue.x, locationValue.y], 7);
+
+            $('#fieldNameTxt').val(fieldNameValue);
+            $('#extentSizeTxt').val(extentSizeValue);
+            $('#location').val(locationValue);
+            $('#previewImage1').attr("src", img1);
+            $('#previewImage2').attr("src", img2);
+
 
             //passed data
         });
@@ -541,6 +565,7 @@
             }
         })
         function clearInputs() {
+            $("#fieldDeleteBtn").css("display", "none");
             $("#btnSave").text("Save");
             $("#btnSave").removeClass("btn-outline-warning");
             $("#btnSave").addClass("btn-primary");
@@ -551,13 +576,134 @@
             $('#fieldImgSelector2').val('');
             $('#previewImage1').attr("src", "");
             $('#previewImage2').attr("src", "");
+            map.removeLayer(marker);
 
 
         }
         $('#btnClear').on('click', () => {
             clearInputs();
-
         });
+        $('#fieldDeleteBtn').on('click', () => {
+            var fieldNameTxt = $('#fieldNameTxt').val();
+
+            iziToast.show({
+                title: 'Do you want to delete this Field?',
+                message: 'Click the button below to confirm.',
+                position: 'topCenter',
+                class: 'custom-iziToast-btn',
+                timeout: false, // Stays on screen until user interacts
+                buttons: [
+                    ['<button>Confirm</button>', function (instance, toast) {
+                        getFieldIdByName(fieldNameTxt, function (fieldCode) {
+                            if (fieldCode) {
+                                $.ajax({
+                                    method:"DELETE",
+                                    contentType:"text",
+                                    url:"http://localhost:5050/CropMonitoringSystem/api/v1/field/"+fieldCode,
+                                    async:true,
+                                    success:function (data){
+                                        loadTable();
+                                        clearInputs();
+                                        iziToast.success({
+                                            title: 'Success!',
+                                            message: 'Crop has been Deleted successfully..!',
+                                            position: 'bottomRight',
+                                            timeout: 5000,
+                                            progressBar: true,
+                                            class: 'custom-iziToast',
+                                        });
+                                    },
+                                    error:function (){
+                                        iziToast.error({
+                                            title: 'Error!',
+                                            message: 'Crop not Deleted ..!',
+                                            position: 'bottomRight',
+                                            timeout: 5000,
+                                            progressBar: true,
+                                            class: 'custom-iziToast',
+                                        });
+                                    }
+                                })
+                            } else {
+                                iziToast.error({
+                                    title: 'Error!',
+                                    message: 'Crop not found ..!',
+                                    position: 'bottomRight',
+                                    timeout: 5000,
+                                    progressBar: true,
+                                    class: 'custom-iziToast',
+                                });
+                            }
+                        });
+                        instance.hide({ transitionOut: 'fadeOut' }, toast);
+                    }],
+                    ['<button>Cancel</button>', function (instance, toast) {
+                        instance.hide({ transitionOut: 'fadeOut' }, toast);
+                    }]
+                ]
+            });
+        });
+        function getFieldIdByName(fieldName, callback) {
+            let fieldCode = null;
+            $.ajax({
+                method: "GET",
+                contentType: "application/json",
+                url: "http://localhost:5050/CropMonitoringSystem/api/v1/field/" + fieldName,
+                async: true,
+                success: function (data) {
+
+                    if (Array.isArray(data)) {
+                        data.forEach((item) => {
+                            fieldCode = item.field_code;
+                        });
+                    } else {
+                        // Handle the case where the data is not an array
+                        fieldCode = data.field_code; // Adjust this based on the actual structure
+                    }
+                    callback(fieldCode);
+                },
+                error: function () {
+                    alert("Error: Field not found");
+                }
+            });
+
+        }
+        // loadTable
+        function loadTable() {
+            $('#fieldTableBody').empty();
+
+            $.ajax({
+                method:"GET",
+                contentType:"application/json",
+                url:"http://localhost:5050/CropMonitoringSystem/api/v1/field/getAllFields",
+                async:true,
+                success:function (data){
+
+                    // sort to setOrderBy tempId
+                    data.map((item,index) =>{
+                        const imageSrc1 = `data:image/png;base64,${item.image1}`;
+                        const imageSrc2 = `data:image/png;base64,${item.image2}`;
+                        var record=`<tr>
+                    <td id="fieldNameValue">${item.fieldName}</td>
+                    <td id="extentSizeValue">${item.extent_size}</td>
+                    <td id="ImgValue1"><img src="${imageSrc1}" class="img-fluid img-thumbnail" alt="Sheep"></td>
+                    <td id="ImgValue2"><img src="${imageSrc2}" class="img-fluid img-thumbnail" alt="Sheep"></td>
+                    <td id="locationValue">
+                        <ul>
+                            <li>${item.location.x}</li>
+                            <li>${item.location.y}</li>
+
+                        </ul>
+                     </td>
+                </tr>`
+                        $('#fieldTableBody').append(record);
+                    });
+                },
+                error:function (){
+                    alert("Error from load table customer")
+                }
+            });
+        }
 
     });
 

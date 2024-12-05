@@ -390,6 +390,14 @@ h1{
     -moz-box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
     box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
 }
+.btn-danger:hover {
+    color: #dc3545;
+    background-color: #ffffff;
+    border-color: #dc3545;
+    -webkit-box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
+    -moz-box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
+}
 
 /*.btn-primary:focus {
     color: #00bcd9;
@@ -490,6 +498,9 @@ tr:hover .deleteBtn{
     height: 100%;
     min-height: 100%;
     width: 100%;
+}
+#fieldDeleteBtn{
+    display: none;
 }
 /*main table css*/
 td > img{
