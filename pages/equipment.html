@@ -487,6 +487,7 @@
                         "staffId": staffId
                     }),
                     success:function (data){
+                        loadTable();
                         clearInputs();
                         iziToast.success({
                             title: 'Success!',
@@ -720,8 +721,8 @@
                     }));
                     for (let i = 0; i < staffArray.length; i++) {
                         $('#dropdownStaffName').append($('<option>', {
-                            value: staffArray[i].staffId,
-                            text: staffArray[i].staffName
+                            value: staffArray[i].id,
+                            text: staffArray[i].firstName
                         }));
                     }
 
