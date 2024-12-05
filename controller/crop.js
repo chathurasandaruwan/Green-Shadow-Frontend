@@ -1,4 +1,6 @@
 $(document).ready(function () {
+    loadTable();
+    refreshFields();
     $("#cropImgSelector").on("change", function (event) {
         event.preventDefault();
         const file = $("#cropImgSelector")[0].files[0];
@@ -37,6 +39,7 @@ $(document).ready(function () {
         var category = $('#dropdownCategory').val();
         var fieldName = $('#dropdownFieldName').val();
         var season = $('input[name="customRadioInline1"]:checked').val();
+        var img = $('#imageInput').val();
 
         const fileInput = $('#cropImgSelector')[0]; // Access the DOM element
         const file = fileInput.files[0];
@@ -57,18 +60,25 @@ $(document).ready(function () {
             console.log("No file selected");
         }*/
         //save data
+        let formData = new FormData();
         if (btnText === "Save") {
+            formData.append("common_name", commonName);
+            formData.append("scientific_name", scientificName);
+            formData.append("image", file); // `file` is a File object (e.g., from an `<input type="file">`)
+            formData.append("category", category);
+            formData.append("season", season);
+            formData.append("field_code", "FIELD-7a77bbca-47f0-4918-84ac-043a7541f94e");
             $.ajax({
                 method:"POST",
-                contentType:"form-data",
-                url:"http://localhost:8080/api/v1/customer",
+                contentType: false,
+                processData: false,
+                url:"http://localhost:5050/CropMonitoringSystem/api/v1/crop",
                 async:true,
-                data:JSON.stringify({
-                    "customerName": customerName,
-                }),
+                data:formData,
                 success:function (data){
                     console.log(commonName, scientificName, category, fieldName, season, file);
                     clearInputs();
+                    loadTable();
                     iziToast.success({
                         title: 'Success!',
                         message: 'Crop has been Saved successfully..!',
@@ -100,42 +110,60 @@ $(document).ready(function () {
                 timeout: false, // Stays on screen until user interacts
                 buttons: [
                     ['<button>Confirm</button>', function (instance, toast) {
-
-                        if (!file){
-                            console.log("No file selected");
-                        }
-                        $.ajax({
-                            method:"POST",
-                            contentType:"form-data",
-                            url:"http://localhost:8080/api/v1/customer",
-                            async:true,
-                            data:JSON.stringify({
-                                "customerName": customerName,
-
-                            }),
-                            success:function (data){
-                                console.log(commonName, scientificName, category, fieldName, season, file);
-                                clearInputs();
-                                iziToast.success({
-                                    title: 'Success!',
-                                    message: 'Crop has been Updated successfully..!',
-                                    position: 'bottomRight',
-                                    timeout: 5000,
-                                    progressBar: true,
-                                    class: 'custom-iziToast',
-                                });
-                            },
-                            error:function (){
+                        getCropIdByName(commonName, function (cropCode) {
+                            if (cropCode) {
+                                formData.append("common_name", commonName);
+                                formData.append("scientific_name", scientificName);
+                                formData.append("category", category);
+                                formData.append("season", season);
+                                formData.append("field_code", "FIELD-7a77bbca-47f0-4918-84ac-043a7541f94e");
+                                if (!file){
+                                    console.log("No file selected");
+                                    console.log(img)
+                                    formData.append('image', convertBase64StringToFile(img));
+                                }else {
+                                    formData.append("image", file);
+                                }
+                                $.ajax({
+                                    type: 'PUT',
+                                    data: formData,
+                                    contentType: false,
+                                    processData: false,
+                                    url:"http://localhost:5050/CropMonitoringSystem/api/v1/crop/"+cropCode,
+                                    success:function (data){
+                                        clearInputs();
+                                        iziToast.success({
+                                            title: 'Success!',
+                                            message: 'Crop has been Updated successfully..!',
+                                            position: 'bottomRight',
+                                            timeout: 5000,
+                                            progressBar: true,
+                                            class: 'custom-iziToast',
+                                        });
+                                    },
+                                    error:function (){
+                                        iziToast.error({
+                                            title: 'Error!',
+                                            message: 'Crop not Updated ..!',
+                                            position: 'bottomRight',
+                                            timeout: 5000,
+                                            progressBar: true,
+                                            class: 'custom-iziToast',
+                                        });
+                                    }
+                                })
+                            } else {
                                 iziToast.error({
                                     title: 'Error!',
-                                    message: 'Crop not Updated ..!',
+                                    message: 'Crop not found ..!',
                                     position: 'bottomRight',
                                     timeout: 5000,
                                     progressBar: true,
                                     class: 'custom-iziToast',
                                 });
                             }
-                        })
+                        });
+
                         instance.hide({ transitionOut: 'fadeOut' }, toast);
                     }],
                     ['<button>Cancel</button>', function (instance, toast) {
@@ -145,6 +173,38 @@ $(document).ready(function () {
             });
         }
     });
+    function convertBase64StringToFile(base64String) {
+        try {
+            const base64Data = base64String.includes(",") ? base64String.split(",")[1] : base64String;
+            const byteCharacters = atob(base64Data);
+
+            //Convert decoded data into an array of bytes
+            const byteArrays = [];
+            for (let offset = 0; offset < byteCharacters.length; offset += 1024) {
+                const slice = byteCharacters.slice(offset, offset + 1024);
+                const byteNumbers = new Array(slice.length);
+
+                for (let i = 0; i < slice.length; i++) {
+                    byteNumbers[i] = slice.charCodeAt(i);
+                }
+
+                const byteArray = new Uint8Array(byteNumbers);
+                byteArrays.push(byteArray);
+            }
+
+            // Create a Blob from the byte arrays
+            const blob = new Blob(byteArrays, { type: 'image/jpeg' });
+
+            // Convert the Blob into a File
+            const file = new File([blob], "imageOne.jpg", { type: 'image/jpeg' });
+
+            return file;
+        } catch (error) {
+            console.error("Error converting Base64 string to File:", error);
+            throw error;
+        }
+    }
+
     $("#cropTbl").on('click','tr',function (){
         let commonName = $(this).find("#commonNameValue").text();
         let scientificName = $(this).find("#scientificNameValue").text();
@@ -165,6 +225,8 @@ $(document).ready(function () {
         });
         // Set the image source
         $('#previewImage').attr("src", img);
+        $('#imageInput').val(img);
+
 
         $("#btnSave").text("Update");
         $("#btnSave").removeClass("btn-primary");
@@ -175,6 +237,7 @@ $(document).ready(function () {
     $("#cropTbl").on('click', '.deleteBtn', function (e) {
         e.preventDefault();
         e.stopPropagation();
+        let cropName = $(this).parent().parent().find("#commonNameValue").text();
         iziToast.show({
             title: 'Do you want to delete this crop?',
             message: 'Click the button below to confirm.',
@@ -183,39 +246,47 @@ $(document).ready(function () {
             timeout: false, // Stays on screen until user interacts
             buttons: [
                 ['<button>Confirm</button>', function (instance, toast) {
-
-                    $.ajax({
-                        method:"POST",
-                        contentType:"form-data",
-                        url:"http://localhost:8080/api/v1/customer",
-                        async:true,
-                        data:JSON.stringify({
-                            "customerName": customerName,
-                        }),
-                        success:function (data){
-                            console.log("delete btn on action")
-                            console.log("commonName: ", $(this).parent().parent().find("#commonNameValue").text());
-                            iziToast.success({
-                                title: 'Success!',
-                                message: 'Crop has been Deleted successfully..!',
-                                position: 'bottomRight',
-                                timeout: 5000,
-                                progressBar: true,
-                                class: 'custom-iziToast',
-                            });
-                        },
-                        error:function (){
+                    getCropIdByName(cropName, function (cropCode) {
+                        if (cropCode) {
+                            $.ajax({
+                                method:"DELETE",
+                                contentType:"text",
+                                url:"http://localhost:5050/CropMonitoringSystem/api/v1/crop/"+cropCode,
+                                async:true,
+                                success:function (data){
+                                    console.log("delete btn on action")
+                                    console.log("commonName: ", $(this).parent().parent().find("#commonNameValue").text());
+                                    iziToast.success({
+                                        title: 'Success!',
+                                        message: 'Crop has been Deleted successfully..!',
+                                        position: 'bottomRight',
+                                        timeout: 5000,
+                                        progressBar: true,
+                                        class: 'custom-iziToast',
+                                    });
+                                },
+                                error:function (){
+                                    iziToast.error({
+                                        title: 'Error!',
+                                        message: 'Crop not Deleted ..!',
+                                        position: 'bottomRight',
+                                        timeout: 5000,
+                                        progressBar: true,
+                                        class: 'custom-iziToast',
+                                    });
+                                }
+                            })
+                        } else {
                             iziToast.error({
                                 title: 'Error!',
-                                message: 'Crop not Deleted ..!',
+                                message: 'Crop not found ..!',
                                 position: 'bottomRight',
                                 timeout: 5000,
                                 progressBar: true,
                                 class: 'custom-iziToast',
                             });
                         }
-                    })
-
+                    });
                     instance.hide({ transitionOut: 'fadeOut' }, toast);
                 }],
                 ['<button>Cancel</button>', function (instance, toast) {
@@ -225,4 +296,98 @@ $(document).ready(function () {
         });
 
     })
+    function getCropIdByName(cropName, callback) {
+        let cropCode = null;
+        $.ajax({
+            method: "GET",
+            contentType: "application/json",
+            url: "http://localhost:5050/CropMonitoringSystem/api/v1/crop/" + cropName,
+            async: true,
+            success: function (data) {
+                console.log(data);  // Log the data to see its structure
+                // let cropCode = null;
+
+                if (Array.isArray(data)) {
+                    data.forEach((item) => {
+                        cropCode = item.crop_code;
+                    });
+                } else {
+                    // Handle the case where the data is not an array
+                    cropCode = data.crop_code; // Adjust this based on the actual structure
+                }
+
+                console.log("Crop code:", cropCode);
+                callback(cropCode);
+            },
+            error: function () {
+                alert("Error: Crop not found");
+            }
+        });
+
+    }
+
+
+    // loadTable
+    function loadTable() {
+        $('#cropTable-body').empty();
+
+        $.ajax({
+            method:"GET",
+            contentType:"application/json",
+            url:"http://localhost:5050/CropMonitoringSystem/api/v1/crop/getAllCrops",
+            async:true,
+            success:function (data){
+
+                // sort to setOrderBy tempId
+                data.map((item,index) =>{
+                    const imageSrc = `data:image/png;base64,${item.image}`;
+                    var record=`<tr>
+
+            <td id="cropImgValue"><img src="${imageSrc}" class="img-fluid img-thumbnail" alt="Sheep"></td>
+            <td id="commonNameValue">${item.commonName}</td>
+            <td id="scientificNameValue">${item.scientific_name}</td>
+            <td id="categoryValue">${item.category}</td>
+            <td id="fieldNameValue">${item.field_code}</td>
+            <td id="seasonValue">${item.season}</td>
+            <td><a href="#" class=" btn deleteBtn ">Delete <i class="far fa-trash-alt"></i></a></td>
+        </tr>`
+                    $('#cropTable-body').append(record);
+                });
+            },
+            error:function (){
+                alert("Error from load table customer")
+            }
+        });
+    }
+    // load field name
+     function refreshFields() {
+        $('#dropdownFieldName').empty();
+        let fieldArray = [];
+        $.ajax({
+            method:"GET",
+            contentType:"application/json",
+            url:"http://localhost:5050/CropMonitoringSystem/api/v1/field/getAllFields",
+            async:true,
+            success:function (data){
+                fieldArray=data;
+                $('#dropdownFieldName').append($('<option>', {
+                    value: '',
+                    disabled: true,
+                    selected: true,
+                    hidden: true,
+                    text: 'Select Field Name'
+                }));
+                for (let i = 0; i < fieldArray.length; i++) {
+                    $('#dropdownFieldName').append($('<option>', {
+                        value: i,
+                        text: fieldArray[i].fieldName
+                    }));
+                }
+
+            },
+            error:function (){
+                alert("Error")
+            }
+        });
+    }
 });

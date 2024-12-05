@@ -373,6 +373,7 @@
                         <div class="form-group form-control-file">
                             <label for="cropImgSelector">Crop Image</label>
                             <img id="previewImage" src="" alt="Preview" />
+                            <input id="imageInput" class="hiddenInput">
                             <input type="file" name="cropImg" id="cropImgSelector" class="form-control" required>
                         </div>
                     </div>
@@ -405,10 +406,10 @@
                         <th scope="col">Season</th>
                     </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="cropTable-body">
                     <tr>
-                        <td id="cropImgValue" class="w-25">
-                            <!--<img src="https://s3.eu-central-1.amazonaws.com/bootstrapbaymisc/blog/24_days_bootstrap/sheep-3.jpg" class="img-fluid img-thumbnail" alt="Sheep">-->
+                        <!--<td id="cropImgValue" class="w-25">
+                            &lt;!&ndash;<img src="https://s3.eu-central-1.amazonaws.com/bootstrapbaymisc/blog/24_days_bootstrap/sheep-3.jpg" class="img-fluid img-thumbnail" alt="Sheep">&ndash;&gt;
                             <img src="../assets/images/test.png" class="img-fluid img-thumbnail" alt="Sheep">
                         </td>
                         <td id="commonNameValue">coconut</td>
@@ -416,7 +417,7 @@
                         <td id="categoryValue">Cow-pea</td>
                         <td id="fieldNameValue">field1</td>
                         <td id="seasonValue">Other</td>
-                        <td><a href="#" class=" btn deleteBtn ">Delete <i class="far fa-trash-alt"></i></a></td>
+                        <td><a href="#" class=" btn deleteBtn ">Delete <i class="far fa-trash-alt"></i></a></td>-->
                     </tr>
                     <tr>
                         <td class="w-25">
