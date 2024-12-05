@@ -770,9 +770,6 @@
 
         })
 
-
-
-
         // Example staff names (replace this with your dynamic data source)
         const staffNames = ["Alice Johnson", "Bob Smith", "Charlie Brown", "Diana Prince", "Eve Adams"];
         // search bar suggestions
@@ -822,18 +819,30 @@
             var genderDropdown = $('#genderDropdown').val();
             var dropdownDesignation = $('#dropdownDesignation').val();
             var roleDropdown = $('#roleDropdown').val();
-            console.log(firstNameTxt, lastNameTxt, emailTxt, contactNoTxt, dateOfBirthTxt, dateOfJoiningTxt, inputAD1, inputAD5, inputAD2, inputAD4, inputAD3, genderDropdown, dropdownDesignation, roleDropdown);
             if (btnText === "Save") {
                 $.ajax({
                     method: "POST",
                     contentType: "application/json",
-                    url: "http://localhost:8080/api/v1/customer",
+                    url: "http://localhost:5050/CropMonitoringSystem/api/v1/staff",
                     async: true,
                     data: JSON.stringify({
-                        "customerName": customerName,
+                        "firstName": firstNameTxt,
+                        "lastName": lastNameTxt,
+                        "designation": dropdownDesignation,
+                        "gender": genderDropdown,
+                        "joinedDate": dateOfJoiningTxt,
+                        "dob": dateOfBirthTxt,
+                        "address1": inputAD1,
+                        "address2": inputAD2,
+                        "address3": inputAD3,
+                        "address4": inputAD4,
+                        "address5": inputAD5,
+                        "contactNo": contactNoTxt,
+                        "email": emailTxt,
+                        "role": roleDropdown
                     }),
                     success: function (data) {
-                        console.log(equipmentName, type, type, fieldName, staffName, status);
+
                         clearInputs();
                         iziToast.success({
                             title: 'Success!',
@@ -936,6 +945,23 @@
                         }]
                     ]
                 });
+            }
+
+            function clearInputs() {
+                $('#firstNameTxt').val("");
+                $('#lastNameTxt').val("");
+                $('#emailTxt').val("");
+                $('#contactNoTxt').val("");
+                $('#dateOfBirthTxt').val("");
+                $('#dateOfJoiningTxt').val("");
+                $('#inputAD1').val("");
+                $('#inputAD5').val("");
+                $('#inputAD2').val("");
+                $('#inputAD4').val("");
+                $('#inputAD3').val("");
+                $('#genderDropdown').val("");
+                $('#dropdownDesignation').val("");
+                $('#roleDropdown').val("");
             }
 
         })
