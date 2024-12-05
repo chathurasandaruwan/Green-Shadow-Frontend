@@ -37,7 +37,7 @@ $(document).ready(function () {
         var commonName = $('#commonNameTxt').val();
         var scientificName = $('#scientificNameTxt').val();
         var category = $('#dropdownCategory').val();
-        var fieldName = $('#dropdownFieldName').val();
+        var fieldCode = $('#dropdownFieldName').val();
         var season = $('input[name="customRadioInline1"]:checked').val();
         var img = $('#imageInput').val();
 
@@ -59,15 +59,17 @@ $(document).ready(function () {
         } else {
             console.log("No file selected");
         }*/
+
+
         //save data
         let formData = new FormData();
         if (btnText === "Save") {
             formData.append("common_name", commonName);
             formData.append("scientific_name", scientificName);
-            formData.append("image", file); // `file` is a File object (e.g., from an `<input type="file">`)
+            formData.append("image", file);
             formData.append("category", category);
             formData.append("season", season);
-            formData.append("field_code", "FIELD-7a77bbca-47f0-4918-84ac-043a7541f94e");
+            formData.append("field_code", fieldCode);
             $.ajax({
                 method:"POST",
                 contentType: false,
@@ -76,7 +78,6 @@ $(document).ready(function () {
                 async:true,
                 data:formData,
                 success:function (data){
-                    console.log(commonName, scientificName, category, fieldName, season, file);
                     clearInputs();
                     loadTable();
                     iziToast.success({
@@ -116,10 +117,8 @@ $(document).ready(function () {
                                 formData.append("scientific_name", scientificName);
                                 formData.append("category", category);
                                 formData.append("season", season);
-                                formData.append("field_code", "FIELD-7a77bbca-47f0-4918-84ac-043a7541f94e");
+                                formData.append("field_code", fieldCode);
                                 if (!file){
-                                    console.log("No file selected");
-                                    console.log(img)
                                     formData.append('image', convertBase64StringToFile(img));
                                 }else {
                                     formData.append("image", file);
@@ -132,6 +131,7 @@ $(document).ready(function () {
                                     url:"http://localhost:5050/CropMonitoringSystem/api/v1/crop/"+cropCode,
                                     success:function (data){
                                         clearInputs();
+                                        loadTable();
                                         iziToast.success({
                                             title: 'Success!',
                                             message: 'Crop has been Updated successfully..!',
@@ -200,7 +200,6 @@ $(document).ready(function () {
 
             return file;
         } catch (error) {
-            console.error("Error converting Base64 string to File:", error);
             throw error;
         }
     }
@@ -212,8 +211,6 @@ $(document).ready(function () {
         let fieldName = $(this).find("#fieldNameValue").text();
         let season = $(this).find("#seasonValue").text();
         let img = $(this).find("#cropImgValue img").attr("src");
-        console.log(commonName, scientificName, category, fieldName, season);
-        console.log("image: ", img);
 
         $('#commonNameTxt').val(commonName);
         $('#scientificNameTxt').val(scientificName);
@@ -254,8 +251,7 @@ $(document).ready(function () {
                                 url:"http://localhost:5050/CropMonitoringSystem/api/v1/crop/"+cropCode,
                                 async:true,
                                 success:function (data){
-                                    console.log("delete btn on action")
-                                    console.log("commonName: ", $(this).parent().parent().find("#commonNameValue").text());
+                                    loadTable();
                                     iziToast.success({
                                         title: 'Success!',
                                         message: 'Crop has been Deleted successfully..!',
@@ -304,7 +300,6 @@ $(document).ready(function () {
             url: "http://localhost:5050/CropMonitoringSystem/api/v1/crop/" + cropName,
             async: true,
             success: function (data) {
-                console.log(data);  // Log the data to see its structure
                 // let cropCode = null;
 
                 if (Array.isArray(data)) {
@@ -315,8 +310,6 @@ $(document).ready(function () {
                     // Handle the case where the data is not an array
                     cropCode = data.crop_code; // Adjust this based on the actual structure
                 }
-
-                console.log("Crop code:", cropCode);
                 callback(cropCode);
             },
             error: function () {
@@ -379,7 +372,7 @@ $(document).ready(function () {
                 }));
                 for (let i = 0; i < fieldArray.length; i++) {
                     $('#dropdownFieldName').append($('<option>', {
-                        value: i,
+                        value: fieldArray[i].field_code,
                         text: fieldArray[i].fieldName
                     }));
                 }
