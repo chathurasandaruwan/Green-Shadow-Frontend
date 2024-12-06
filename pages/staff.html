@@ -439,14 +439,14 @@
                 <div class="container">
                     <div class="form-wrap-staff">
                     <!--search bar-->
-                    <div id="custSearchCardBody" class="custCard">
+                    <div id="custSearchCardBody" class="card">
                         <div class="card-header custSearchCardHeader">
                             <b>Search Staff By name</b>
                         </div>
                         <div class="card-body">
                             <div class="input-group mb-3">
                                 <input id="searchBox" type="search" role="combobox" class="form-control" placeholder="Search by name here ....." aria-describedby="button-addon2">
-                                <button class="btn btn-outline-success" type="button" >Search</button>
+                                <button id="searchBtn" class="btn btn-outline-success" type="button" >Search</button>
                             </div>
                             <ul id="suggestions" class="list-group"></ul>
                         </div>
@@ -511,8 +511,8 @@
                                     <label for="genderDropdown">Gender</label>
                                     <select id="genderDropdown" name="gender" class="form-control" required>
                                         <option value=""  disabled selected hidden>Select Gender</option>
-                                        <option value="Male">Male</option>
-                                        <option value="Female">Female</option>
+                                        <option value="MALE">MALE</option>
+                                        <option value="FEMALE">FEMALE</option>
                                     </select>
                                 </div>
                             </div>
@@ -668,8 +668,8 @@
                         <th scope="col">Role</th>
                     </tr>
                     </thead>
-                    <tbody>
-                    <tr>
+                    <tbody id="staffTable-body">
+                    <!--<tr>
                         <td id="">kamal</td>
                         <td id=" ">santha</td>
                         <td id="  ">kamal@123</td>
@@ -692,7 +692,7 @@
                         <td id="  8   ">no1, street, city</td>
                         <td id="  9   ">1234567890</td>
                         <td id="  10   ">Manager</td>
-                    </tr>
+                    </tr>-->
                     </tbody>
                 </table>
             </div>
@@ -709,6 +709,8 @@
 <script src="https://cdn.jsdelivr.net/npm/izitoast/dist/js/iziToast.min.js"></script>
 <script>
     $(document).ready(function () {
+        loadSearchBar();
+        loadTable();
         // AddNewStaffBtn on click
         $(document).on("click","#AddNewStaffBtn",function(){
             $("#staffModel").modal("toggle");
@@ -770,31 +772,49 @@
 
         })
 
-        // Example staff names (replace this with your dynamic data source)
-        const staffNames = ["Alice Johnson", "Bob Smith", "Charlie Brown", "Diana Prince", "Eve Adams"];
-        // search bar suggestions
-        $("#searchBox").on("input", function () {
-            const query = $(this).val().toLowerCase();
-            const $suggestions = $("#suggestions");
-            $suggestions.empty(); // Clear previous suggestions
+        function loadSearchBar() {
+            let staffArray = [];
+            $.ajax({
+                method:"GET",
+                contentType:"application/json",
+                url:"http://localhost:5050/CropMonitoringSystem/api/v1/staff/getAllStaff",
+                async:true,
+                success:function (data){
+                    let staffNames = [];
+                    staffArray=data;
+                    for (let i = 0; i < staffArray.length; i++) {
+                        staffNames[i] = staffArray[i].firstName
+                    }
+                    // search bar suggestions
+                    $("#searchBox").on("input", function () {
+                        const query = $(this).val().toLowerCase();
+                        const $suggestions = $("#suggestions");
+                        $suggestions.empty(); // Clear previous suggestions
 
-            if (query) {
-                // Filter staff names
-                const matches = staffNames.filter(name => name.toLowerCase().includes(query));
-                matches.forEach(match => {
-                    const $li = $("<li>")
-                        .text(match)
-                        .addClass("list-group-item")
-                        .css("cursor", "pointer")
-                        .on("click", function () {
-                            $("#searchBox").val(match); // Set input value
-                            $suggestions.empty(); // Clear suggestions
-                        });
+                        if (query) {
+                            // Filter staff names
+                            const matches = staffNames.filter(name => name.toLowerCase().includes(query));
+                            matches.forEach(match => {
+                                const $li = $("<li>")
+                                    .text(match)
+                                    .addClass("list-group-item")
+                                    .css("cursor", "pointer")
+                                    .on("click", function () {
+                                        $("#searchBox").val(match); // Set input value
+                                        $suggestions.empty(); // Clear suggestions
+                                    });
 
-                    $suggestions.append($li);
-                });
-            }
-        });
+                                $suggestions.append($li);
+                            });
+                        }
+                    });
+
+                },
+                error:function (){
+                    alert("Error")
+                }
+            });
+        }
 
         // Hide suggestions when clicking outside
         $(document).on("click", function (e) {
@@ -865,37 +885,56 @@
                     }
                 })
             }else if(btnText === "Update"){
-                $.ajax({
-                    method: "PUT",
-                    contentType: "application/json",
-                    url: "http://localhost:8080/api/v1/customer",
-                    async: true,
-                    data: JSON.stringify({
-                        "customerName": customerName,
-                    }),
-                    success: function (data) {
-                        console.log(equipmentName, type, type, fieldName, staffName, status);
-                        clearInputs();
-                        iziToast.success({
-                            title: 'Success!',
-                            message: 'Staff has been Updated successfully..!',
-                            position: 'bottomRight',
-                            timeout: 5000,
-                            progressBar: true,
-                            class: 'custom-iziToast',
-                        });
-                    },
-                    error: function () {
-                        iziToast.error({
-                            title: 'Error!',
-                            message: 'Staff not updated ..!',
-                            position: 'bottomRight',
-                            timeout: 5000,
-                            progressBar: true,
-                            class: 'custom-iziToast',
-                        });
+                getStaffIdByName(firstNameTxt, function (staff_code) {
+                    if (staff_code) {
+                        $.ajax({
+                            method: "PUT",
+                            contentType: "application/json",
+                            url: "http://localhost:5050/CropMonitoringSystem/api/v1/staff/" + staff_code,
+                            async: true,
+                            data: JSON.stringify({
+                                "firstName": firstNameTxt,
+                                "lastName": lastNameTxt,
+                                "designation": dropdownDesignation,
+                                "gender": genderDropdown,
+                                "joinedDate": dateOfJoiningTxt,
+                                "dob": dateOfBirthTxt,
+                                "address1": inputAD1,
+                                "address2": inputAD2,
+                                "address3": inputAD3,
+                                "address4": inputAD4,
+                                "address5": inputAD5,
+                                "contactNo": contactNoTxt,
+                                "email": emailTxt,
+                                "role": roleDropdown
+                            }),
+                            success: function (data) {
+
+                                clearInputs();
+                                iziToast.success({
+                                    title: 'Success!',
+                                    message: 'Staff has been Updated successfully..!',
+                                    position: 'bottomRight',
+                                    timeout: 5000,
+                                    progressBar: true,
+                                    class: 'custom-iziToast',
+                                });
+                            },
+                            error: function () {
+                                iziToast.error({
+                                    title: 'Error!',
+                                    message: 'Staff not updated ..!',
+                                    position: 'bottomRight',
+                                    timeout: 5000,
+                                    progressBar: true,
+                                });
+                            }
+
+                        })
+                    } else {
+                        alert("Error Staff no found");
                     }
-                })
+                });
             }else {
                 iziToast.show({
                     title: 'Do you want to delete this staff ?',
@@ -906,38 +945,39 @@
                     buttons: [
                         ['<button>Confirm</button>', function (instance, toast) {
 
-                            $.ajax({
-                                method:"POST",
-                                contentType:"form-data",
-                                url:"http://localhost:8080/api/v1/customer",
-                                async:true,
-                                data:JSON.stringify({
-                                    "customerName": customerName,
-                                }),
-                                success:function (data){
-                                    console.log("delete btn on action")
-                                    console.log("commonName: ", $(this).parent().parent().find("#commonNameValue").text());
-                                    iziToast.success({
-                                        title: 'Success!',
-                                        message: 'Staff has been Deleted successfully..!',
-                                        position: 'bottomRight',
-                                        timeout: 5000,
-                                        progressBar: true,
-                                        class: 'custom-iziToast',
-                                    });
-                                },
-                                error:function (){
-                                    iziToast.error({
-                                        title: 'Error!',
-                                        message: 'Staff not Deleted ..!',
-                                        position: 'bottomRight',
-                                        timeout: 5000,
-                                        progressBar: true,
-                                        class: 'custom-iziToast',
-                                    });
-                                }
-                            })
+                            getStaffIdByName(firstNameTxt, function (staffId) {
+                                if(staffId){
+                                    $.ajax({
+                                        method:"PUT",
+                                        contentType:"application/json",
+                                        url:"http://localhost:5050/CropMonitoringSystem/api/v1/staff/" + staffId,
+                                        async:true,
+                                        success:function (data){
 
+                                            iziToast.success({
+                                                title: 'Success!',
+                                                message: 'Staff has been Deleted successfully..!',
+                                                position: 'bottomRight',
+                                                timeout: 5000,
+                                                progressBar: true,
+                                                class: 'custom-iziToast',
+                                            });
+                                        },
+                                        error:function (){
+                                            iziToast.error({
+                                                title: 'Error!',
+                                                message: 'Staff not Deleted ..!',
+                                                position: 'bottomRight',
+                                                timeout: 5000,
+                                                progressBar: true,
+                                                class: 'custom-iziToast',
+                                            });
+                                        }
+                                    })
+                                }else {
+                                    alert("Error Staff no found");
+                                }
+                            });
                             instance.hide({ transitionOut: 'fadeOut' }, toast);
                         }],
                         ['<button>Cancel</button>', function (instance, toast) {
@@ -946,12 +986,124 @@
                     ]
                 });
             }
+        })
 
-            function clearInputs() {
-                $('#firstNameTxt').val("");
-                $('#lastNameTxt').val("");
-                $('#emailTxt').val("");
-                $('#contactNoTxt').val("");
+        $('#searchBtn').on('click', () => {
+            var staffName = $('#searchBox').val();
+            $.ajax({
+                method: "GET",
+                contentType: "application/json",
+                url: "http://localhost:5050/CropMonitoringSystem/api/v1/staff/" + staffName,
+                async: true,
+                success: function (data) {
+                    loadInputs(data);
+                    $('#searchBox').val("");
+                },
+                error: function () {
+                    alert("Error: Staff not found");
+                }
+            });
+        })
+        function loadInputs(data) {
+
+            let dateTimeValue = data.dob;
+            let dateDob = dateTimeValue.split('T')[0];
+
+            let dateTimeValue2 = data.joinedDate;
+            let dateJoin = dateTimeValue2.split('T')[0];
+            $('#firstNameTxt').val(data.firstName);
+            $('#lastNameTxt').val(data.lastName);
+            $('#emailTxt').val(data.email);
+            $('#contactNoTxt').val(data.contactNo);
+            $('#dateOfBirthTxt').val(dateDob);
+            $('#dateOfJoiningTxt').val(dateJoin);
+            $('#inputAD1').val(data.address1);
+            $('#inputAD5').val(data.address5);
+            $('#inputAD2').val(data.address2);
+            $('#inputAD4').val(data.address4);
+            $('#inputAD3').val(data.address3);
+            $('#genderDropdown').val(data.gender);
+            $('#dropdownDesignation').val(data.designation);
+            $('#roleDropdown').val(data.role);
+        }
+
+
+            function getStaffIdByName(staffName, callback) {
+                let staffId = null;
+                $.ajax({
+                    method: "GET",
+                    contentType: "application/json",
+                    url: "http://localhost:5050/CropMonitoringSystem/api/v1/staff/" + staffName,
+                    async: true,
+                    success: function (data) {
+                        staffId = data.id;
+                        callback(staffId);
+                    },
+                    error: function () {
+                        alert("Error: Staff not found");
+                    }
+                });
+
+            }
+        function loadTable() {
+            $('#staffTable-body').empty();
+
+            $.ajax({
+                method:"GET",
+                contentType:"application/json",
+                url:"http://localhost:5050/CropMonitoringSystem/api/v1/staff/getAllStaff",
+                async:true,
+                success:function (data){
+                    // sort to setOrderBy tempId
+                    data.map((item,index) =>{
+                        let dateTimeValue = item.dob;
+                        let dateDob = dateTimeValue.split('T')[0];
+
+                        let dateTimeValue2 = item.joinedDate;
+                        let dateJoin = dateTimeValue2.split('T')[0];
+                        var record=`<tr>
+
+            <td id="firstNameValue">${item.firstName}</td>
+            <td id="lastNameValue">${item.lastName}</td>
+            <td id="emailValue">${item.email}</td>
+            <td id="designationValue">${item.designation}</td>
+            <td id="genderValue">${item.gender}</td>
+            <td id="joinedDateValue">${dateJoin}</td>
+            <td id="dobValue">${dateDob}</td>
+
+            <td id="addressValue">
+                <ul>
+                <li>${item.address1}</li>
+                <li>${item.address2}</li>
+                <li>${item.address3}</li>
+                <li>${item.address4}</li>
+                <li>${item.address5}</li>
+                </ul>
+            </td>
+            <td id="contactNoValue">${item.contactNo}</td>
+            <td id="roleValue">${item.role}</td>
+        </tr>`
+                        $('#staffTable-body').append(record);
+                    });
+                },
+                error:function (){
+                    alert("Error from load table staff")
+                }
+            });
+        }
+        $('#btnClear').on('click', () => {
+            let btnText = $('#btnClear').text();
+            clearInputs();
+            if (btnText === "Cancel") {
+                $('#clearBtn').text("Clear");
+                $("#staffModel").modal("hide");
+            }
+        })
+        function clearInputs() {
+            $('#firstNameTxt').val("");
+            $('#lastNameTxt').val("");
+            $('#emailTxt').val("");
+            $('#contactNoTxt').val("");
                 $('#dateOfBirthTxt').val("");
                 $('#dateOfJoiningTxt').val("");
                 $('#inputAD1').val("");
@@ -962,9 +1114,8 @@
                 $('#genderDropdown').val("");
                 $('#dropdownDesignation').val("");
                 $('#roleDropdown').val("");
-            }
+        }
 
-        })
     });
 
 </script>
