@@ -774,8 +774,10 @@
 
         function loadSearchBar() {
             let staffArray = [];
+            let token = localStorage.getItem("token");
             $.ajax({
                 method:"GET",
+                headers: {"Authorization": "Bearer " + token},
                 contentType:"application/json",
                 url:"http://localhost:5050/CropMonitoringSystem/api/v1/staff/getAllStaff",
                 async:true,
@@ -840,8 +842,10 @@
             var dropdownDesignation = $('#dropdownDesignation').val();
             var roleDropdown = $('#roleDropdown').val();
             if (btnText === "Save") {
+                let token = localStorage.getItem("token");
                 $.ajax({
                     method: "POST",
+                    headers: {"Authorization": "Bearer " + token},
                     contentType: "application/json",
                     url: "http://localhost:5050/CropMonitoringSystem/api/v1/staff",
                     async: true,
@@ -887,8 +891,10 @@
             }else if(btnText === "Update"){
                 getStaffIdByName(firstNameTxt, function (staff_code) {
                     if (staff_code) {
+                        let token = localStorage.getItem("token");
                         $.ajax({
                             method: "PUT",
+                            headers: {"Authorization": "Bearer " + token},
                             contentType: "application/json",
                             url: "http://localhost:5050/CropMonitoringSystem/api/v1/staff/" + staff_code,
                             async: true,
@@ -947,8 +953,10 @@
 
                             getStaffIdByName(firstNameTxt, function (staffId) {
                                 if(staffId){
+                                    let token = localStorage.getItem("token");
                                     $.ajax({
                                         method:"PUT",
+                                        headers: {"Authorization": "Bearer " + token},
                                         contentType:"application/json",
                                         url:"http://localhost:5050/CropMonitoringSystem/api/v1/staff/" + staffId,
                                         async:true,
@@ -990,8 +998,10 @@
 
         $('#searchBtn').on('click', () => {
             var staffName = $('#searchBox').val();
+            let token = localStorage.getItem("token");
             $.ajax({
                 method: "GET",
+                headers: {"Authorization": "Bearer " + token},
                 contentType: "application/json",
                 url: "http://localhost:5050/CropMonitoringSystem/api/v1/staff/" + staffName,
                 async: true,
@@ -1030,8 +1040,10 @@
 
             function getStaffIdByName(staffName, callback) {
                 let staffId = null;
+                let token = localStorage.getItem("token");
                 $.ajax({
                     method: "GET",
+                    headers: {"Authorization": "Bearer " + token},
                     contentType: "application/json",
                     url: "http://localhost:5050/CropMonitoringSystem/api/v1/staff/" + staffName,
                     async: true,
@@ -1047,9 +1059,10 @@
             }
         function loadTable() {
             $('#staffTable-body').empty();
-
+            let token = localStorage.getItem("token");
             $.ajax({
                 method:"GET",
+                headers: {"Authorization": "Bearer " + token},
                 contentType:"application/json",
                 url:"http://localhost:5050/CropMonitoringSystem/api/v1/staff/getAllStaff",
                 async:true,

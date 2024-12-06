@@ -656,8 +656,10 @@
 
         function generateNextLogId() {
             let logArray = [];
+            let token = localStorage.getItem("token");
             $.ajax({
                 method:"GET",
+                headers: {"Authorization": "Bearer " + token},
                 contentType:"application/json",
                 url:"http://localhost:5050/CropMonitoringSystem/api/v1/log/getAllLog",
                 async:true,
@@ -741,15 +743,17 @@
             formData.append("logFields", fieldIds);
             formData.append("logCrops", cropIds);
             formData.append("logStaff", staffIds);
+            let token = localStorage.getItem("token");
             $.ajax({
                 method:"POST",
+                headers: {"Authorization": "Bearer " + token},
                 contentType: false,
                 processData: false,
                 url:"http://localhost:5050/CropMonitoringSystem/api/v1/log",
                 async:true,
                 data:formData,
                 success:function (data){
-                    clearInputs();
+                    clearInput();
                     loadTable();
                     iziToast.success({
                         title: 'Success!',
@@ -810,8 +814,10 @@
         function refreshFields() {
             $('#dropdownFieldName').empty();
             let fieldArray = [];
+            let token = localStorage.getItem("token");
             $.ajax({
                 method:"GET",
+                headers: {"Authorization": "Bearer " + token},
                 contentType:"application/json",
                 url:"http://localhost:5050/CropMonitoringSystem/api/v1/field/getAllFields",
                 async:true,
@@ -840,8 +846,10 @@
         function refreshStaff() {
             $('#dropdownStaffName').empty();
             let staffArray = [];
+            let token = localStorage.getItem("token");
             $.ajax({
                 method:"GET",
+                headers: {"Authorization": "Bearer " + token},
                 contentType:"application/json",
                 url:"http://localhost:5050/CropMonitoringSystem/api/v1/staff/getAllStaff",
                 async:true,
@@ -870,8 +878,10 @@
         function refreshCrops() {
             $('#dropdownCropName').empty();
             let cropArray = [];
+            let token = localStorage.getItem("token");
             $.ajax({
                 method:"GET",
+                headers: {"Authorization": "Bearer " + token},
                 contentType:"application/json",
                 url:"http://localhost:5050/CropMonitoringSystem/api/v1/crop/getAllCrops",
                 async:true,
@@ -912,9 +922,10 @@
         })
         function loadTable() {
             $('#logTable-body').empty();
-
+            let token = localStorage.getItem("token");
             $.ajax({
                 method:"GET",
+                headers: {"Authorization": "Bearer " + token},
                 contentType:"application/json",
                 url:"http://localhost:5050/CropMonitoringSystem/api/v1/log/getAllLog",
                 async:true,

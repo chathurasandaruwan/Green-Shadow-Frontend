@@ -474,8 +474,10 @@
             var status = $('input[name="customRadioInline1"]:checked').val();
 
             if (btnText === "Save") {
+                let token = localStorage.getItem("token");
                 $.ajax({
                     method:"POST",
+                    headers:{"Authorization":"Bearer "+token},
                     contentType:"application/json",
                     url:"http://localhost:5050/CropMonitoringSystem/api/v1/equipment",
                     async:true,
@@ -522,8 +524,10 @@
                         ['<button>Confirm</button>', function (instance, toast) {
                             getEquipmentIdByName(equipmentName, function (equipmentId) {
                                 if (equipmentId) {
+                                    let token = localStorage.getItem("token");
                                     $.ajax({
                                         method:"PUT",
+                                        headers:{"Authorization":"Bearer "+token},
                                         contentType:"application/json",
                                         url:"http://localhost:5050/CropMonitoringSystem/api/v1/equipment/"+equipmentId,
                                         async:true,
@@ -607,8 +611,10 @@
                     ['<button>Confirm</button>', function (instance, toast) {
                         getEquipmentIdByName(equipmentName, function (equipmentId) {
                             if (equipmentId) {
+                                let token = localStorage.getItem("token");
                                 $.ajax({
                                     method:"DELETE",
+                                    headers:{"Authorization":"Bearer "+token},
                                     contentType:"form-data",
                                     url:"http://localhost:5050/CropMonitoringSystem/api/v1/equipment/"+equipmentId,
                                     async:true,
@@ -675,8 +681,10 @@
         function refreshFields() {
             $('#dropdownFieldName').empty();
             let fieldArray = [];
+            let token = localStorage.getItem("token");
             $.ajax({
                 method:"GET",
+                headers:{"Authorization":"Bearer "+token},
                 contentType:"application/json",
                 url:"http://localhost:5050/CropMonitoringSystem/api/v1/field/getAllFields",
                 async:true,
@@ -705,8 +713,10 @@
         function refreshStaff() {
             $('#dropdownStaffName').empty();
             let staffArray = [];
+            let token = localStorage.getItem("token");
             $.ajax({
                 method:"GET",
+                headers:{"Authorization":"Bearer "+token},
                 contentType:"application/json",
                 url:"http://localhost:5050/CropMonitoringSystem/api/v1/staff/getAllStaff",
                 async:true,
@@ -735,8 +745,10 @@
         function getEquipmentIdByName(equipmentName, callback) {
             console.log(equipmentName)
             let equipment_id = null;
+            let token = localStorage.getItem("token");
             $.ajax({
                 method: "GET",
+                headers: {"Authorization": "Bearer " + token},
                 contentType: "application/json",
                 url: "http://localhost:5050/CropMonitoringSystem/api/v1/equipment/" + equipmentName,
                 async: true,
@@ -761,9 +773,10 @@
         }
         function loadTable() {
             $('#equipmentTable-body').empty();
-
+            let token = localStorage.getItem("token");
             $.ajax({
                 method:"GET",
+                headers:{"Authorization":"Bearer "+token},
                 contentType:"application/json",
                 url:"http://localhost:5050/CropMonitoringSystem/api/v1/equipment/getAllEquipment",
                 async:true,

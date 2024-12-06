@@ -416,8 +416,6 @@
 
             const locationValue = $('#location').val();
             const [latitude, longitude] = locationValue.split(',').map(Number);
-            console.log(latitude); // x
-            console.log(longitude); // y
 
             let formData = new FormData();
             if (btnText === "Save") {
@@ -427,8 +425,12 @@
                 formData.append("image2", image2);
                 formData.append("location.x", latitude);
                 formData.append("location.y", longitude);
+                let token = localStorage.getItem("token");
                 $.ajax({
                     method:"POST",
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    },
                     contentType: false,
                     processData: false,
                     url: "http://localhost:5050/CropMonitoringSystem/api/v1/field",
@@ -475,8 +477,12 @@
                         ['<button>Confirm</button>', function (instance, toast) {
                             getFieldIdByName(fieldNameTxt, function (fieldCode) {
                                 if (fieldCode) {
+                                    let token = localStorage.getItem("token");
                             $.ajax({
                                 method:"PUT",
+                                headers: {
+                                    'Authorization': `Bearer ${token}`
+                                },
                                 contentType: false,
                                 processData: false,
                                 url: "http://localhost:5050/CropMonitoringSystem/api/v1/field/"+fieldCode,
@@ -596,8 +602,10 @@
                     ['<button>Confirm</button>', function (instance, toast) {
                         getFieldIdByName(fieldNameTxt, function (fieldCode) {
                             if (fieldCode) {
+                                let token = localStorage.getItem("token");
                                 $.ajax({
                                     method:"DELETE",
+                                    headers:{"Authorization":"Bearer "+token},
                                     contentType:"text",
                                     url:"http://localhost:5050/CropMonitoringSystem/api/v1/field/"+fieldCode,
                                     async:true,
@@ -645,8 +653,12 @@
         });
         function getFieldIdByName(fieldName, callback) {
             let fieldCode = null;
+            let token = localStorage.getItem("token");
             $.ajax({
                 method: "GET",
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                },
                 contentType: "application/json",
                 url: "http://localhost:5050/CropMonitoringSystem/api/v1/field/" + fieldName,
                 async: true,
@@ -671,9 +683,10 @@
         // loadTable
         function loadTable() {
             $('#fieldTableBody').empty();
-
+            let token = localStorage.getItem("token");
             $.ajax({
                 method:"GET",
+                headers:{"Authorization":"Bearer "+token},
                 contentType:"application/json",
                 url:"http://localhost:5050/CropMonitoringSystem/api/v1/field/getAllFields",
                 async:true,

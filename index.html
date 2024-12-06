@@ -315,6 +315,7 @@ $('#lblLogin').on('click', () => {
                     "password": password
                 }),
                 success:function (data){
+                    console.log("token",data.token)
                     localStorage.setItem("token",data.token);
                     window.location.href = 'pages/dashboard.html';
                 },
@@ -322,7 +323,6 @@ $('#lblLogin').on('click', () => {
                     alert("Error")
                 }
             })
-            window.location.href = 'pages/dashboard.html';
         });
     });
     // sign up btnOnAction

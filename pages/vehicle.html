@@ -433,8 +433,10 @@
             var status = $('input[name="customRadioInline1"]:checked').val();
             var staffId = $('#dropdownStaffName').val();
             if (btnText === "Save") {
+                let token = localStorage.getItem("token");
                 $.ajax({
                     method:"POST",
+                    headers:{"Authorization": "Bearer " + token},
                     contentType:"application/json",
                     url:"http://localhost:5050/CropMonitoringSystem/api/v1/vehicle",
                     async:true,
@@ -481,8 +483,10 @@
                         ['<button>Confirm</button>', function (instance, toast) {
                             getVehicleIdByLPNum(licensePlateNumber, function (vehicle_code) {
                                 if (vehicle_code) {
+                                    let token = localStorage.getItem("token");
                                     $.ajax({
                                         method:"PUT",
+                                        headers:{"Authorization": "Bearer " + token},
                                         contentType:"application/json",
                                         url:"http://localhost:5050/CropMonitoringSystem/api/v1/vehicle/" + vehicle_code,
                                         async:true,
@@ -534,8 +538,10 @@
 
         function getVehicleIdByLPNum(licensePlateNumber, callback) {
             let vehicleId = null;
+            let token = localStorage.getItem("token");
             $.ajax({
                 method: "GET",
+                headers: { "Authorization": "Bearer " + token },
                 contentType: "application/json",
                 url: "http://localhost:5050/CropMonitoringSystem/api/v1/vehicle/" + licensePlateNumber,
                 async: true,
@@ -578,8 +584,10 @@
                     ['<button>Confirm</button>', function (instance, toast) {
                         getVehicleIdByLPNum(licensePlateNumber, function (vehicle_code) {
                             if (vehicle_code) {
+                                let token = localStorage.getItem("token");
                                 $.ajax({
                                     method:"DELETE",
+                                    headers:{"Authorization": "Bearer " + token},
                                     contentType:"form-data",
                                     url:"http://localhost:5050/CropMonitoringSystem/api/v1/vehicle/" + vehicle_code,
                                     async:true,
@@ -644,8 +652,10 @@
         function refreshStaff() {
             $('#dropdownStaffName').empty();
             let staffArray = [];
+            let token = localStorage.getItem("token");
             $.ajax({
                 method:"GET",
+                headers:{"Authorization": "Bearer " + token},
                 contentType:"application/json",
                 url:"http://localhost:5050/CropMonitoringSystem/api/v1/staff/getAllStaff",
                 async:true,
@@ -673,9 +683,10 @@
         }
         function loadTable() {
             $('#vehicleTable-body').empty();
-
+            let token = localStorage.getItem("token");
             $.ajax({
                 method:"GET",
+                headers:{"Authorization": "Bearer " + token},
                 contentType:"application/json",
                 url:"http://localhost:5050/CropMonitoringSystem/api/v1/vehicle/getAllVehicle",
                 async:true,

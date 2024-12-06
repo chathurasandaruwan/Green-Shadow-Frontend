@@ -70,12 +70,16 @@ $(document).ready(function () {
             formData.append("category", category);
             formData.append("season", season);
             formData.append("field_code", fieldCode);
+            let token = localStorage.getItem("token");
             $.ajax({
                 method:"POST",
                 contentType: false,
                 processData: false,
                 url:"http://localhost:5050/CropMonitoringSystem/api/v1/crop",
                 async:true,
+                headers: {
+                    "Authorization": "Bearer " + token
+                },
                 data:formData,
                 success:function (data){
                     clearInputs();
@@ -123,12 +127,17 @@ $(document).ready(function () {
                                 }else {
                                     formData.append("image", file);
                                 }
+
+                                let token = localStorage.getItem("token");
                                 $.ajax({
                                     type: 'PUT',
                                     data: formData,
                                     contentType: false,
                                     processData: false,
                                     url:"http://localhost:5050/CropMonitoringSystem/api/v1/crop/"+cropCode,
+                                    headers: {
+                                        "Authorization": "Bearer " + token
+                                    },
                                     success:function (data){
                                         clearInputs();
                                         loadTable();
@@ -245,10 +254,14 @@ $(document).ready(function () {
                 ['<button>Confirm</button>', function (instance, toast) {
                     getCropIdByName(cropName, function (cropCode) {
                         if (cropCode) {
+                            let token = localStorage.getItem("token");
                             $.ajax({
                                 method:"DELETE",
                                 contentType:"text",
                                 url:"http://localhost:5050/CropMonitoringSystem/api/v1/crop/"+cropCode,
+                                headers: {
+                                    "Authorization": "Bearer " + token
+                                },
                                 async:true,
                                 success:function (data){
                                     loadTable();
@@ -294,10 +307,14 @@ $(document).ready(function () {
     })
     function getCropIdByName(cropName, callback) {
         let cropCode = null;
+        let token = localStorage.getItem("token");
         $.ajax({
             method: "GET",
             contentType: "application/json",
             url: "http://localhost:5050/CropMonitoringSystem/api/v1/crop/" + cropName,
+            headers: {
+                "Authorization": "Bearer " + token
+            },
             async: true,
             success: function (data) {
                 // let cropCode = null;
@@ -323,11 +340,15 @@ $(document).ready(function () {
     // loadTable
     function loadTable() {
         $('#cropTable-body').empty();
-
+        let token = localStorage.getItem("token");
+        console.log(token)
         $.ajax({
             method:"GET",
             contentType:"application/json",
             url:"http://localhost:5050/CropMonitoringSystem/api/v1/crop/getAllCrops",
+            headers: {
+                "Authorization": "Bearer " + token
+            },
             async:true,
             success:function (data){
 
@@ -356,10 +377,14 @@ $(document).ready(function () {
      function refreshFields() {
         $('#dropdownFieldName').empty();
         let fieldArray = [];
+         let token = localStorage.getItem("token");
         $.ajax({
             method:"GET",
             contentType:"application/json",
             url:"http://localhost:5050/CropMonitoringSystem/api/v1/field/getAllFields",
+            headers: {
+                "Authorization": "Bearer " + token
+            },
             async:true,
             success:function (data){
                 fieldArray=data;
