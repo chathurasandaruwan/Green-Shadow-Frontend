@@ -313,11 +313,7 @@
                                 <th scope="col">Staffs</th>
                             </tr>
                             </thead>
-                            <tbody>
-                            <tr>
-                                <td id="">kamal</td>
-                                <td><button type="button" class="btn-close hiddenBtn" aria-label="Close"></button></td>
-                            </tr>
+                            <tbody id="staffTbl-body">
                             </tbody>
                         </table>
                     </div>
@@ -328,12 +324,7 @@
                                 <th scope="col">Fields</th>
                             </tr>
                             </thead>
-                            <tbody>
-                            <tr>
-                                <td id="2">Field1</td>
-                                <td><button type="button" class="btn-close hiddenBtn" aria-label="Close"></button></td>
-
-                            </tr>
+                            <tbody id="fieldTbl-body">
                             </tbody>
                         </table>
                     </div>
@@ -344,13 +335,7 @@
                                 <th scope="col">Crops</th>
                             </tr>
                             </thead>
-                            <tbody>
-                            <tr>
-                                <td id="3">Been</td>
-                                <td>
-                                    <button type="button" class="btn-close hiddenBtn" aria-label="Close"></button>
-                                </td>
-                            </tr>
+                            <tbody id="cropListTbl-body">
                             </tbody>
                         </table>
                     </div>
@@ -386,8 +371,8 @@
                             <th scope="col">Crop</th>
                         </tr>
                         </thead>
-                        <tbody>
-                        <tr>
+                        <tbody id="logTable-body">
+                        <!--<tr>
                             <td>01</td>
                             <td>2024/10/30</td>
                             <td>
@@ -438,7 +423,7 @@
                                     <li>Wheat</li>
                                 </ul>
                             </td>
-                        </tr>
+                        </tr>-->
                         </tbody>
                     </table>
                 </div>
@@ -466,11 +451,6 @@
                                     <div class="form-group">
                                         <label for="dropdownStaffName">Staff Name</label>
                                         <select id="dropdownStaffName" name="staffName" class="form-control" required>
-                                            <option value=""  disabled selected hidden>Select Staff Name</option>
-                                            <option value="kamal">kamal</option>
-                                            <option value="ranil">ranil</option>
-                                            <option value="nimal">nimal</option>
-                                            <option value="sahan">sahan</option>
                                         </select>
                                     </div>
                                 </div>
@@ -663,6 +643,320 @@
 <script src="../js/pageMain.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/izitoast/dist/js/iziToast.min.js"></script>
 <script>
+
+    $(document).ready(function () {
+        generateNextLogId();
+        refreshFields();
+        refreshStaff();
+        refreshCrops();
+        loadTable();
+        const today = new Date();
+        const formattedDate = today.toISOString().split('T')[0];
+        $('#logDateLbl').val(formattedDate);
+
+        function generateNextLogId() {
+            let logArray = [];
+            $.ajax({
+                method:"GET",
+                contentType:"application/json",
+                url:"http://localhost:5050/CropMonitoringSystem/api/v1/log/getAllLog",
+                async:true,
+                success:function (data){
+                    // sort to setOrderBy tempId
+                    data.sort((a, b) => {
+                        let numA = parseInt(a.tempId.split('-')[1]);
+                        let numB = parseInt(b.tempId.split('-')[1]);
+                        return numA - numB;
+                    });
+                    logArray=data;
+                    if (logArray.length > 0){
+                        let orderId = logArray[logArray.length-1].tempId;
+                        let strings = orderId.split("LOG-");
+                        let id= parseInt(strings[1]);
+                        ++id;
+                        let digit = id.toString().padStart(3, '0');
+
+                        $("#logIdTxt").val("LOG-" + digit);
+                    }else {
+                        $("#logIdTxt").val( "LOG-001");
+                    }
+                },
+                error:function (){
+                    alert("Error")
+                }
+            });
+        }
+        $("#logImgSelector").on("change", function (event) {
+            event.preventDefault();
+            const file = $("#logImgSelector")[0].files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    $("#previewImage").attr("src", e.target.result);
+                };
+                reader.readAsDataURL(file);
+            }
+        })
+        $('#btnSave').on('click', () => {
+            let logId = $("#logIdTxt").val();
+            let date = $("#logDateLbl").val();
+            let detail = $("#logDetailTxt").val();
+            const fileInput = $('#logImgSelector')[0];
+            const file = fileInput.files[0];
+
+            let StaffvaluesList = [];
+            $('#staffTbl-body tr td:first-child').each(function () {
+                let value = $(this).data('value');
+                if (value) {
+                    StaffvaluesList.push(value);
+                }
+            });
+            let staffIds = StaffvaluesList.join(',');
+
+
+            let fieldValuesList = [];
+            $('#fieldTbl-body tr td:first-child').each(function () {
+                let value = $(this).data('value');
+                if (value) {
+                    fieldValuesList.push(value);
+                }
+            });
+            let fieldIds = fieldValuesList.join(',');
+
+
+            let cropValuesList = [];
+            $('#cropListTbl-body tr td:first-child').each(function () {
+                let value = $(this).data('value');
+                if (value) {
+                    cropValuesList.push(value);
+                }
+            });
+            let cropIds = cropValuesList.join(',');
+
+            let formData = new FormData();
+            formData.append("tempId", logId);
+            formData.append("date", date);
+            formData.append("details", detail);
+            formData.append("image", file);
+            formData.append("logFields", fieldIds);
+            formData.append("logCrops", cropIds);
+            formData.append("logStaff", staffIds);
+            $.ajax({
+                method:"POST",
+                contentType: false,
+                processData: false,
+                url:"http://localhost:5050/CropMonitoringSystem/api/v1/log",
+                async:true,
+                data:formData,
+                success:function (data){
+                    clearInputs();
+                    loadTable();
+                    iziToast.success({
+                        title: 'Success!',
+                        message: 'Log has been Saved successfully..!',
+                        position: 'bottomRight',
+                        timeout: 5000,
+                        progressBar: true,
+                        class: 'custom-iziToast',
+                    });
+                },
+                error:function (){
+                    iziToast.error({
+                        title: 'Error!',
+                        message: 'Log not saved ..!',
+                        position: 'bottomRight',
+                        timeout: 5000,
+                        progressBar: true,
+                        class: 'custom-iziToast',
+                    });
+                }
+            })
+
+
+
+        })
+
+        $('#btnStaffAdd').on('click', () => {
+            let staffName = $('#dropdownStaffName option:selected').text();
+            let staffValue = $('#dropdownStaffName option:selected').val();
+            $('#staffTbl-body').append(`<tr>
+            <td data-value="${staffValue}">${staffName}</td>
+            <td><button type="button" class="btn-close hiddenBtn" aria-label="Close"></button></td>
+        </tr>`);
+            $("#staffModal").modal("hide");
+            refreshStaff();
+
+        })
+        $('#btnFieldAdd').on('click', () => {
+            let fieldName = $('#dropdownFieldName option:selected').text();
+            let fieldValue = $('#dropdownFieldName option:selected').val();
+            $('#fieldTbl-body').append(`<tr>
+            <td data-value="${fieldValue}">${fieldName}</td>
+            <td><button type="button" class="btn-close hiddenBtn" aria-label="Close"></button></td>
+        </tr>`);
+            $("#fieldModal").modal("hide");
+            refreshFields();
+        })
+        $('#btnCropAdd').on('click', () => {
+            let cropName = $('#dropdownCropName option:selected').text();
+            let cropValue = $('#dropdownCropName option:selected').val();
+            $('#cropListTbl-body').append(`<tr>
+            <td data-value="${cropValue}">${cropName}</td>
+            <td><button type="button" class="btn-close hiddenBtn" aria-label="Close"></button></td>
+        </tr>`);
+            $("#cropModal").modal("hide");
+            refreshCrops();
+        })
+        function refreshFields() {
+            $('#dropdownFieldName').empty();
+            let fieldArray = [];
+            $.ajax({
+                method:"GET",
+                contentType:"application/json",
+                url:"http://localhost:5050/CropMonitoringSystem/api/v1/field/getAllFields",
+                async:true,
+                success:function (data){
+                    fieldArray=data;
+                    $('#dropdownFieldName').append($('<option>', {
+                        value: '',
+                        disabled: true,
+                        selected: true,
+                        hidden: true,
+                        text: 'Select Field Name'
+                    }));
+                    for (let i = 0; i < fieldArray.length; i++) {
+                        $('#dropdownFieldName').append($('<option>', {
+                            value: fieldArray[i].field_code,
+                            text: fieldArray[i].fieldName
+                        }));
+                    }
+
+                },
+                error:function (){
+                    alert("Error")
+                }
+            });
+        }
+        function refreshStaff() {
+            $('#dropdownStaffName').empty();
+            let staffArray = [];
+            $.ajax({
+                method:"GET",
+                contentType:"application/json",
+                url:"http://localhost:5050/CropMonitoringSystem/api/v1/staff/getAllStaff",
+                async:true,
+                success:function (data){
+                    staffArray=data;
+                    $('#dropdownStaffName').append($('<option>', {
+                        value: '',
+                        disabled: true,
+                        selected: true,
+                        hidden: true,
+                        text: 'Select Staff Name'
+                    }));
+                    for (let i = 0; i < staffArray.length; i++) {
+                        $('#dropdownStaffName').append($('<option>', {
+                            value: staffArray[i].id,
+                            text: staffArray[i].firstName
+                        }));
+                    }
+
+                },
+                error:function (){
+                    alert("Error")
+                }
+            });
+        }
+        function refreshCrops() {
+            $('#dropdownCropName').empty();
+            let cropArray = [];
+            $.ajax({
+                method:"GET",
+                contentType:"application/json",
+                url:"http://localhost:5050/CropMonitoringSystem/api/v1/crop/getAllCrops",
+                async:true,
+                success:function (data){
+                    cropArray=data;
+                    $('#dropdownCropName').append($('<option>', {
+                        value: '',
+                        disabled: true,
+                        selected: true,
+                        hidden: true,
+                        text: 'Select Crop Name'
+                    }));
+                    for (let i = 0; i < cropArray.length; i++) {
+                        $('#dropdownCropName').append($('<option>', {
+                            value: cropArray[i].crop_code,
+                            text: cropArray[i].commonName
+                        }));
+                    }
+
+                },
+                error:function (){
+                    alert("Error")
+                }
+            });
+
+        }
+        function clearInput() {
+            $('#logIdTxt').val('');
+            $('#logDetailTxt').val('');
+            $('#logImgSelector').val('');
+            $('#staffTbl-body').empty();
+            $('#fieldTbl-body').empty();
+            $('#previewImage').attr('src', '');
+            $('#cropListTbl-body').empty();
+        }
+        $('#btnClear').on('click', () => {
+          clearInput();
+        })
+        function loadTable() {
+            $('#logTable-body').empty();
+
+            $.ajax({
+                method:"GET",
+                contentType:"application/json",
+                url:"http://localhost:5050/CropMonitoringSystem/api/v1/log/getAllLog",
+                async:true,
+                success:function (data){
+
+                    // sort to setOrderBy tempId
+                    data.map((item,index) =>{
+                        let dateTimeValue = item.date;
+                        // console.log(item.staffs)
+                        /*const firstNames = item.staffs.map(staff => staff.firstName);
+                        console.log(firstNames);*/
+
+                        const staffNamesList = item.staffs.map(staff => `<li>${staff.firstName}</li>`).join('');
+                        const fieldNamesList = item.fields.map(field => `<li>${field.fieldName}</li>`).join('');
+                        const cropNamesList = item.crops.map(crop => `<li>${crop.commonName}</li>`).join('');
+
+
+                        let date = dateTimeValue.split('T')[0];
+                        const imageSrc = `data:image/png;base64,${item.image}`;
+                        var record=`<tr>
+
+
+            <td id="logIdValue">${item.tempId}</td>
+            <td id="dateValue">${date}</td>
+            <td id="logImgValue"><img src="${imageSrc}" class="img-fluid img-thumbnail" alt="Sheep"></td>
+            <td id="detailsValue">${item.details}</td>
+            <td id="staffValue">${staffNamesList}</td>
+            <td id="fieldValue">${fieldNamesList}</td>
+            <td id="cropValue">${cropNamesList}</td>
+
+        </tr>`
+                        $('#logTable-body').append(record);
+                    });
+                },
+                error:function (){
+                    alert("Error from load table customer")
+                }
+            });
+        }
+
+
+    });
 
 </script>
 </body>
