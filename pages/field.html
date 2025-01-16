@@ -438,6 +438,7 @@
                     data:formData,
                     success: function (data) {
                         clearInputs();
+                        loadTable();
                         iziToast.success({
                             title: 'Success!',
                             message: 'Field has been Saved successfully..!',

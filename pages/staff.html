@@ -866,7 +866,7 @@
                         "role": roleDropdown
                     }),
                     success: function (data) {
-
+                        loadTable();
                         clearInputs();
                         iziToast.success({
                             title: 'Success!',
@@ -915,7 +915,7 @@
                                 "role": roleDropdown
                             }),
                             success: function (data) {
-
+                                loadTable();
                                 clearInputs();
                                 iziToast.success({
                                     title: 'Success!',
@@ -961,7 +961,8 @@
                                         url:"http://localhost:5050/CropMonitoringSystem/api/v1/staff/" + staffId,
                                         async:true,
                                         success:function (data){
-
+                                            loadTable();
+                                            clearInputs();
                                             iziToast.success({
                                                 title: 'Success!',
                                                 message: 'Staff has been Deleted successfully..!',
